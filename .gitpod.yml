@@ -7,5 +7,3 @@ tasks:
 ports:
   - port: 3000
     onOpen: open-preview
-
-image: gitpod/workspace-dotnet
