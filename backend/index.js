@@ -5,11 +5,11 @@ const port = 3001
 let clubs = {
   1: {
     id: '1',
-    username: 'programming',
+    name: 'programming',
   },
   2: {
     id: '2',
-    username: 'robo',
+    name: 'robo',
   },
 };
 
