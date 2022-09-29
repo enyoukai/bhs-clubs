@@ -1,24 +1,39 @@
 import logo from './logo.svg';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 function App() {
   return (
     <div className="App">
-      <p>list of clubs</p>
-      <ClubList/>
-      <ClubInput/>
+      <ClubView/>
     </div>
   );
 }
 
-function ClubList() {
+function ClubView()
+{
   const [clubs, setClubs] = useState([]);
+  useEffect(() => {GET('/clubs').then(res => res.json()).then(data => setClubs(data))}, []);
 
-  GET('/clubs').then(res => res.json()).then(data => setClubs(data));
+  function handleClubInput(club)
+  {
+    setClubs(clubs.concat({clubName: club}));
+    POST('/clubs', {clubName: club});
+  }
+
+  return (
+    <div>
+      <p>list of clubs</p>
+      <ClubList clubs={clubs}/>
+      <ClubInput onClubInput={handleClubInput}/>
+    </div>
+  )
+}
+
+function ClubList(props) {
   
-  let clubsList = clubs.map((club) => <li>{club["name"]}</li>);
+  let clubsList = props.clubs.map((club) => <Club clubName={club['clubName']}/>);
 
   return (
   <ul>
@@ -27,28 +42,23 @@ function ClubList() {
   )
 }
 
-function Club(clubName)
+function Club(props)
 {
   return (
     <li>
-      {clubName}
+      {props.clubName}
     </li>
   )
 }
 
-function ClubInput()
+function ClubInput(props)
 {
-  const [club, setClub] = useState('');
-
-  function addClub(club)
-  {
-    POST('/clubs', {clubName: club});
-  }
+  const [clubInput, setClubInput] = useState('');
 
   return(
     <div>
-      <input value={club} onChange={e => setClub(e.target.value)}/>
-      <button onClick={() => addClub(club)}>Add Club</button>
+      <input value={clubInput} onChange={e => setClubInput(e.target.value)}/>
+      <button onClick={() => props.onClubInput(clubInput)}>Add Club</button>
     </div>
   )
 }
