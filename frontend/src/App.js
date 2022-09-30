@@ -14,12 +14,16 @@ function App() {
 function ClubView()
 {
   const [clubs, setClubs] = useState([]);
-  useEffect(() => {GET('/clubs').then(res => res.json()).then(data => setClubs(data))}, []);
+  useEffect(() => {GET('/clubs').then(res => res.json()).then(data => addClub(data))}, []);
 
   function handleClubInput(club)
   {
-    setClubs(clubs.concat({clubName: club}));
-    POST('/clubs', {clubName: club});
+    POST('/clubs', {clubName: club}).then(res => res.json()).then(data => addClub(data));
+  }
+
+  function addClub(clubJson)
+  {
+    setClubs(clubs.concat(clubJson));
   }
 
   return (
@@ -32,8 +36,8 @@ function ClubView()
 }
 
 function ClubList(props) {
-  
-  let clubsList = props.clubs.map((club) => <Club clubName={club['clubName']}/>);
+  console.log(props.clubs);
+  let clubsList = props.clubs.map((club) => <Club clubName={club['clubName']} key={club['clubId']} />);
 
   return (
   <ul>
@@ -45,7 +49,7 @@ function ClubList(props) {
 function Club(props)
 {
   return (
-    <li>
+    <li key={props.clubId}>
       {props.clubName}
     </li>
   )

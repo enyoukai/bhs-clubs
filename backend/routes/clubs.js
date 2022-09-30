@@ -1,11 +1,15 @@
-const express = require("express")
-const router = express.Router()
+const express = require("express");
+const {
+	v1: uuidv1,
+	v4: uuidv4,
+} = require('uuid');
 
+const router = express.Router();
 
-let clubs = [];
+let clubs = {};
   
 router.get('/', (req, res) => {
-	return res.send(Object.values(clubs));
+	return res.json(Object.values(clubs));
 });
 
 router.get('/:clubId', (req, res) => {
@@ -13,16 +17,28 @@ router.get('/:clubId', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	clubs.push({name: req.body['clubName']})
-	return res.send('post request');
+	const clubId = uuidv4();
+	
+	clubObj = {clubName: req.body['clubName'], clubId: clubId};
+	clubs[clubId] = clubObj;
+
+	return res.send(clubObj);
 });
 
 router.put('/:clubId', (req, res) => {
-	return res.send(`put request on ${req.params.clubId} id`);
+	return res.send(clubs[clubObj]);
 });
 
 router.delete('/:clubId', (req, res) => {
-	return res.send(`delete request ${req.params.clubId} id`);
+	if (req.body['clubId'] in clubs)
+	{
+		delete clubs[req.body['clubId']];
+		return res.sendStatus(200);
+	}
+	else
+	{
+		res.sendStatus(400);
+	}
 });
 
 module.exports = router;
