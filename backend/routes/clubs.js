@@ -30,9 +30,11 @@ router.put('/:clubId', (req, res) => {
 });
 
 router.delete('/:clubId', (req, res) => {
-	if (req.body['clubId'] in clubs)
+	const clubId = req.params.clubId;
+	
+	if (clubId in clubs)
 	{
-		delete clubs[req.body['clubId']];
+		delete clubs[clubId];
 		return res.sendStatus(200);
 	}
 	else

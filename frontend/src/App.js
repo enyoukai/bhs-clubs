@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-
 import React, { useState, useEffect } from 'react';
 
 
@@ -16,28 +14,39 @@ function ClubView()
   const [clubs, setClubs] = useState([]);
   useEffect(() => {GET('/clubs').then(res => res.json()).then(data => addClub(data))}, []);
 
-  function handleClubInput(club)
+  function postClub(club)
   {
     POST('/clubs', {clubName: club}).then(res => res.json()).then(data => addClub(data));
   }
 
-  function addClub(clubJson)
+  function deleteClub(clubId)
   {
-    setClubs(clubs.concat(clubJson));
+    DELETE('/clubs/' + clubId);
+  }
+
+  function addClub(clubObj)
+  {
+    setClubs(clubs.concat(clubObj));
   }
 
   return (
     <div>
       <p>list of clubs</p>
-      <ClubList clubs={clubs}/>
-      <ClubInput onClubInput={handleClubInput}/>
+      <ClubList clubs={clubs} deleteClub={deleteClub}/>
+      <ClubInput onClubInput={postClub}/>
     </div>
   )
 }
 
 function ClubList(props) {
-  console.log(props.clubs);
-  let clubsList = props.clubs.map((club) => <Club clubName={club['clubName']} key={club['clubId']} />);
+  let clubsList = props.clubs.map((club) => {
+    return (
+      <li key={club.clubId}>
+        <Club clubObj={club} />
+        <DeleteButton deleteClub={() => props.deleteClub(club.clubId)}/>
+      </li>
+    )
+  });
 
   return (
   <ul>
@@ -48,10 +57,19 @@ function ClubList(props) {
 
 function Club(props)
 {
+  const club = props.clubObj;
+
   return (
-    <li key={props.clubId}>
-      {props.clubName}
-    </li>
+    <div>
+      {club.clubId}: {club.clubName}
+    </div>
+  )
+}
+
+function DeleteButton(props)
+{
+  return (
+    <button onClick={props.deleteClub}>Delete</button>
   )
 }
 
@@ -76,6 +94,11 @@ function GET(endpoint)
 function POST(endpoint, body)
 {
   return fetch(endpoint, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)});
+}
+
+function DELETE(endpoint, body)
+{
+  return fetch(endpoint, {method: 'DELETE', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)});
 }
 
 export default App;
