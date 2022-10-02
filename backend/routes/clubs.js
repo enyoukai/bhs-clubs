@@ -26,8 +26,17 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:clubId', (req, res) => {
-	return res.send(clubs[clubObj]);
-});
+	const clubId = req.params.clubId;
+	
+	if (clubId in clubs)
+	{
+		clubs[clubId] = req.params;
+		return res.sendStatus(200);
+	}
+	else
+	{
+		res.sendStatus(400);
+}});
 
 router.delete('/:clubId', (req, res) => {
 	const clubId = req.params.clubId;
