@@ -50,7 +50,7 @@ function ClubView()
 
   function addClubState(clubObj)
   {
-    setClubs(clubs.concat(clubObj));
+    setClubs((prevClubs, props) => prevClubs.concat(clubObj));
   }
 
   return (
