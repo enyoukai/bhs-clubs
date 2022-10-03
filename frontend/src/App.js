@@ -33,7 +33,7 @@ function Header()
 function ClubView()
 {
   const [clubs, setClubs] = useState([]);
-  useEffect(() => {GET('/clubs').then(data => addClubState(data))}, []);
+  useEffect(() => {GET('/clubs').then(data => setClubs(data))}, []);
 
   function postClub(club)
   {
