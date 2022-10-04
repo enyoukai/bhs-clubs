@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { stringify } = require("uuid");
 
 const clubSchema = new mongoose.Schema({
 	name: String,
