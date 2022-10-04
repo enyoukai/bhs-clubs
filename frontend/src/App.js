@@ -54,7 +54,7 @@ function ClubView()
   }
 
   return (
-    <div>
+    <div className="clubView">
       <ListHeader/>
       <ClubList clubs={clubs} deleteClub={deleteClub}/>
       <ClubInput onClubInput={postClub}/>
@@ -78,7 +78,7 @@ function ListHeader()
 function ClubList(props) {
   let clubsList = props.clubs.map((club) => {
     return (
-      <li key={club.clubId} >
+      <li key={club.clubId}>
         <Club clubObj={club} />
         <DeleteButton deleteClub={() => props.deleteClub(club.clubId)}/>
       </li>
