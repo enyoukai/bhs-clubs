@@ -1,49 +1,53 @@
+const Club = require("../models/clubs")
+
 const express = require("express");
 const {
 	v1: uuidv1,
 	v4: uuidv4,
 } = require('uuid');
+const { Model } = require("mongoose");
 
 const router = express.Router();
-
-let clubs = {};
   
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+	const clubs = await Club.find();
 	return res.json(Object.values(clubs));
 });
 
-router.get('/:clubId', (req, res) => {
-	return res.send(clubs[req.params.clubId]);
+router.get('/:clubId', async (req, res) => {
+	const club = await Club.find({id: req.params.clubId});
+	return res.send(club);
 });
 
 router.post('/', (req, res) => {
 	const clubId = uuidv4();
 	
-	clubObj = {clubName: req.body['clubName'], clubId: clubId};
-	clubs[clubId] = clubObj;
+	const club = new Club({name: req.body.clubName, id: clubId});
+	club.save();
 
-	return res.send(clubObj);
+	return res.send(club);
 });
 
-router.put('/:clubId', (req, res) => {
+router.put('/:clubId', async (req, res) => {
+	// fix later
 	const clubId = req.params.clubId;
 	
-	if (clubId in clubs)
+	if (await Club.exists[{id: clubId}])
 	{
-		clubs[clubId] = req.params;
 		return res.sendStatus(200);
 	}
 	else
 	{
 		res.sendStatus(400);
-}});
+	}
+});
 
-router.delete('/:clubId', (req, res) => {
+router.delete('/:clubId', async (req, res) => {
 	const clubId = req.params.clubId;
 	
-	if (clubId in clubs)
+	if (await Club.exists({id: clubId}))
 	{
-		delete clubs[clubId];
+		await Club.deleteOne({id: clubId});
 		return res.sendStatus(200);
 	}
 	else

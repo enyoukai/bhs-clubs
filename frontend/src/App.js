@@ -42,7 +42,7 @@ function ClubView()
 
   function deleteClub(clubId)
   {
-    const filteredClubs = clubs.filter(club => club.clubId !== clubId);
+    const filteredClubs = clubs.filter(club => club.id !== clubId);
     setClubs(filteredClubs);
 
     DELETE('/clubs/' + clubId);
@@ -78,9 +78,9 @@ function ListHeader()
 function ClubList(props) {
   let clubsList = props.clubs.map((club) => {
     return (
-      <li key={club.clubId}>
+      <li key={club.id}>
         <Club clubObj={club} />
-        <DeleteButton deleteClub={() => props.deleteClub(club.clubId)}/>
+        <DeleteButton deleteClub={() => props.deleteClub(club.id)}/>
       </li>
     )
   });
@@ -98,7 +98,7 @@ function Club(props)
 
   return (
     <div className="club">
-      <div>{club.clubName}</div>
+      <div>{club.name}</div>
       <div>Some Description</div>
       <div>Some Location</div>
       <div>Some Day</div>
