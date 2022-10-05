@@ -5,13 +5,16 @@ const {
 	v1: uuidv1,
 	v4: uuidv4,
 } = require('uuid');
-const { Model } = require("mongoose");
 
 const router = express.Router();
   
 router.get('/', async (req, res) => {
-	const clubs = await Club.find();
-	return res.json(Object.values(clubs));
+	if (Object.keys(req.query).length === 0)
+	{
+		return res.json(await Club.find());
+	}
+	console.lo
+	return res.json(await Club.find({name: {$regex: req.query.name, $options: 'i'}}));
 });
 
 router.get('/:clubId', async (req, res) => {
@@ -22,7 +25,7 @@ router.get('/:clubId', async (req, res) => {
 router.post('/', (req, res) => {
 	const clubId = uuidv4();
 	
-	const club = new Club({name: req.body.clubName, id: clubId});
+	const club = new Club({name: req.body.clubName, description: "desc", location: "location", date: "date", time: "time", advisor: "advisor", id: clubId});
 	club.save();
 
 	return res.send(club);

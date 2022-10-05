@@ -4,7 +4,7 @@ const clubSchema = new mongoose.Schema({
 	name: String,
 	description: String,
 	location: String,
-	day: String,
+	date: String,
 	time: String,
 	advisor: String,
 	id: String

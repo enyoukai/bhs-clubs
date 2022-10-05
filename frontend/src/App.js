@@ -33,7 +33,19 @@ function Header()
 function ClubView()
 {
   const [clubs, setClubs] = useState([]);
-  useEffect(() => {GET('/clubs').then(data => setClubs(data))}, []);
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    if (search === '')
+    {
+      GET(`/clubs/`).then(data => setClubs(data));
+    }
+    else
+    {
+      GET(`/clubs/?name=${search}`).then(data => setClubs(data));
+    }
+
+  }, [search]);
 
   function postClub(club)
   {
@@ -56,9 +68,17 @@ function ClubView()
   return (
     <div className="clubView">
       <ListHeader/>
+      <Search setSearch={setSearch}/>
       <ClubList clubs={clubs} deleteClub={deleteClub}/>
       <ClubInput onClubInput={postClub}/>
     </div>
+  )
+}
+
+function Search(props)
+{    
+  return (
+    <input onChange={e => props.setSearch(e.target.value)} placeholder="search"/>
   )
 }
 
@@ -99,11 +119,11 @@ function Club(props)
   return (
     <div className="club">
       <div>{club.name}</div>
-      <div>Some Description</div>
-      <div>Some Location</div>
-      <div>Some Day</div>
-      <div>Some Time</div>
-      <div>Some Advisor</div>
+      <div>{club.description}</div>
+      <div>{club.location}</div>
+      <div>{club.date}</div>
+      <div>{club.time}</div>
+      <div>{club.advisor}</div>
 
     </div>
   )
