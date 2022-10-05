@@ -49,7 +49,7 @@ function ClubView()
 
   function postClub(club)
   {
-    POST('/clubs', {clubName: club}).then(data => addClubState(data));
+    POST('/clubs', {name: club}).then(data => addClubState(data));
   }
 
   function deleteClub(clubId)
