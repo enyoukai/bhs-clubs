@@ -7,7 +7,7 @@ const Club = require("./models/clubs")
 const app = express()
 const PORT = 3001
 
-mongoose.connect("mongodb://localhost/testdb");
+mongoose.connect("mongodb://localhost/clubsdb");
 
 app.use(express.json());
 app.use("/clubs", clubRouter);
