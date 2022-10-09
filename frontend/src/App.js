@@ -1,116 +1,55 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './App.css';
-
-const MouseContext = React.createContext({x:0, y:0});
+import Header from './components/Header.js';
+import API from './api/API.js';
 
 function App() {
-  // TODO: DON'T HAVE COMPONENT RERENDER EVERY TIME MOUSE CHANGES
-  const [mouseCoords, setMouseCoords] = useState({x: 0, y: 0});
-
-  useEffect(() => {
-    const handleWindowMouseMove = event => {
-      setMouseCoords({
-        x: event.pageX,
-        y: event.pageY
-      })
-    };
-    window.addEventListener('mousemove', handleWindowMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleWindowMouseMove);
-    };
-  }, []);
-
-  return (
-    <MouseContext.Provider value={mouseCoords}>
-      <div className="App">
-        <Header/>
-        <ClubView/>
-      </div>
-    </MouseContext.Provider>
-  );
-}
-
-function Header()
-{
-  return (
-    <div className="header">
-      <div className="logo">
-        BHS Clubs
-      </div>
-      <div className="tabs">
-        <div className="tab-selected">Home</div>
-        <div className="tab-unselected">Feed</div>
-        <div className="tab-unselected">Calendar</div>
-      </div>
-      <div className="sign-reg white-font">
-        <div className="bubble">Sign In</div>
-        <div className="bubble">Register</div>
-      </div>
-    </div>
-  )
-}
-
-function ClubView()
-{
-  console.log('rerender');
   const [clubs, setClubs] = useState([]);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    if (search === '')
-    {
-      GET(`/clubs/`).then(data => setClubs(data));
-    }
-    else
-    {
-      GET(`/clubs/?name=${search}`).then(data => setClubs(data));
+    async function updateClubs() {
+      if (search !== '') setClubs(await API.searchClubs(search));
+      else setClubs(await API.getClubs());
     }
 
+    updateClubs();
   }, [search]);
 
-  function postClub(club)
-  {
-    POST('/clubs', {name: club}).then(data => addClubState(data));
-  }
-
-  function deleteClub(clubId)
-  {
-    const filteredClubs = clubs.filter(club => club.id !== clubId);
-    setClubs(filteredClubs);
-
-    DELETE('/clubs/' + clubId);
-  }
-
-  function addClubState(clubObj)
-  {
-    setClubs((prevClubs, props) => prevClubs.concat(clubObj));
-  }
-
   return (
-    <div className="clubView">
+    <div className="App">
+      <Header/>
       <OptionsBar setSearch={setSearch}/>
-      <ClubList clubs={clubs} deleteClub={deleteClub}/>
+      <table className="clubTable">
+        <tbody>
+          <ListHeader/>
+          <ClubList clubs={clubs}/>
+        </tbody>
+      </table>
     </div>
-  )
+  );
 }
 
 function OptionsBar(props) {
   return (
     <div className="optionsBar">
-      <Search setSearch={props.setSearch}/>
+      <input className="searchBar" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
     </div>
   )
 }
 
-function Search(props)
-{    
+function ClubList(props) {
+  let clubsList = props.clubs.map((club) => {
+    return (
+      <Club key={club.id} clubObj={club} />
+    )
+  });
+
   return (
-    <div>
-      <input className="searchBar" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
-    </div>
+    <React.Fragment>
+        {clubsList}
+    </React.Fragment>
   )
 }
 
@@ -126,22 +65,6 @@ function ListHeader()
     </tr>
   )
 }
-function ClubList(props) {
-  let clubsList = props.clubs.map((club) => {
-    return (
-      <Club key={club.id} clubObj={club} />
-    )
-  });
-
-  return (
-  <table className="clubList">
-    <tbody>
-      <ListHeader/>
-      {clubsList}
-    </tbody>
-  </table>
-  )
-}
 
 function Club(props)
 {
@@ -149,44 +72,54 @@ function Club(props)
 
   const club = props.clubObj;
 
+  const handleMouseOver = () => {
+    setHover(true)
+  }
+
+  const handleMouseOut = () => {
+    setHover(false)
+  }
+
   return (
-    <tr className="club" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <tr className="club" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
       <td>{club.name}</td>
       <td>{club.location}</td>
       <td>{club.date}</td>
       <td>{club.time}</td>
       <td>{club.advisor}</td>
-      {hover && <HoverText name={club.name} description={club.description}/>}
     </tr>
   )
 }
 
 function HoverText(props) {
-  const mouseCoords = useContext(MouseContext);
-
+  const mousePosition = useMousePosition();
+  
   return (
-    <div className="hoverText" style={{left: mouseCoords.x + 'px', top: mouseCoords.y + 'px'}}>
-      <div>{props.name}</div>
-      <div>{props.description}</div>
+    <div className="hoverText" style={{left: mousePosition.x + 'px', top: mousePosition.y + 'px'}}>
+      <div>{props.club.name}</div>
+      <div>{props.club.description}</div>
     </div>
   )
 }
 
-// TODO: move this into a separate file
-function GET(endpoint)
-{
-  return fetch(endpoint).then(res => res.json());
+function useMousePosition() {
+  const [mousePosition, setMousePosition] = useState({x: -1, y: -1});
 
-}
+  useEffect(() => {
+    const handleWindowMouseMove = event => {
+      setMousePosition({
+        x: event.pageX,
+        y: event.pageY
+      })
+    };
+    window.addEventListener('mousemove', handleWindowMouseMove);
 
-function POST(endpoint, body)
-{
-  return fetch(endpoint, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)}).then(res => res.json());
-}
+    return () => {
+      window.removeEventListener('mousemove', handleWindowMouseMove);
+    };
+  }, []);
 
-function DELETE(endpoint, body)
-{
-  return fetch(endpoint, {method: 'DELETE', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)});
+  return mousePosition;
 }
 
 export default App;
