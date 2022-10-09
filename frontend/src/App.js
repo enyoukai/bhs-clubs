@@ -1,12 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import './App.css';
 
+const MouseContext = React.createContext({x:0, y:0});
+
 function App() {
+  // TODO: DON'T HAVE COMPONENT RERENDER EVERY TIME MOUSE CHANGES
+  const [mouseCoords, setMouseCoords] = useState({x: 0, y: 0});
+
+  useEffect(() => {
+    const handleWindowMouseMove = event => {
+      setMouseCoords({
+        x: event.pageX,
+        y: event.pageY
+      })
+    };
+    window.addEventListener('mousemove', handleWindowMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleWindowMouseMove);
+    };
+  }, []);
+
   return (
-    <div className="App">
-      <Header/>
-      <ClubView/>
-    </div>
+    <MouseContext.Provider value={mouseCoords}>
+      <div className="App">
+        <Header/>
+        <ClubView/>
+      </div>
+    </MouseContext.Provider>
   );
 }
 
@@ -32,6 +55,7 @@ function Header()
 
 function ClubView()
 {
+  console.log('rerender');
   const [clubs, setClubs] = useState([]);
   const [search, setSearch] = useState('');
 
@@ -67,10 +91,16 @@ function ClubView()
 
   return (
     <div className="clubView">
-      <ListHeader/>
-      <Search setSearch={setSearch}/>
+      <OptionsBar setSearch={setSearch}/>
       <ClubList clubs={clubs} deleteClub={deleteClub}/>
-      <ClubInput onClubInput={postClub}/>
+    </div>
+  )
+}
+
+function OptionsBar(props) {
+  return (
+    <div className="optionsBar">
+      <Search setSearch={props.setSearch}/>
     </div>
   )
 }
@@ -78,72 +108,66 @@ function ClubView()
 function Search(props)
 {    
   return (
-    <input onChange={e => props.setSearch(e.target.value)} placeholder="search"/>
+    <div>
+      <input className="searchBar" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
+    </div>
   )
 }
 
 function ListHeader()
 {
   return (
-    <div className="listHeader">
-      <div>Name</div>
-      <div>Description</div>
-      <div>Location</div>
-      <div>Day</div>
-      <div>Time</div>
-      <div>Advisor</div>
-    </div>
+    <tr className="listHeader">
+      <th>Name</th>
+      <th>Location</th>
+      <th>Day</th>
+      <th>Time</th>
+      <th>Advisor</th>
+    </tr>
   )
 }
 function ClubList(props) {
   let clubsList = props.clubs.map((club) => {
     return (
-      <li key={club.id}>
-        <Club clubObj={club} />
-        <DeleteButton deleteClub={() => props.deleteClub(club.id)}/>
-      </li>
+      <Club key={club.id} clubObj={club} />
     )
   });
 
   return (
-  <ul className="clubList">
-    {clubsList}
-  </ul>
+  <table className="clubList">
+    <tbody>
+      <ListHeader/>
+      {clubsList}
+    </tbody>
+  </table>
   )
 }
 
 function Club(props)
 {
+  const [hover, setHover] = useState(false);
+
   const club = props.clubObj;
 
   return (
-    <div className="club">
-      <div>{club.name}</div>
-      <div>{club.description}</div>
-      <div>{club.location}</div>
-      <div>{club.date}</div>
-      <div>{club.time}</div>
-      <div>{club.advisor}</div>
-
-    </div>
+    <tr className="club" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+      <td>{club.name}</td>
+      <td>{club.location}</td>
+      <td>{club.date}</td>
+      <td>{club.time}</td>
+      <td>{club.advisor}</td>
+      {hover && <HoverText name={club.name} description={club.description}/>}
+    </tr>
   )
 }
 
-function DeleteButton(props)
-{
+function HoverText(props) {
+  const mouseCoords = useContext(MouseContext);
+
   return (
-    <button onClick={props.deleteClub}>Delete</button>
-  )
-}
-
-function ClubInput(props)
-{
-  const [clubInput, setClubInput] = useState('');
-
-  return(
-    <div>
-      <input value={clubInput} onChange={e => setClubInput(e.target.value)}/>
-      <button onClick={() => props.onClubInput(clubInput)}>Add Club</button>
+    <div className="hoverText" style={{left: mouseCoords.x + 'px', top: mouseCoords.y + 'px'}}>
+      <div>{props.name}</div>
+      <div>{props.description}</div>
     </div>
   )
 }
