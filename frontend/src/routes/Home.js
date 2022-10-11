@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import './App.css';
-import Header from './routes/Header.js';
-import API from './api/API.js';
+import './Home.css';
+import API from '../api/API.js';
 
-function App() {
+function Home() {
   const [clubs, setClubs] = useState([]);
   const [search, setSearch] = useState('');
 
@@ -18,8 +17,7 @@ function App() {
   }, [search]);
 
   return (
-    <div className="App">
-      <Header/>
+    <div>
       <OptionsBar setSearch={setSearch}/>
       <table className="clubTable">
         <tbody>
@@ -122,4 +120,4 @@ function useMousePosition() {
   return mousePosition;
 }
 
-export default App;
+export default Home;
