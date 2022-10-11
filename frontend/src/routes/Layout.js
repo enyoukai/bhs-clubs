@@ -1,6 +1,8 @@
 import { Outlet, Link } from "react-router-dom";
 
-function Root()
+import './Layout.css'
+
+function Layout()
 {
   return (
     <>
@@ -23,4 +25,4 @@ function Root()
   )
 }
 
-export default Root;
+export default Layout;

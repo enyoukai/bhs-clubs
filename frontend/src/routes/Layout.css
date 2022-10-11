@@ -1,0 +1,47 @@
+.header {
+	background-color: var(--primary-bg);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
+	font-size: 2rem
+
+}
+
+.logo {
+	color: var(--secondary-bg);
+	font-weight: 400;
+}
+
+.tabs {
+	display:flex;
+	gap: 3rem;
+	align-items: center;
+}
+
+.tab-selected {
+	color: #FFFFFF;
+}
+
+.tab-unselected {
+	color: #ACACAC;
+}
+
+
+.white-font {
+	color: #FFFFFF;
+}
+
+.sign-reg {
+	font-size: 1.5rem;
+	display: flex;
+	gap: 2rem;
+}
+
+.bubble {
+	background-color: #E2E2E2;
+	color: #0E0E0E;
+	padding: 0.5rem 3rem 0.5rem 3rem;
+	border-radius: 50px;
+	font-weight: 500;
+}

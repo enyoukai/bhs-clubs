@@ -1,38 +1,19 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
-import Root from './routes/Root';
-import Home from './routes/Home';
-import PageNotFound from './routes/PageNotFound';
-import SignIn from './routes/SignIn';
+import App from './App';
 
 import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 import './index.css';
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root  />,
-    errorElement: <PageNotFound/>,
-    children: [
-      {
-        path: "signin",
-        element: <SignIn/>
-      }
-    ]
-  }
-]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
   </StrictMode>
 );
 
