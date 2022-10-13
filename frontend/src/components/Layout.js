@@ -7,9 +7,9 @@ function Layout()
   return (
     <>
       <div className="header">
-        <div className="logo">
+        <Link to={'/'} className="logo">
           BHS Clubs
-        </div>
+        </Link>
         <div className="tabs">
           <div className="tab-selected">Home</div>
           <div className="tab-unselected">Feed</div>
@@ -17,7 +17,7 @@ function Layout()
         </div>
         <div className="sign-reg white-font">
           <Link to={'signin'} className="bubble">Sign In</Link>
-          <Link className="bubble">Register</Link>
+          <Link to={'register'} className="bubble">Register</Link>
         </div>
       </div>
       <Outlet />
