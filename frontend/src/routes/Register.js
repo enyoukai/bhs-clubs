@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import API from '../api/API.js';
+import API from '../api/API';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
+import { auth } from '../firebase'
 
 function Register(props)
 {
@@ -7,9 +10,16 @@ function Register(props)
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 
-	function handleOnClick() {
-		API.register(email, password);
+	async function register() {
+		try{
+			const user = await createUserWithEmailAndPassword(auth, email, password);
+			console.log(user);
+		}
+		catch (error) {
+			console.log(error.message);
+		}
 	}
+
 	return (
 		<div>
 			<div>Email</div>
@@ -18,7 +28,7 @@ function Register(props)
 			<input type='password' onChange={e => setPassword(e.target.value)}/>
 			<div>Confirm Password</div>
 			<input type='password' onChange={e => setConfirmPassword(e.target.value)}/>
-			<button onClick={handleOnClick}>Register</button>
+			<button onClick={register}>Register</button>
 		</div>
 	)
 }
