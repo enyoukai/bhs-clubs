@@ -9,6 +9,11 @@ class API
 	static async searchClubs(search) {
 		return REST.GET(`/clubs/?name=${search}`);
 	}
+	
+	static async createClub(club)
+	{
+		return REST.POST('/clubs', {name: club.name, description: club.description, location: club.location, date: club.date, time: club.time, advisor: club.advisor});
+	}
 
 	static async login(email, password)
 	{
@@ -22,4 +27,18 @@ class API
 	}
 }
 
+class Club
+{
+	constructor(name, description, location, date, time, advisor)
+	{
+		this.name = name;
+		this.description = description;
+		this.location = location;
+		this.date = date;
+		this.time = time;
+		this.advisor = advisor;
+	}
+}
+
+export { Club };
 export default API;

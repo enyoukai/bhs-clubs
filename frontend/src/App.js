@@ -8,6 +8,7 @@ import Layout from './components/Layout'
 import Home from './routes/Home'
 import SignIn from './routes/SignIn'
 import Register from './routes/Register'
+import NewClub from './routes/NewClub'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route index element={<Home/>}/>
         <Route path='signin' element={<SignIn/>}/>
         <Route path='register' element={<Register/>}/>
+        <Route path='newclub' element={<NewClub/>}/>
       </Route>
     </Routes>
   )

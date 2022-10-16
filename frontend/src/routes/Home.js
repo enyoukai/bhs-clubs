@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
 import './Home.css';
 import API from '../api/API.js';
@@ -33,6 +34,7 @@ function OptionsBar(props) {
   return (
     <div className="optionsBar">
       <input className="searchBar" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
+      <Link to={'newclub'}>Add Club +</Link>
     </div>
   )
 }
