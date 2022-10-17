@@ -9,6 +9,7 @@ import Home from './routes/Home'
 import SignIn from './routes/SignIn'
 import Register from './routes/Register'
 import NewClub from './routes/NewClub'
+import { SDK_VERSION } from 'firebase/app';
 
 function App() {
   return (

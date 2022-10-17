@@ -1,29 +1,30 @@
 import REST from './REST';
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase'
 
 class API 
 {
-	static async getClubs() {
+	static getClubs() {
 		return REST.GET(`/clubs/`);
 	}
 	
-	static async searchClubs(search) {
+	static searchClubs(search) {
 		return REST.GET(`/clubs/?name=${search}`);
 	}
 	
-	static async createClub(club)
+	static createClub(club)
 	{
 		return REST.POST('/clubs', {name: club.name, description: club.description, location: club.location, date: club.date, time: club.time, advisor: club.advisor});
 	}
 
-	static async login(email, password)
+	static login(email, password)
 	{
-		return REST.POST('/auth/login', {email: email, password: password});
+		return signInWithEmailAndPassword(auth, email, password);
 	}
 
-	static async register(email, password)
+	static register(email, password)
 	{
-		console.log('here');
-		return REST.POST('/auth/register', {email: email, password: password});
+		return createUserWithEmailAndPassword(auth, email, password);
 	}
 }
 

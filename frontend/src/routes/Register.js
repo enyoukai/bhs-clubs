@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import API from '../api/API';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-import { auth } from '../firebase'
+import { useNavigate } from "react-router-dom";
 
 function Register(props)
 {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
+		const [confirmPassword, setConfirmPassword] = useState('');
+
+	const navigate = useNavigate();
 
 	async function register() {
 		try{
-			const user = await createUserWithEmailAndPassword(auth, email, password);
-			console.log(user);
+			const user = await API.register(email, password);
+			sessionStorage.setItem('auth', user._tokenResponse.refreshToken);
+			navigate('/');
 		}
 		catch (error) {
 			console.log(error.message);
