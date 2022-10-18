@@ -10,7 +10,6 @@ import SignIn from './routes/SignIn'
 import Register from './routes/Register'
 import NewClub from './routes/NewClub'
 import Account from './routes/Account'
-import { SDK_VERSION } from 'firebase/app';
 
 function App() {
   return (
