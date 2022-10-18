@@ -1,5 +1,5 @@
 import REST from './REST';
-import {signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase'
 
 class API 

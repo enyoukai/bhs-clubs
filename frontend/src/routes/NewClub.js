@@ -18,7 +18,6 @@ export default function NewClub() {
 
 	useEffect(() => {
 	  let authToken = sessionStorage.getItem('auth');
-	  auth.currentUser.getIdToken(true).then(t => console.log(t));
   
 	  if (authToken) {
 		  navigate('/newclub')

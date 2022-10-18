@@ -18,7 +18,7 @@ function Register(props)
 			navigate('/');
 		}
 		catch (error) {
-			console.log(error.message);
+			console.log(error.code + ' ' + error.message);
 		}
 	}
 
