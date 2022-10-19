@@ -16,17 +16,17 @@ export default function NewClub() {
 
 	const navigate = useNavigate();
 
-	useEffect(() => {
-	  let authToken = sessionStorage.getItem('auth');
+	// useEffect(() => {
+	//   let authToken = sessionStorage.getItem('auth');
   
-	  if (authToken) {
-		  navigate('/newclub')
-	  }
+	//   if (authToken) {
+	// 	  navigate('/newclub')
+	//   }
   
-	  if (!authToken) {
-		  navigate('/signin');
-	  }
-	}, []);
+	//   if (!authToken) {
+	// 	  navigate('/signin');
+	//   }
+	// }, []);
 
 	function submitClub() {
 		const club = new Club(name, description, location, day, time, advisor);

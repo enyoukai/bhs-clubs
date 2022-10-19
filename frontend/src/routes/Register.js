@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import API from '../api/API';
-
+import { auth } from '../firebase';
 import { useNavigate } from "react-router-dom";
 
 function Register(props)
@@ -14,7 +14,7 @@ function Register(props)
 	async function register() {
 		try{
 			const user = await API.register(email, password);
-			sessionStorage.setItem('auth', user._tokenResponse.refreshToken);
+			auth.currentUser.getIdToken().then(token => localStorage.setItem('authorization', token));
 			navigate('/');
 		}
 		catch (error) {

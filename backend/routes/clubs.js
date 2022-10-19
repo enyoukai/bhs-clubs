@@ -1,6 +1,9 @@
-const Club = require("../models/clubs")
-
+require('dotenv').config();
+const admin = require('firebase-admin');
+const Club = require("../models/clubs");
 const express = require("express");
+const authenticate = require('../authenticate');
+
 const {
 	v1: uuidv1,
 	v4: uuidv4,
@@ -19,15 +22,6 @@ router.get('/', async (req, res) => {
 
 router.get('/:clubId', async (req, res) => {
 	const club = await Club.find({id: req.params.clubId});
-	return res.send(club);
-});
-
-router.post('/', (req, res) => {
-	const clubId = uuidv4();
-	
-	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, id: clubId});
-	club.save();
-
 	return res.send(club);
 });
 
@@ -59,4 +53,14 @@ router.delete('/:clubId', async (req, res) => {
 	}
 });
 
+router.use(authenticate);
+
+router.post('/', (req, res) => {
+	const clubId = uuidv4();
+	
+	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, id: clubId});
+	club.save();
+
+	return res.send(club);
+});
 module.exports = router;

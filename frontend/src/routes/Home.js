@@ -8,6 +8,10 @@ function Home() {
   const [clubs, setClubs] = useState([]);
   const [search, setSearch] = useState('');
 
+  if (localStorage.getItem('authorization') !== null)
+	{
+		console.log(localStorage.getItem('authorization'));
+	}
   useEffect(() => {
     async function updateClubs() {
       if (search !== '') setClubs(await API.searchClubs(search));
