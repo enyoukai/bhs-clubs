@@ -7,7 +7,8 @@ const clubSchema = new mongoose.Schema({
 	date: String,
 	time: String,
 	advisor: String,
-	id: String
+	id: String,
+	userId: String
 })
 
 module.exports = mongoose.model("Club", clubSchema);

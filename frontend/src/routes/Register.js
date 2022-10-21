@@ -14,7 +14,7 @@ function Register(props)
 	async function register() {
 		try{
 			const user = await API.register(email, password);
-			auth.currentUser.getIdToken().then(token => localStorage.setItem('authorization', token));
+			auth.currentUser.getIdToken().then(token => console.log(token));
 			navigate('/');
 		}
 		catch (error) {

@@ -12,9 +12,10 @@ class API
 		return REST.GET(`/clubs/?name=${search}`);
 	}
 	
-	static createClub(club)
+	static async createClub(club)
 	{
-		return REST.POST('/clubs', {name: club.name, description: club.description, location: club.location, date: club.date, time: club.time, advisor: club.advisor});
+		const token = await auth.currentUser.getIdToken()
+		return REST.POST('/clubs', {name: club.name, description: club.description, location: club.location, date: club.date, time: club.time, advisor: club.advisor}, token);
 	}
 
 	static login(email, password)

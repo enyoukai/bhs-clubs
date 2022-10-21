@@ -58,7 +58,7 @@ router.use(authenticate);
 router.post('/', (req, res) => {
 	const clubId = uuidv4();
 	
-	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, id: clubId});
+	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, id: clubId, userId: req.headers.uid});
 	club.save();
 
 	return res.send(club);

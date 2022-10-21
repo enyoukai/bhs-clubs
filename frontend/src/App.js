@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Routes,
   Route,
@@ -11,7 +11,7 @@ import Register from './routes/Register'
 import NewClub from './routes/NewClub'
 import Account from './routes/Account'
 
-import AuthProvider from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   return (

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Club } from '../api/API'
 import { useNavigate } from "react-router-dom";
 
-import { auth } from '../firebase'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function NewClub() {
 	const [name, setName] = useState('');
@@ -16,17 +16,8 @@ export default function NewClub() {
 
 	const navigate = useNavigate();
 
-	// useEffect(() => {
-	//   let authToken = sessionStorage.getItem('auth');
-  
-	//   if (authToken) {
-	// 	  navigate('/newclub')
-	//   }
-  
-	//   if (!authToken) {
-	// 	  navigate('/signin');
-	//   }
-	// }, []);
+	const auth = useAuth();
+	auth.currentUser.getIdToken().then(token => console.log(token));
 
 	function submitClub() {
 		const club = new Club(name, description, location, day, time, advisor);

@@ -3,10 +3,17 @@ import { auth } from '../firebase';
 
 const AuthContext = React.createContext();
 
-export default function AuthProvider(props)
+export function useAuth()
 {
+	return useContext(AuthContext);
+}
+
+export function AuthProvider(props)
+{
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged(auth) }, [])
 	return (
-		<AuthContext.Provider value=''>
+		<AuthContext.Provider value={auth}>
 			{props.children}
 		</AuthContext.Provider>
 	)
