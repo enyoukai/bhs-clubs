@@ -17,7 +17,6 @@ export default function NewClub() {
 	const navigate = useNavigate();
 
 	const auth = useAuth();
-	auth.currentUser.getIdToken().then(token => console.log(token));
 
 	function submitClub() {
 		const club = new Club(name, description, location, day, time, advisor);
