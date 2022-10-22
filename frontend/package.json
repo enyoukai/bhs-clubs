@@ -1,7 +1,7 @@
 {
   "name": "bhs-clubs",
   "version": "0.1.0",
-  "proxy": "http://localhost:3001",
+  "proxy": "https://3001-enyoukai-clubdirectory-vgwmuw6gpg9.ws-us72.gitpod.io",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
