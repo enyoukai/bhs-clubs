@@ -21,6 +21,7 @@ export default function NewClub() {
 	function submitClub() {
 		const club = new Club(name, description, location, day, time, advisor);
 		API.createClub(club);
+		navigate('/');
 	}
 
 	return (
