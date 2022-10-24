@@ -1,22 +1,12 @@
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
-  - name: npm setup stuff
-    init: npm install --prefix ./backend && npm install --prefix ./frontend # runs during prebuild
-
-  - name: package.json proxy
-    command: npm pkg set proxy=$(gp url 3001) --prefix ./frontend
-
-  - name: mongo setup
+  - init: npm install --prefix ./backend && npm install --prefix ./frontend # runs during prebuild
     command: mkdir -p /workspace/data && mongod --dbpath /workspace/data
 
 # List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
 ports:
-  - name: React
-    port: 3000
-    onOpen: open-browser
-  - name: Express
-    port: 3001
-    visibility: public
+  - port: 3000
+    onOpen: open-preview
 
 image:
   file: .gitpod.dockerfile
