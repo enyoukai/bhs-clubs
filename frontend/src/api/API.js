@@ -27,6 +27,11 @@ class API
 	{
 		return createUserWithEmailAndPassword(auth, email, password);
 	}
+	
+	static async getUser(userId)
+	{
+		return REST.GET(`/account/${userId}`);
+	}
 }
 
 class Club

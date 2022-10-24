@@ -10,10 +10,17 @@ export function useAuth()
 
 export function AuthProvider(props)
 {
-	// useEffect(() => {
-	// 	const unsubscribe = auth.onAuthStateChanged(auth) }, [])
+	const [user, setUser] = useState(null);
+
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged(user => setUser(user));
+		return unsubscribe
+	}, [])
+
+	const authValue = {auth, user};
+
 	return (
-		<AuthContext.Provider value={auth}>
+		<AuthContext.Provider value={authValue}>
 			{props.children}
 		</AuthContext.Provider>
 	)

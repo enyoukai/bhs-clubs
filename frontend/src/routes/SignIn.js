@@ -7,9 +7,12 @@ function SignIn() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
+	const navigate = useNavigate();
+
 	async function signIn()
 	{	
 		const user = await API.login(email, password);
+		navigate('/');
 	}
 
 	return (
