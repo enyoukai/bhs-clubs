@@ -15,8 +15,6 @@
 
 .nav__logo {
 	color: #F8F8F8;
-	font-weight: 400;
-	text-decoration: none;
 	font-size: 2.2rem;
 }
 
@@ -28,7 +26,6 @@
 
 .nav__tab {
 	font-size: 1.7rem;
-	text-decoration: none;
 }
 
 .nav__tab:hover {
@@ -51,7 +48,6 @@
 .login-bar__text {
 	color: #ACACAC;
 	font-size: 1.5rem;
-	text-decoration: none;
 }
 
 .login-bar__text:hover {
@@ -63,7 +59,6 @@
 	border: none;
 	color: #F8F8F8;
 	font-size: 1.5rem;
-	text-decoration: none;
 }
 
 .account__avatar {
@@ -82,11 +77,9 @@
 }
 
 .account__text {
-	text-decoration: none;
 	color: #ACACAC;
 }
 
 .account__text:hover {
-	text-decoration: none;
 	color: #F8F8F8;
 }

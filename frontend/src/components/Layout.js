@@ -10,7 +10,7 @@ function Layout()
 
   return (
     <React.Fragment>
-      <div className="nav">
+      <nav className="nav">
         <div className="nav__container">
           <Link to='/' className="nav__logo">BHS Clubs</Link>
           <div className="nav__tabs">
@@ -20,7 +20,7 @@ function Layout()
           </div>
         </div>
         {user === null ? <RegisterBar/> : <Avatar user={user}/>}
-      </div>
+      </nav>
       <Outlet />
     </React.Fragment>
   )

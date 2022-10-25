@@ -41,6 +41,7 @@
 
 .container__input::placeholder {
 	color: #d8d8d8;
+	font-weight: 300;
 }
 
 .container__input:focus {
