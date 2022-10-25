@@ -10,13 +10,13 @@ function Layout()
 
   return (
     <>
-      <div className="navbar">
-        <div className="navbar__container">
-          <Link to='/' className="navbar__logo">BHS Clubs</Link>
-          <div className="navbar__tabs">
-            <Link to='/' className="navbar__tab navbar__tab--selected">Home</Link>
-            <Link to='feed' className="navbar__tab navbar__tab--unselected">Feed</Link>
-            <Link to='calendar' className="navbar__tab navbar__tab--unselected">Calendar</Link>
+      <div className="nav">
+        <div className="nav__container">
+          <Link to='/' className="nav__logo">BHS Clubs</Link>
+          <div className="nav__tabs">
+            <Link to='/' className="nav__tab nav__tab--selected">Home</Link>
+            <Link to='feed' className="nav__tab nav__tab--unselected">Feed</Link>
+            <Link to='calendar' className="nav__tab nav__tab--unselected">Calendar</Link>
           </div>
         </div>
         {user === null ? <RegisterBar/> : <Avatar user={user}/>}
@@ -29,9 +29,9 @@ function Layout()
 function RegisterBar()
 {
   return (
-    <div className="navbar__login-bar">
-      <Link to={'signin'} className="navbar__login-text">Sign In</Link>
-      <Link to={'register'} className="navbar__login-text">Register</Link>
+    <div className="nav__login-bar">
+      <Link to={'signin'} className="login-bar__text">Sign In</Link>
+      <Link to={'register'} className="login-bar__text">Register</Link>
     </div>
   )
 }
@@ -51,8 +51,8 @@ function Avatar(props)
   }
 
   return (
-    <div className="navbar__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <img className="navbar__avatar" src="https://cdn.discordapp.com/avatars/583895458838085642/893f2cc514e4186f115a31ef05810a7f.webp?size=80"/>
+    <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <img className="account__avatar" src="https://cdn.discordapp.com/avatars/583895458838085642/893f2cc514e4186f115a31ef05810a7f.webp?size=80"/>
       {dropdown && <Dropdown/>}
     </div>
   )
@@ -63,10 +63,10 @@ function Dropdown(props)
   const { user } = useAuth();
 
   return (
-    <div className="navbar__dropdown">
-      <Link className="navbar__dropdown-text" to={'account/' + user.uid}>Profile</Link>
-      <Link className="navbar__dropdown-text" to='settings'>Settings</Link>
-      <Link className="navbar__dropdown-text" to='signout'>Sign Out</Link>
+    <div className="account__dropdown">
+      <Link className="account__text" to={'account/' + user.uid}>Profile</Link>
+      <Link className="account__text" to='settings'>Settings</Link>
+      <Link className="account__text" to='signout'>Sign Out</Link>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-.navbar {
+.nav {
 	background-color: var(--primary-bg);
 	display: flex;
 	justify-content: space-between;
@@ -7,58 +7,58 @@
 	background-color: #282828;
 }
 
-.navbar__container {
+.nav__container {
 	display: flex;
 	align-items: center;
 	gap: 5rem;
 }
 
-.navbar__logo {
+.nav__logo {
 	color: #F8F8F8;
 	font-weight: 400;
 	text-decoration: none;
 	font-size: 2.2rem;
 }
 
-.navbar__tabs {
+.nav__tabs {
 	display:flex;
 	gap: 3rem;
 	align-items: center;
 }
 
-.navbar__tab {
+.nav__tab {
 	font-size: 1.7rem;
 	text-decoration: none;
 }
 
-.navbar__tab:hover {
+.nav__tab:hover {
 	color: #F8F8F8;
 }
 
-.navbar__tab--selected {
+.nav__tab--selected {
 	color: #F8F8F8;
 }
 
-.navbar__tab--unselected {
+.nav__tab--unselected {
 	color: #ACACAC;
 }
 
-.navbar__login-bar {
+.nav__login-bar {
 	display: flex;
 	gap: 2rem;
 }
 
-.navbar__login-text {
+.login-bar__text {
 	color: #ACACAC;
 	font-size: 1.5rem;
 	text-decoration: none;
 }
 
-.navbar__login-text:hover {
+.login-bar__text:hover {
 	color: #F8F8F8;
 }
 
-.navbar__account {
+.nav__account {
 	background: none;
 	border: none;
 	color: #F8F8F8;
@@ -66,19 +66,19 @@
 	text-decoration: none;
 }
 
-.navbar__account:hover {
+.nav__account:hover {
 	cursor:pointer;
 }
 
-.navbar__account--selected {
+.nav__account--selected {
 	color: #F8F8F8;
 }
 
-.navbar__avatar {
+.account__avatar {
 	border-radius: 100%;
 	width: 3rem;
 }
-.navbar__dropdown {
+.account__dropdown {
 	position: absolute;
 	background-color: #282828;
 	display:flex;
@@ -86,12 +86,12 @@
 	padding:1rem;
 }
 
-.navbar__dropdown-text {
+.account__text {
 	text-decoration: none;
 	color: #ACACAC;
 }
 
-.navbar__dropdown-text:hover {
+.account__text:hover {
 	text-decoration: none;
 	color: #F8F8F8;
 }
