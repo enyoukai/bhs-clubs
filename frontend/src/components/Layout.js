@@ -1,5 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
+import React, { useState, useEffect } from 'react';
 
 import './Layout.css'
 
@@ -35,10 +36,30 @@ function RegisterBar()
     </div>
   )
 }
+
 function Profile(props)
 {
+  const [dropdown, setDropdown] = useState(false);
   return (
-    <Link to={'account/' + props.user.uid} className="white-font">{props.user.email}</Link>
+    <div>
+      <button onClick={() => setDropdown(!dropdown)}>account</button>
+      {dropdown && <Dropdown/>}
+      
+    </div>
+  )
+}
+
+function Dropdown(props)
+{
+  const { user } = useAuth();
+
+
+  return (
+    <div className="white-font">
+      <Link to={'account/' + user.uid}>My Account</Link>
+      <div>Clubs</div>
+      <Link to='signout'>Sign Out</Link>
+    </div>
   )
 }
 

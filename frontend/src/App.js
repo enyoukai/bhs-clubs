@@ -10,6 +10,7 @@ import SignIn from './routes/SignIn'
 import Register from './routes/Register'
 import NewClub from './routes/NewClub'
 import Account from './routes/Account'
+import SignOut from './routes/SignOut';
 import ProtectedRoute from './routes/ProtectedRoute';
 
 import { AuthProvider } from './contexts/AuthContext';
@@ -24,6 +25,7 @@ function App() {
           <Route path='register' element={<Register/>}/>
           <Route path='newclub' element={<ProtectedRoute><NewClub/></ProtectedRoute>}/>
           <Route path='account/:id' element={<Account/>}/>
+          <Route path='signout' element={<SignOut/>}/>
         </Route>
       </Routes>
     </AuthProvider>

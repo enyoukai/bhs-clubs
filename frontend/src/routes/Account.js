@@ -17,7 +17,6 @@ export default function Account(props)
 		getUser();
 	}, [])
 	
-	console.log(user);
 	return (
 		<>
 			{ user ? <UserInfo user={user}/> : <Loading/>

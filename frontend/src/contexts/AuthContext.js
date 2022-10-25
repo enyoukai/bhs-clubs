@@ -15,9 +15,14 @@ export function AuthProvider(props)
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(user => setUser(user));
 		return unsubscribe
-	}, [])
+	}, []);
 
-	const authValue = {auth, user};
+	function signOut()
+	{
+		return auth.signOut();
+	}
+
+	const authValue = {auth, user, signOut};
 
 	return (
 		<AuthContext.Provider value={authValue}>
