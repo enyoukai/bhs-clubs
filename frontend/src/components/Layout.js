@@ -39,6 +39,7 @@ function RegisterBar()
 function Avatar(props)
 {
   const [dropdown, setDropdown] = useState(false);
+  const { user } = useAuth();
 
   function handleMouseEnter()
   {
@@ -52,7 +53,7 @@ function Avatar(props)
 
   return (
     <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <img className="account__avatar" src="https://cdn.discordapp.com/avatars/583895458838085642/893f2cc514e4186f115a31ef05810a7f.webp?size=80"/>
+      <Link to={'account/' + user.uid}><img className="account__avatar" src="https://cdn.discordapp.com/avatars/583895458838085642/893f2cc514e4186f115a31ef05810a7f.webp?size=80"/></Link>
       {dropdown && <Dropdown/>}
     </div>
   )
