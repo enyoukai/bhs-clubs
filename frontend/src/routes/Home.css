@@ -1,19 +1,57 @@
-.listHeader {
+.options {
+	padding: 1rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.options__search {
+	border-radius: 8px;
+	border: 2px solid #cfcfcf;
+	padding: 0.3rem 1rem 0.3rem 0.5rem;
+	color: #707070;
+}
+
+.options__search::placeholder {
+	color: #a8a8a8;
+}
+
+.options__search:focus {
+	outline:none;
+}
+
+.options__new-club {
+	color: #707070;
+	font-weight: 600;
+	font-size: 1.2rem;
+}
+
+.clubs {
+	list-style:none;
+	margin: 0px;
+	width: 100vw;
+	text-align: center;
+	table-layout: fixed;
+	border-spacing: 0px;
+}
+
+.clubs__header {
 	background-color: var(--tertiary-bg);
 	justify-content: space-between;
 	padding: 10px;
+}
+
+.header__text {
+	font-weight: 500;
 	font-size: 1.4rem;
+	color: #6b6b6b;
 }
 
-.clubTable {
-	list-style:none;
-	margin: 0px;
-}
-
-.club {
-	justify-content: space-between;
-	font-size: 1.3rem;
+.clubs__club {
+	font-size: 1.4rem;
 	padding: 0.5rem;
+	font-weight: 500;
+	color: #3d3d3d;
 }
 
 .hoverText {
@@ -22,26 +60,4 @@
 	padding: 0.5rem;
 	background-color: var(--primary-txt);
 	color: #FFFFFF;
-}
-
-.optionsBar {
-	padding: 1rem;
-}
-
-.searchBar {
-	border-radius: 5px;
-	border: 0.5px solid;
-	padding: 0.2rem 1rem 0.2rem 0.5rem;
-	color: var(--primary-txt)
-}
-
-table {
-	width: 100vw;
-	text-align: center;
-	table-layout: fixed;
-	border-spacing: 0px;
-}
-
-th {
-	font-weight: normal;
 }

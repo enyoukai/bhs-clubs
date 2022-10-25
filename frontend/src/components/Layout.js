@@ -53,7 +53,7 @@ function Avatar(props)
 
   return (
     <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link to={'account/' + user.uid}><img className="account__avatar" src="https://cdn.discordapp.com/avatars/583895458838085642/893f2cc514e4186f115a31ef05810a7f.webp?size=80" alt="profile"/></Link>
+      <Link to={'account/' + user.uid}><img className="account__avatar" src="https://cdn.dribbble.com/users/1165288/screenshots/6008531/document-hierarchy.jpg" alt="profile"/></Link>
       {dropdown && <Dropdown/>}
     </div>
   )

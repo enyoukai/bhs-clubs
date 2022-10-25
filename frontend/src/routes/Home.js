@@ -20,9 +20,11 @@ function Home() {
   return (
     <div>
       <OptionsBar setSearch={setSearch}/>
-      <table className="clubTable">
+      <table className="clubs">
+        <tbody>
           <ListHeader/>
           <ClubList clubs={clubs}/>
+        </tbody>
       </table>
     </div>
   );
@@ -30,9 +32,9 @@ function Home() {
 
 function OptionsBar(props) {
   return (
-    <div className="optionsBar">
-      <input className="searchBar" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
-      <Link to={'newclub'}>Add Club +</Link>
+    <div className="options">
+      <input className="options__search" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
+      <Link className="options__new-club" to={'newclub'}>Add Club +</Link>
     </div>
   )
 }
@@ -54,12 +56,12 @@ function ClubList(props) {
 function ListHeader()
 {
   return (
-    <tr className="listHeader">
-      <th>Name</th>
-      <th>Location</th>
-      <th>Day</th>
-      <th>Time</th>
-      <th>Advisor</th>
+    <tr className="clubs__header">
+      <th className="header__text">Name</th>
+      <th className="header__text">Location</th>
+      <th className="header__text">Day</th>
+      <th className="header__text">Time</th>
+      <th className="header__text">Advisor</th>
     </tr>
   )
 }
@@ -79,7 +81,7 @@ function Club(props)
   }
 
   return (
-    <tr className="club" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
+    <tr className="clubs__club" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
       <td>{club.name}</td>
       <td>{club.location}</td>
       <td>{club.date}</td>
