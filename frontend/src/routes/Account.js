@@ -14,7 +14,7 @@ export default function Account(props)
 		}
 
 		getUser();
-	}, [])
+	}, [userId])
 	
 	return (
 		<div>
