@@ -1,5 +1,4 @@
 import API from '../api/API.js';
-import { useAuth } from '../contexts/AuthContext';
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 
@@ -18,10 +17,9 @@ export default function Account(props)
 	}, [])
 	
 	return (
-		<>
-			{ user ? <UserInfo user={user}/> : <Loading/>
-			}
-		</>
+		<div>
+			{ user ? <UserInfo user={user}/> : <Loading/>}
+		</div>
 	)
 }
 

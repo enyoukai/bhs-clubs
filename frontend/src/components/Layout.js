@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import './Layout.css'
 
@@ -9,7 +9,7 @@ function Layout()
   const { user } = useAuth();
 
   return (
-    <>
+    <React.Fragment>
       <div className="nav">
         <div className="nav__container">
           <Link to='/' className="nav__logo">BHS Clubs</Link>
@@ -22,7 +22,7 @@ function Layout()
         {user === null ? <RegisterBar/> : <Avatar user={user}/>}
       </div>
       <Outlet />
-    </>
+    </React.Fragment>
   )
 }
 
@@ -53,7 +53,7 @@ function Avatar(props)
 
   return (
     <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link to={'account/' + user.uid}><img className="account__avatar" src="https://cdn.discordapp.com/avatars/583895458838085642/893f2cc514e4186f115a31ef05810a7f.webp?size=80"/></Link>
+      <Link to={'account/' + user.uid}><img className="account__avatar" src="https://cdn.discordapp.com/avatars/583895458838085642/893f2cc514e4186f115a31ef05810a7f.webp?size=80" alt="profile"/></Link>
       {dropdown && <Dropdown/>}
     </div>
   )

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import './Home.css';
 import API from '../api/API.js';
@@ -21,10 +21,8 @@ function Home() {
     <div>
       <OptionsBar setSearch={setSearch}/>
       <table className="clubTable">
-        <tbody>
           <ListHeader/>
           <ClubList clubs={clubs}/>
-        </tbody>
       </table>
     </div>
   );
