@@ -1,47 +1,97 @@
-.header {
+.navbar {
 	background-color: var(--primary-bg);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 1rem;
-	font-size: 2rem
-
+	padding: 1rem 1.7rem 1rem 1.7rem;
+	background-color: #282828;
 }
 
-.logo {
-	color: var(--secondary-bg);
+.navbar__container {
+	display: flex;
+	align-items: center;
+	gap: 5rem;
+}
+
+.navbar__logo {
+	color: #F8F8F8;
 	font-weight: 400;
+	text-decoration: none;
+	font-size: 2.2rem;
 }
 
-.tabs {
+.navbar__tabs {
 	display:flex;
 	gap: 3rem;
 	align-items: center;
 }
 
-.tab-selected {
-	color: #FFFFFF;
+.navbar__tab {
+	font-size: 1.7rem;
+	text-decoration: none;
 }
 
-.tab-unselected {
+.navbar__tab:hover {
+	color: #F8F8F8;
+}
+
+.navbar__tab--selected {
+	color: #F8F8F8;
+}
+
+.navbar__tab--unselected {
 	color: #ACACAC;
 }
 
-
-.white-font {
-	color: #FFFFFF;
-}
-
-.sign-reg {
-	font-size: 1.5rem;
+.navbar__login-bar {
 	display: flex;
 	gap: 2rem;
 }
 
-.bubble {
-	background-color: #E2E2E2;
-	color: #0E0E0E;
-	padding: 0.5rem 3rem 0.5rem 3rem;
-	border-radius: 50px;
-	font-weight: 500;
+.navbar__login-text {
+	color: #ACACAC;
+	font-size: 1.5rem;
+	text-decoration: none;
+}
+
+.navbar__login-text:hover {
+	color: #F8F8F8;
+}
+
+.navbar__account {
+	background: none;
+	border: none;
+	color: #F8F8F8;
+	font-size: 1.5rem;
+	text-decoration: none;
+}
+
+.navbar__account:hover {
+	cursor:pointer;
+}
+
+.navbar__account--selected {
+	color: #F8F8F8;
+}
+
+.navbar__avatar {
+	border-radius: 100%;
+	width: 3rem;
+}
+.navbar__dropdown {
+	position: absolute;
+	background-color: #282828;
+	display:flex;
+	flex-direction: column;
+	padding:1rem;
+}
+
+.navbar__dropdown-text {
+	text-decoration: none;
+	color: #ACACAC;
+}
+
+.navbar__dropdown-text:hover {
+	text-decoration: none;
+	color: #F8F8F8;
 }

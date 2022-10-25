@@ -10,17 +10,16 @@ function Layout()
 
   return (
     <>
-      <div className="header">
-        <Link to={'/'} className="logo">
-          BHS Clubs
-        </Link>
-        <div className="tabs">
-          <div className="tab-selected">Home</div>
-          <div className="tab-unselected">Feed</div>
-          <div className="tab-unselected">Calendar</div>
+      <div className="navbar">
+        <div className="navbar__container">
+          <Link to='/' className="navbar__logo">BHS Clubs</Link>
+          <div className="navbar__tabs">
+            <Link to='/' className="navbar__tab navbar__tab--selected">Home</Link>
+            <Link to='feed' className="navbar__tab navbar__tab--unselected">Feed</Link>
+            <Link to='calendar' className="navbar__tab navbar__tab--unselected">Calendar</Link>
+          </div>
         </div>
-
-        {user === null ? <RegisterBar/> : <Profile user={user}/>}
+        {user === null ? <RegisterBar/> : <Avatar user={user}/>}
       </div>
       <Outlet />
     </>
@@ -30,21 +29,31 @@ function Layout()
 function RegisterBar()
 {
   return (
-    <div className="sign-reg white-font">
-      <Link to={'signin'} className="bubble">Sign In</Link>
-      <Link to={'register'} className="bubble">Register</Link>
+    <div className="navbar__login-bar">
+      <Link to={'signin'} className="navbar__login-text">Sign In</Link>
+      <Link to={'register'} className="navbar__login-text">Register</Link>
     </div>
   )
 }
 
-function Profile(props)
+function Avatar(props)
 {
   const [dropdown, setDropdown] = useState(false);
+
+  function handleMouseEnter()
+  {
+    setDropdown(true);
+  }
+
+  function handleMouseLeave()
+  {
+    setDropdown(false);
+  }
+
   return (
-    <div>
-      <button onClick={() => setDropdown(!dropdown)}>account</button>
+    <div className="navbar__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <img className="navbar__avatar" src="https://cdn.discordapp.com/avatars/583895458838085642/893f2cc514e4186f115a31ef05810a7f.webp?size=80"/>
       {dropdown && <Dropdown/>}
-      
     </div>
   )
 }
@@ -53,12 +62,11 @@ function Dropdown(props)
 {
   const { user } = useAuth();
 
-
   return (
-    <div className="white-font">
-      <Link to={'account/' + user.uid}>My Account</Link>
-      <div>Clubs</div>
-      <Link to='signout'>Sign Out</Link>
+    <div className="navbar__dropdown">
+      <Link className="navbar__dropdown-text" to={'account/' + user.uid}>Profile</Link>
+      <Link className="navbar__dropdown-text" to='settings'>Settings</Link>
+      <Link className="navbar__dropdown-text" to='signout'>Sign Out</Link>
     </div>
   )
 }

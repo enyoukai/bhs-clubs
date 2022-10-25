@@ -12,6 +12,9 @@ code {
     monospace;
 }
 
+a {
+  text-decoration: none;
+}
 :root {
 	--primary-bg: #0D0B48;
 	--secondary-bg: #FFC423;
