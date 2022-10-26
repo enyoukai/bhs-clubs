@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
-import './Home.module.css';
+import './Home.css';
 import API from '../api/API.js';
+import CSSModules from 'react-css-modules';
 
 function Home() {
   const [clubs, setClubs] = useState([]);
