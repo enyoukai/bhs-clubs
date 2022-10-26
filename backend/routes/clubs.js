@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:clubId', async (req, res) => {
-	const club = await Club.find({id: req.params.clubId});
+	const club = await Club.findOne({id: req.params.clubId});
 	return res.send(club);
 });
 

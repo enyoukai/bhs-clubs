@@ -15,6 +15,7 @@ function Layout()
           <Link to='/' className="nav__logo">BHS Clubs</Link>
           <div className="nav__tabs">
             <Link to='/' className="nav__tab nav__tab--selected">Home</Link>
+            <Link to='newclub' className="nav__tab nav__tab--unselected">Add Club</Link>
             <Link to='feed' className="nav__tab nav__tab--unselected">Feed</Link>
             <Link to='calendar' className="nav__tab nav__tab--unselected">Calendar</Link>
           </div>

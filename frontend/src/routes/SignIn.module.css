@@ -1,4 +1,4 @@
-.container {
+.signin {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -13,23 +13,23 @@
 	gap: 1rem;
 }
 
-.container__form {
+.signin__form {
 	display:flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	gap: 2rem;
 }
 
-.container__text--big {
+.signin__text--big {
 	font-size: 5rem;
 }
 
-.container__text {
+.signin__text {
 	color: #FAFDFE;
 	font-size: 4rem;
 }
 
-.container__input {
+.signin__input {
 	padding: 1rem;
 	border-radius: 0.2rem;
 	border:none;
@@ -39,17 +39,17 @@
 	font-size: 2rem;
 }
 
-.container__input::placeholder {
+.signin__input::placeholder {
 	color: #d8d8d8;
 	font-weight: 300;
 }
 
-.container__input:focus {
+.signin__input:focus {
 	outline: #ffffff solid 1px;
 
 }
 
-.container__btn {
+.signin__btn {
 	font-size: 2rem;
 	border-radius: 0.5em;
 	padding: 1rem;
@@ -58,15 +58,15 @@
 	border:none;
 }
 
-.container__btn--submit {
+.signin__btn--submit {
 	background-color: #a7a7a7;
 }
 
-.container__btn--submit:hover {
+.signin__btn--submit:hover {
 	background-color: #dfdfdf;
 }
 
-.container__btn--submit:focus {
+.signin__btn--submit:focus {
 	outline:none;
 	background-color: #dfdfdf;
 }

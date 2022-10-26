@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
-import './Home.css';
+import './Home.module.css';
 import API from '../api/API.js';
 
 function Home() {
@@ -34,7 +34,7 @@ function OptionsBar(props) {
   return (
     <div className="options">
       <input className="options__search" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
-      <Link className="options__new-club" to={'newclub'}>Add Club +</Link>
+      <Link className="options__add-club" to={'newclub'}>Add Club +</Link>
     </div>
   )
 }
@@ -82,11 +82,11 @@ function Club(props)
 
   return (
     <tr className="clubs__club" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
-      <td>{club.name}</td>
-      <td>{club.location}</td>
-      <td>{club.date}</td>
-      <td>{club.time}</td>
-      <td>{club.advisor}</td>
+      <td><Link className="clubs__text" to={'club/' + club.id}>{club.name}</Link></td>
+      <td><Link className="clubs__text" to={'club/' + club.id}>{club.location}</Link></td>
+      <td><Link className="clubs__text" to={'club/' + club.id}>{club.date}</Link></td>
+      <td><Link className="clubs__text" to={'club/' + club.id}>{club.time}</Link></td>
+      <td><Link className="clubs__text" to={'club/' + club.id}>{club.advisor}</Link></td>
     </tr>
   )
 }

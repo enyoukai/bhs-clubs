@@ -3,7 +3,7 @@ import API from '../api/API';
 import { auth } from '../firebase';
 import { useNavigate } from "react-router-dom";
 
-import './SignIn.css';
+import styles from './SignIn.module.css';
 
 function Register(props)
 {
@@ -24,13 +24,13 @@ function Register(props)
 	}
 
 	return (
-		<div className="container">
-			<div className="container__form">
-				<div className="container__text container__text--big">Hello New User</div>
-				<input className="container__input" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
-				<input className="container__input" placeholder="Password" type='password' onChange={e => setPassword(e.target.value)}/>
-				<input className="container__input" placeholder="Confirm Password" type='password' onChange={e => setConfirmPassword(e.target.value)}/>
-				<button className="container__btn container__btn--submit" onClick={register}>Register</button>
+		<div className="signin">
+			<div className="signin__form">
+				<div className="signin__text signin__text--big">Hello New User</div>
+				<input className="signin__input" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+				<input className="signin__input" placeholder="Password" type='password' onChange={e => setPassword(e.target.value)}/>
+				<input className="signin__input" placeholder="Confirm Password" type='password' onChange={e => setConfirmPassword(e.target.value)}/>
+				<button className="signin__btn signin__btn--submit" onClick={register}>Register</button>
 			</div>
 		</div>
 	)

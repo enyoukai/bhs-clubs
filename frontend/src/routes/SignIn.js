@@ -3,7 +3,7 @@ import API from '../api/API.js';
 
 import { useNavigate } from "react-router-dom";
 
-import './SignIn.css';
+import styles from './SignIn.module.css';
 
 function SignIn() {
 	const [email, setEmail] = useState('');
@@ -18,12 +18,12 @@ function SignIn() {
 	}
 
 	return (
-		<div className="container">
-			<div className="container__text container__text--big">Welcome Back</div>
-			<div className="container__form">
-				<input className="container__input" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
-				<input className="container__input" placeholder="Password" type='password' onChange={e => setPassword(e.target.value)}/>
-				<button className="container__btn container__btn--submit" onClick={signIn}>Sign In</button>
+		<div className="signin">
+			<div className="signin__text signin__text--big">Welcome Back</div>
+			<div className="signin__form">
+				<input className="signin__input" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+				<input className="signin__input" placeholder="Password" type='password' onChange={e => setPassword(e.target.value)}/>
+				<button className="signin__btn signin__btn--submit" onClick={signIn}>Sign In</button>
 			</div>
 		</div>
 	)

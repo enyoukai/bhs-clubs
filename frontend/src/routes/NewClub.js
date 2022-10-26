@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from '../contexts/AuthContext'
 
+import styles from './NewClub.module.css';
+
 export default function NewClub() {
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -25,7 +27,7 @@ export default function NewClub() {
 	}
 
 	return (
-		<div>
+		<div class>
 			<div>Add New Club</div>
 			<div>Name</div>
 			<input onChange={e => setName(e.target.value)}></input>

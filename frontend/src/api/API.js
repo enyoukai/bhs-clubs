@@ -12,6 +12,11 @@ class API
 		return REST.GET(`/clubs/?name=${search}`);
 	}
 	
+	static getClubById(id)
+	{
+		return REST.GET(`/clubs/${id}`);
+	}
+
 	static async createClub(club)
 	{
 		const token = await auth.currentUser.getIdToken()

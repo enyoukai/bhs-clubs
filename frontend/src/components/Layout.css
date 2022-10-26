@@ -26,6 +26,7 @@
 
 .nav__tab {
 	font-size: 1.7rem;
+	transition: color 0.3s ease-in-out;
 }
 
 .nav__tab:hover {
@@ -48,6 +49,7 @@
 .login-bar__text {
 	color: #ACACAC;
 	font-size: 1.5rem;
+	transition: color 0.3s ease-in-out;
 }
 
 .login-bar__text:hover {
@@ -79,6 +81,7 @@
 
 .account__text {
 	color: #ACACAC;
+	transition: color 0.3s ease-in-out;
 }
 
 .account__text:hover {

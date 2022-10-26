@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 
 
-export default function Account(props)
+export default function Account()
 {
 	const userId = useParams().id;
 	const [user, setUser] = useState(null);
