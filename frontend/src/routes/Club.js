@@ -33,6 +33,11 @@ function ClubInfo(props)
 		<div className="club-info">
 			<div>{club.name}</div>
 			<div>{club.description}</div>
+			<div>{club.location}</div>
+			<div>{club.date}</div>
+			<div>{club.time}</div>
+			<div>{club.advisor}</div>
+
 			<div></div>
 		</div>
     )
