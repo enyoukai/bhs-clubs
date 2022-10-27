@@ -1,12 +1,18 @@
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom'
 
 import './Layout.scss'
 
 function Layout()
 {
   const { user } = useAuth();
+  const location = useLocation();
+  const path = location.pathname;
+
+  const selected = "nav__tab--selected";
+  const unselected = "nav__tab--unselected";
 
   return (
     <React.Fragment>
@@ -14,10 +20,10 @@ function Layout()
         <div className="nav__container">
           <Link to='/' className="nav__logo">BHS Clubs</Link>
           <div className="nav__tabs">
-            <Link to='/' className="nav__tab nav__tab--selected">Home</Link>
-            <Link to='newclub' className="nav__tab nav__tab--unselected">Add Club</Link>
-            <Link to='feed' className="nav__tab nav__tab--unselected">Feed</Link>
-            <Link to='calendar' className="nav__tab nav__tab--unselected">Calendar</Link>
+            <Link to='/' className={`nav__tab ${path == '/' ? selected : unselected}`}>Home</Link>
+            <Link to='newclub' className={`nav__tab ${path == '/newclub' ? selected : unselected}`}>Add Club</Link>
+            <Link to='feed' className={`nav__tab ${path == '/feed' ? selected : unselected}`}>Feed</Link>
+            <Link to='calendar' className={`nav__tab ${path == '/calendar' ? selected : unselected}`}>Calendar</Link>
           </div>
         </div>
         {user === null ? <RegisterBar/> : <Avatar user={user}/>}
