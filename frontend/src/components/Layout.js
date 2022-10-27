@@ -8,8 +8,7 @@ import './Layout.scss'
 function Layout()
 {
   const { user } = useAuth();
-  const location = useLocation();
-  const path = location.pathname;
+  const path = useLocation().pathname;
 
   const selected = "nav__tab--selected";
   const unselected = "nav__tab--unselected";
