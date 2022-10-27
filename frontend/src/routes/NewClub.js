@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from '../contexts/AuthContext'
 
-import './NewClub.css';
+import './NewClub.scss';
 
 export default function NewClub() {
 	const [name, setName] = useState('');

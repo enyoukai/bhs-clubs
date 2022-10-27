@@ -3,7 +3,7 @@ import API from '../api/API';
 import { auth } from '../firebase';
 import { useNavigate } from "react-router-dom";
 
-import './SignIn.css';
+import './SignIn.scss';
 
 function Register(props)
 {

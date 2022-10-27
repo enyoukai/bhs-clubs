@@ -3,7 +3,7 @@ import API from '../api/API.js';
 
 import { useNavigate } from "react-router-dom";
 
-import './SignIn.css';
+import './SignIn.scss';
 
 function SignIn() {
 	const [email, setEmail] = useState('');

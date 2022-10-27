@@ -2,7 +2,7 @@ import API from "../api/API";
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-import './Club.css';
+import './Club.scss';
 
 export default function Club()
 {

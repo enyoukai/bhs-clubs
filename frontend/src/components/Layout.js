@@ -2,7 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import React, { useState } from 'react';
 
-import './Layout.css'
+import './Layout.scss'
 
 function Layout()
 {
