@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import './Home.css';
 import API from '../api/API.js';
-import CSSModules from 'react-css-modules';
 
 function Home() {
   const [clubs, setClubs] = useState([]);
@@ -35,7 +34,7 @@ function OptionsBar(props) {
   return (
     <div className="options">
       <input className="options__search" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
-      <Link className="options__add-club" to={'newclub'}>Add Club +</Link>
+      <Link className="options__addClub" to={'newclub'}>Add Club +</Link>
     </div>
   )
 }

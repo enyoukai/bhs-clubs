@@ -2,8 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import React, { useState } from 'react';
 
-import CSSModules from 'react-css-modules';
-import styles from './Layout.module.css'
+import './Layout.css'
 
 function Layout()
 {
@@ -11,14 +10,14 @@ function Layout()
 
   return (
     <React.Fragment>
-      <nav styleName="nav">
-        <div styleName="nav__container">
-          <Link to='/' styleName="nav__logo">BHS Clubs</Link>
-          <div styleName="nav__tabs">
-            <Link to='/' styleName="nav__tab nav__tab--selected">Home</Link>
-            <Link to='newclub' styleName="nav__tab nav__tab--unselected">Add Club</Link>
-            <Link to='feed' styleName="nav__tab nav__tab--unselected">Feed</Link>
-            <Link to='calendar' styleName="nav__tab nav__tab--unselected">Calendar</Link>
+      <nav className="nav">
+        <div className="nav__container">
+          <Link to='/' className="nav__logo">BHS Clubs</Link>
+          <div className="nav__tabs">
+            <Link to='/' className="nav__tab nav__tab--selected">Home</Link>
+            <Link to='newclub' className="nav__tab nav__tab--unselected">Add Club</Link>
+            <Link to='feed' className="nav__tab nav__tab--unselected">Feed</Link>
+            <Link to='calendar' className="nav__tab nav__tab--unselected">Calendar</Link>
           </div>
         </div>
         {user === null ? <RegisterBar/> : <Avatar user={user}/>}
@@ -31,9 +30,9 @@ function Layout()
 function RegisterBar()
 {
   return (
-    <div styleName="nav__login-bar">
-      <Link to={'signin'} styleName="login-bar__text">Sign In</Link>
-      <Link to={'register'} styleName="login-bar__text">Register</Link>
+    <div className="nav__login-bar">
+      <Link to={'signin'} className="login-bar__text">Sign In</Link>
+      <Link to={'register'} className="login-bar__text">Register</Link>
     </div>
   )
 }
@@ -54,8 +53,8 @@ function Avatar(props)
   }
 
   return (
-    <div styleName="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link to={'account/' + user.uid}><img styleName="account__avatar" src="https://cdn.dribbble.com/users/1165288/screenshots/6008531/document-hierarchy.jpg" alt="profile"/></Link>
+    <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <Link to={'account/' + user.uid}><img className="account__avatar" src="https://cdn.dribbble.com/users/1165288/screenshots/6008531/document-hierarchy.jpg" alt="profile"/></Link>
       {dropdown && <Dropdown/>}
     </div>
   )
@@ -66,12 +65,12 @@ function Dropdown(props)
   const { user } = useAuth();
 
   return (
-    <div styleName="account__dropdown">
-      <Link styleName="account__text" to={'account/' + user.uid}>Profile</Link>
-      <Link styleName="account__text" to='settings'>Settings</Link>
-      <Link styleName="account__text" to='signout'>Sign Out</Link>
+    <div className="account__dropdown">
+      <Link className="account__text" to={'account/' + user.uid}>Profile</Link>
+      <Link className="account__text" to='settings'>Settings</Link>
+      <Link className="account__text" to='signout'>Sign Out</Link>
     </div>
   )
 }
 
-export default CSSModules(Layout, styles, {allowMultiple: true});
+export default Layout;
