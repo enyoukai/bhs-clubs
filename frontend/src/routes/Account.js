@@ -1,7 +1,6 @@
 import API from '../api/API.js';
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
-
 
 export default function Account()
 {
@@ -25,7 +24,7 @@ export default function Account()
 
 function UserInfo(props)
 {
-	const clubs = props.user.clubs.map(club => <li key={club.id}>{club.name}</li>);
+	const clubs = props.user.clubs.map(club => <Club key={club.id} club={club}/>);
 	return (
 		<div>
 			<div>Created Account: {props.user.creationTime}</div>
@@ -35,7 +34,15 @@ function UserInfo(props)
 			<ul>{clubs}</ul>
 		</div>
 	)
+}
 
+function Club(props) {
+	return (
+		<div>
+			<div>{props.club.name}</div>
+			<Link to={`/modifyClub/${props.club.id}`}>EDIT</Link>
+		</div>
+	)
 }
 
 function Loading()

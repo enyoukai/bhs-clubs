@@ -14,6 +14,8 @@ import SignOut from './routes/SignOut';
 import Feed from './routes/Feed';
 import Calendar from './routes/Calendar';
 import Club from './routes/Club';
+import ModifyClub from './routes/ModifyClub';
+
 import ProtectedRoute from './routes/ProtectedRoute';
 
 import { AuthProvider } from './contexts/AuthContext';
@@ -32,6 +34,7 @@ function App() {
           <Route path='feed' element={<Feed/>}/>
           <Route path='calendar' element={<Calendar/>}/>
           <Route path='club/:id' element={<Club/>}/>
+          <Route path='modifyClub/:id' element={<ModifyClub/>}/>
         </Route>
       </Routes>
     </AuthProvider>
