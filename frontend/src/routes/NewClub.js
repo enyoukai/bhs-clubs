@@ -27,21 +27,27 @@ export default function NewClub() {
 	}
 
 	return (
-		<div class>
-			<div>Add New Club</div>
-			<div>Name</div>
-			<input onChange={e => setName(e.target.value)}></input>
-			<div>Description</div>
-			<input onChange={e => setDescription(e.target.value)}></input>
-			<div>Location</div>
-			<input onChange={e => setLocation(e.target.value)}></input>
-			<div>Day</div>
-			<input onChange={e => setDay(e.target.value)}></input>
-			<div>Time</div>
-			<input onChange={e => setTime(e.target.value)}></input>
-			<div>Advisor</div>
-			<input onChange={e => setAdvisor(e.target.value)}></input>
-			<button onClick={submitClub}>Add Club</button>
+		<div class="newClub">
+			<div className="newClub__text newClub__text--large">Add New Club</div>
+			<div className="newClub__form">
+				<div className="newClub__innerContainer">
+					<div className="newClub__text">Name</div>
+					<input className="newClub__input" onChange={e => setName(e.target.value)}></input>
+					<div className="newClub__text">Description</div>
+					<input className="newClub__input" onChange={e => setDescription(e.target.value)}></input>
+					<div className="newClub__text">Location</div>
+					<input className="newClub__input" onChange={e => setLocation(e.target.value)}></input>
+				</div>
+				<div className="newClub__innerContainer">
+					<div className="newClub__text">Day</div>
+					<input className="newClub__input" onChange={e => setDay(e.target.value)}></input>
+					<div className="newClub__text">Time</div>
+					<input className="newClub__input" onChange={e => setTime(e.target.value)}></input>
+					<div className="newClub__text">Advisor</div>
+					<input className="newClub__input" onChange={e => setAdvisor(e.target.value)}></input>
+				</div>
+			</div>
+			<button className="newClub__btn" onClick={submitClub}>Add Club</button>
 		</div>
 	)
 

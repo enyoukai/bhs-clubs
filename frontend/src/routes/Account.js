@@ -25,7 +25,7 @@ export default function Account()
 
 function UserInfo(props)
 {
-	const clubs = props.user.clubs.map(club => <li>{club.name}</li>);
+	const clubs = props.user.clubs.map(club => <li key={club.id}>{club.name}</li>);
 	return (
 		<div>
 			<div>Created Account: {props.user.creationTime}</div>

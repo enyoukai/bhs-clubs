@@ -1,0 +1,67 @@
+
+.newClub {
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #282828;
+    padding: 2rem;
+    gap: 1.5rem;
+    border-radius: 0.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.newClub__text {
+    color: var(--primary-txt);
+}
+
+.newClub__text--large{
+    font-size: 3rem;
+}
+
+.newClub__form {
+    display: flex;
+    gap: 1rem;
+    font-size: 2rem;
+}
+
+.newClub__innerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.newClub__btn {
+    font-size: 2rem;
+    background-color: #a7a7a7;
+	border:none;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    color: #282828;
+}
+.newClub__btn:hover {
+	background-color: #dfdfdf;
+}
+
+.newClub__btn:focus {
+	outline:none;
+	background-color: #dfdfdf;
+}
+
+.newClub__input {
+	padding: 1rem;
+	border-radius: 0.2rem;
+	border:none;
+	outline: #aeb0b1 solid 1px;
+	background-color: #282828;
+	color: #FAFDFE;
+	font-size: 2rem;
+}
+
+.newClub__input:focus {
+    outline: #ffffff solid 1px;
+}

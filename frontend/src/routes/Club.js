@@ -19,10 +19,10 @@ export default function Club()
 	}, [clubId]);
 
     return (
-        <div>
-            { club ? <ClubInfo club={club}/> : <Loading/>}
-        </div>
-    )
+		<>
+            {club ? <ClubInfo club={club}/> : <Loading/>}
+		</>
+	)
 }
 
 function ClubInfo(props)
@@ -30,14 +30,13 @@ function ClubInfo(props)
 	const club = props.club;
 
     return (
-		<div className="club-info">
-			<div>{club.name}</div>
+		<div className="clubInfo">
+			<div className="clubInfo__text clubInfo__text--large">{club.name}</div>
 			<div>{club.description}</div>
 			<div>{club.location}</div>
 			<div>{club.date}</div>
 			<div>{club.time}</div>
 			<div>{club.advisor}</div>
-
 			<div></div>
 		</div>
     )
