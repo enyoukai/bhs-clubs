@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
 
 import './Home.scss';
@@ -7,6 +7,22 @@ import API from '../api/API.js';
 function Home() {
   const [clubs, setClubs] = useState([]);
   const [search, setSearch] = useState('');
+
+  let mousePosition = null;
+
+  useEffect(() => {
+    const handleWindowMouseMove = event => {
+      mousePosition = {
+        x: event.pageX,
+        y: event.pageY
+      }
+    };
+    window.addEventListener('mousemove', handleWindowMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleWindowMouseMove);
+    };
+  }, []);
 
   useEffect(() => {
     async function updateClubs() {
@@ -20,10 +36,10 @@ function Home() {
   return (
     <div>
       <OptionsBar setSearch={setSearch}/>
-      <table className="clubs">
+      <table className="clubTable">
         <tbody>
           <ListHeader/>
-          <ClubList clubs={clubs}/>
+          <ClubList mousePosition={mousePosition} clubs={clubs}/>
         </tbody>
       </table>
     </div>
@@ -40,9 +56,10 @@ function OptionsBar(props) {
 }
 
 function ClubList(props) {
+  function renderHover
   let clubsList = props.clubs.map((club) => {
     return (
-      <Club key={club.id} clubObj={club} />
+      <Club renderHover={renderHover} key={club.id} clubObj={club} />
     )
   });
 
@@ -56,7 +73,7 @@ function ClubList(props) {
 function ListHeader()
 {
   return (
-    <tr className="clubs__header">
+    <tr className="clubTable__header">
       <th className="header__text">Name</th>
       <th className="header__text">Location</th>
       <th className="header__text">Day</th>
@@ -81,12 +98,12 @@ function Club(props)
   }
 
   return (
-    <tr className="clubs__club" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
-      <td><Link className="clubs__text" to={'club/' + club.id}>{club.name}</Link></td>
-      <td><Link className="clubs__text" to={'club/' + club.id}>{club.location}</Link></td>
-      <td><Link className="clubs__text" to={'club/' + club.id}>{club.date}</Link></td>
-      <td><Link className="clubs__text" to={'club/' + club.id}>{club.time}</Link></td>
-      <td><Link className="clubs__text" to={'club/' + club.id}>{club.advisor}</Link></td>
+    <tr className="clubTable__club" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
+      <td><Link className="clubTable__link" to={'club/' + club.id}>{club.name}</Link></td>
+      <td><Link className="clubTable__link" to={'club/' + club.id}>{club.location}</Link></td>
+      <td><Link className="clubTable__link" to={'club/' + club.id}>{club.date}</Link></td>
+      <td><Link className="clubTable__link" to={'club/' + club.id}>{club.time}</Link></td>
+      <td><Link className="clubTable__link" to={'club/' + club.id}>{club.advisor}</Link></td>
     </tr>
   )
 }

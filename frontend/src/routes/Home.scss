@@ -31,7 +31,7 @@
 	color: #3ad63a;
 }
 
-.clubs {
+.clubTable {
 	list-style:none;
 	margin: 0px;
 	width: 100vw;
@@ -40,7 +40,7 @@
 	border-spacing: 0px;
 }
 
-.clubs__header {
+.clubTable__header {
 	background-color: var(--tertiary-bg);
 	justify-content: space-between;
 	padding: 10px;
@@ -52,20 +52,21 @@
 	color: #6b6b6b;
 }
 
-.clubs__club {
+.clubTable__club {
 	font-size: 1.4rem;
 	padding: 0.5rem;
 	font-weight: 500;
 	color: #3d3d3d;
 }
 
-.clubs__text {
+
+.clubTable__link {
 	color: #3d3d3d;
 	transition: color 0.3s ease-in-out;
 
 }
 
-.clubs__text:hover {
+.clubTable__link:hover {
 	color: #3d64e4;
 }
 

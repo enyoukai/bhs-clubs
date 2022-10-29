@@ -1,16 +1,10 @@
 .nav {
 	background-color: var(--primary-bg);
 	display: flex;
-	justify-content: space-between;
+	gap: 3rem;
 	align-items: center;
 	padding: 1rem 1.7rem 1rem 1.7rem;
 	background-color: #282828;
-}
-
-.nav__container {
-	display: flex;
-	align-items: center;
-	gap: 5rem;
 }
 
 .nav__logo {
@@ -22,6 +16,8 @@
 	display:flex;
 	gap: 3rem;
 	align-items: center;
+	justify-content: start;
+	flex-grow: 2;
 }
 
 .nav__tab {

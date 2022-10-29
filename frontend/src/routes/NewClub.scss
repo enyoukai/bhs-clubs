@@ -1,10 +1,9 @@
-
 .newClub {
     display:flex;
     align-items: center;
     flex-direction: column;
     background-color: #282828;
-    padding: 2rem;
+    padding: 1rem;
     gap: 1.5rem;
     border-radius: 0.5rem;
     position: absolute;
@@ -25,14 +24,9 @@
 
 .newClub__form {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
     font-size: 2rem;
-}
-
-.newClub__innerContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
 }
 
 .newClub__btn {

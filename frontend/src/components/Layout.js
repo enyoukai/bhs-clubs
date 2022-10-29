@@ -16,18 +16,18 @@ function Layout()
   return (
     <React.Fragment>
       <nav className="nav">
-        <div className="nav__container">
-          <Link to='/' className="nav__logo">BHS Clubs</Link>
-          <div className="nav__tabs">
-            <Link to='/' className={`nav__tab ${path == '/' ? selected : unselected}`}>Home</Link>
-            <Link to='newclub' className={`nav__tab ${path == '/newclub' ? selected : unselected}`}>Add Club</Link>
-            <Link to='feed' className={`nav__tab ${path == '/feed' ? selected : unselected}`}>Feed</Link>
-            <Link to='calendar' className={`nav__tab ${path == '/calendar' ? selected : unselected}`}>Calendar</Link>
-          </div>
+        <Link to='/' className="nav__logo">BHS Clubs</Link>
+        <div className="nav__tabs">
+          <Link to='/' className={`nav__tab ${path == '/' ? selected : unselected}`}>Home</Link>
+          <Link to='newclub' className={`nav__tab ${path == '/newclub' ? selected : unselected}`}>Add Club</Link>
+          <Link to='feed' className={`nav__tab ${path == '/feed' ? selected : unselected}`}>Feed</Link>
+          <Link to='calendar' className={`nav__tab ${path == '/calendar' ? selected : unselected}`}>Calendar</Link>
         </div>
         {user === null ? <RegisterBar/> : <Avatar user={user}/>}
       </nav>
-      <Outlet />
+      {/* <div className="outlet"> */}
+        <Outlet />
+      {/* </div> */}
     </React.Fragment>
   )
 }

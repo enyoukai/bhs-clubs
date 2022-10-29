@@ -2,6 +2,7 @@ import API from "../api/API";
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
+import Loading from '../components/Loading';
 import './Club.scss';
 
 export default function Club()
@@ -40,13 +41,4 @@ function ClubInfo(props)
 			<div></div>
 		</div>
     )
-}
-
-function Loading()
-{
-	return (
-		<div>
-			Fetching from server...
-		</div>
-	)
 }

@@ -2,6 +2,8 @@ import API from '../api/API.js';
 import { useParams, Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 
+import Loading from '../components/Loading';
+
 export default function Account()
 {
 	const userId = useParams().id;
@@ -41,15 +43,6 @@ function Club(props) {
 		<div>
 			<div>{props.club.name}</div>
 			<Link to={`/modifyClub/${props.club.id}`}>EDIT</Link>
-		</div>
-	)
-}
-
-function Loading()
-{
-	return (
-		<div>
-			Fetching from server...
 		</div>
 	)
 }

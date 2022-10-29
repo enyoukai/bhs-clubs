@@ -11,9 +11,13 @@ export function useAuth()
 export function AuthProvider(props)
 {
 	const [user, setUser] = useState(null);
+	const [signInFetched, setSignInFetched] = useState(false);
 
 	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged(user => setUser(user));
+		const unsubscribe = auth.onAuthStateChanged(user => {
+			setUser(user);
+			setSignInFetched(true);
+		});
 		return unsubscribe
 	}, []);
 
@@ -22,7 +26,7 @@ export function AuthProvider(props)
 		return auth.signOut();
 	}
 
-	const authValue = {auth, user, signOut};
+	const authValue = {auth, user, signInFetched, signOut};
 
 	return (
 		<AuthContext.Provider value={authValue}>
