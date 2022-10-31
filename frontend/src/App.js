@@ -34,7 +34,7 @@ function App() {
           <Route path='feed' element={<Feed/>}/>
           <Route path='calendar' element={<Calendar/>}/>
           <Route path='club/:id' element={<Club/>}/>
-          <Route path='modifyClub/:id' element={<ModifyClub/>}/>
+          <Route path='modifyClub/:id' element={<ProtectedRoute><ModifyClub/></ProtectedRoute>}/>
         </Route>
       </Routes>
     </AuthProvider>

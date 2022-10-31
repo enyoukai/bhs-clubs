@@ -28,8 +28,8 @@ router.get('/:clubId', async (req, res) => {
 router.use(authenticate);
 
 router.put('/:clubId', async (req, res) => {
-	const club = await club.findOne({id: req.params.clubId});
-	if (club.uid != req.headers.uid) return res.sendStatus(401);
+	const club = await Club.findOne({id: req.params.clubId});
+	if (club.userId != req.headers.uid) return res.sendStatus(401);
 	
 	const dbRes = await Club.updateOne({id: req.params.clubId}, {name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor});
 	

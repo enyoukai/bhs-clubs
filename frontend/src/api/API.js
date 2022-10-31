@@ -19,7 +19,7 @@ class API
 
 	static putClub(id, name, description, location, date, time, advisor, token)
 	{
-		console.log(time);
+		console.log(token);
 		return REST.PUT(`/clubs/${id}`, {name: name, description: description, location: location, date: date, time: time, advisor: advisor}, token);
 	}
 

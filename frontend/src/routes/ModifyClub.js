@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import API from '../api/API';
 
+import { useAuth } from '../contexts/AuthContext'
+
 export default function ModifyClub() {
     const id = useParams().id;
     const [club, setClub] = useState({});
@@ -11,24 +13,26 @@ export default function ModifyClub() {
 	const [time, setTime] = useState('');
 	const [advisor, setAdvisor] = useState('');
 
+    const {user} = useAuth();
+
     useEffect(() => {
         async function getClub()
         {
             const club = await API.getClubById(id);
+
             setClub(club);
             setDescription(club.description);
             setLocation(club.location);
             setDate(club.date);
             setTime(club.time);
             setAdvisor(club.advisor);
-
         }
         getClub();
     }, []);
 
     async function submitChange()
     {
-        await API.putClub(id, club.name, description, location, date, time, advisor);
+        await API.putClub(id, club.name, description, location, date, time, advisor, await user.getIdToken());
     }
 
     return (
