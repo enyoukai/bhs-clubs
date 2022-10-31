@@ -56,10 +56,9 @@ function OptionsBar(props) {
 }
 
 function ClubList(props) {
-  function renderHover
   let clubsList = props.clubs.map((club) => {
     return (
-      <Club renderHover={renderHover} key={club.id} clubObj={club} />
+      <Club key={club.id} clubObj={club} />
     )
   });
 

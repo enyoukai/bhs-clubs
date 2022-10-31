@@ -17,6 +17,13 @@ class API
 		return REST.GET(`/clubs/${id}`);
 	}
 
+	static putClub(id, name, description, location, date, time, advisor, token)
+	{
+		console.log(time);
+		return REST.PUT(`/clubs/${id}`, {name: name, description: description, location: location, date: date, time: time, advisor: advisor}, token);
+	}
+
+
 	static async createClub(club)
 	{
 		const token = await auth.currentUser.getIdToken()

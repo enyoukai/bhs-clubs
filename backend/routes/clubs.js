@@ -25,17 +25,21 @@ router.get('/:clubId', async (req, res) => {
 	return res.send(club);
 });
 
+router.use(authenticate);
+
 router.put('/:clubId', async (req, res) => {
-	// fix later
-	const clubId = req.params.clubId;
+	const club = await club.findOne({id: req.params.clubId});
+	if (club.uid != req.headers.uid) return res.sendStatus(401);
 	
-	if (await Club.exists[{id: clubId}])
+	const dbRes = await Club.updateOne({id: req.params.clubId}, {name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor});
+	
+	if (dbRes.acknowledged)
 	{
 		return res.sendStatus(200);
 	}
 	else
 	{
-		res.sendStatus(400);
+		return res.sendStatus(400);
 	}
 });
 
@@ -52,8 +56,6 @@ router.delete('/:clubId', async (req, res) => {
 		res.sendStatus(400);
 	}
 });
-
-router.use(authenticate);
 
 router.post('/', (req, res) => {
 	const clubId = uuidv4();
