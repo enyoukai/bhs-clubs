@@ -8,7 +8,8 @@ const clubSchema = new mongoose.Schema({
 	time: String,
 	advisor: String,
 	id: String,
-	uid: String
+	uid: String,
+	approved: Boolean
 })
 
 module.exports = mongoose.model("Club", clubSchema);

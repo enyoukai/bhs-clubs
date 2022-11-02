@@ -4,10 +4,12 @@ const authenticate = require('../authenticate');
 const admin = require('firebase-admin');
 const Club = require("../models/clubs");
 
-router.use(authenticate);
 
-router.get('/', async (req, res) => {
-	return res.json({pee: pee});
+router.get('/clubs', async (req, res) => {
+	return res.json(await Club.find({approved: false}));
 });
+
+// router.use(authenticate);
+
 
 module.exports = router;

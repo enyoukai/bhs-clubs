@@ -60,7 +60,7 @@ router.delete('/:clubId', async (req, res) => {
 router.post('/', (req, res) => {
 	const clubId = uuidv4();
 	
-	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, id: clubId, uid: req.headers.uid});
+		const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, id: clubId, uid: req.headers.uid, approved: false});
 	club.save();
 
 	return res.send(club);
