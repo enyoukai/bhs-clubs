@@ -7,7 +7,7 @@ import './Layout.scss'
 
 function Layout()
 {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const path = useLocation().pathname;
 
   const selected = "nav__tab--selected";
@@ -22,6 +22,7 @@ function Layout()
           <Link to='newclub' className={`nav__tab ${path == '/newclub' ? selected : unselected}`}>Add Club</Link>
           <Link to='feed' className={`nav__tab ${path == '/feed' ? selected : unselected}`}>Feed</Link>
           <Link to='calendar' className={`nav__tab ${path == '/calendar' ? selected : unselected}`}>Calendar</Link>
+          {isAdmin && <Link to='admin' className={`nav__tab ${path == '/admin' ? selected : unselected}`}>Admin</Link>}
         </div>
         {user === null ? <RegisterBar/> : <Avatar user={user}/>}
       </nav>

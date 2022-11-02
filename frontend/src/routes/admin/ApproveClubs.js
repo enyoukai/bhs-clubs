@@ -16,7 +16,7 @@ export default function ApproveClubs()
 		
 		fetchClubs();
 	}, []);
-
+	console.log(clubs);
 	async function approveClub(ID)
 	{
 		await axios.patch(`/admin/clubs/${ID}`, {approved: true}, {headers: {authorization: `Bearer ${await user.getIdToken()}`}});
@@ -24,6 +24,7 @@ export default function ApproveClubs()
 
 	return (
 		<div>
+		<div>Peding Clubs...</div>
 		{
 			clubs.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>)
 		}

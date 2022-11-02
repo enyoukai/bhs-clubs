@@ -16,8 +16,10 @@ import Calendar from './routes/Calendar';
 import Club from './routes/Club';
 import ModifyClub from './routes/ModifyClub';
 import ApproveClubs from './routes/admin/ApproveClubs';
+import AdminHome from './routes/admin/AdminHome';
 
 import ProtectedRoute from './routes/ProtectedRoute';
+import AdminRoute from './routes/admin/AdminRoute';
 
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -37,7 +39,7 @@ function App() {
           <Route path='club/:id' element={<Club/>}/>
           <Route path='modifyClub/:id' element={<ProtectedRoute><ModifyClub/></ProtectedRoute>}/>
           <Route path="admin">
-            <Route path="clubs" element={<ProtectedRoute><ApproveClubs/></ProtectedRoute>}/>
+            <Route path="clubs" element={<AdminRoute><ApproveClubs/></AdminRoute>}/>
           </Route>
         </Route>
       </Routes>
