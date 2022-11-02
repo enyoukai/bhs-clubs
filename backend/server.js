@@ -9,6 +9,8 @@ const adminRouter = require("./routes/admin");
 
 const serviceAccount = require('./firebase.json');
 
+require('dotenv').config();
+
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
   databaseURL: process.env.FIREBASE_DATABASE_URL

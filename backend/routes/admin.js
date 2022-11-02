@@ -1,15 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const authenticate = require('../authenticate');
+const authenticate = require('../middleware/authenticate');
+const adminAuthenticate = require('../middleware/adminAuthenticate');
 const admin = require('firebase-admin');
 const Club = require("../models/clubs");
 
+router.use(authenticate);
+router.use(adminAuthenticate);
 
 router.get('/clubs', async (req, res) => {
 	return res.json(await Club.find({approved: false}));
 });
 
-// router.use(authenticate);
-
+router.patch('/clubs/:clubID', async (req, res) => {
+	const dbRes = await Club.updateOne({id: req.params.clubID}, {approved: req.body.approved});
+});
 
 module.exports = router;
