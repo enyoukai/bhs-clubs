@@ -6,7 +6,7 @@ const Club = require("../models/clubs");
 
 router.get('/:userId', async (req, res) => {
 	const user = await admin.auth().getUser(req.params.userId);
-	const clubs = await Club.find({userId: req.params.userId});
+	const clubs = await Club.find({uid: req.params.userId});
 	
 	return res.json({email: user.email, creationTime : user.metadata.creationTime, clubs: clubs});
 });

@@ -24,7 +24,10 @@ export default function ModifyClub() {
         async function getClub()
         {
             const club = await API.getClubById(clubId);
-            if (club.uid != user.uid) navigate('/');
+            if (club.uid != user.uid) 
+            {
+                navigate('/');
+            }
 
             setLoading(false);
 
@@ -41,6 +44,7 @@ export default function ModifyClub() {
     async function submitChange()
     {
         await API.putClub(clubId, club.name, description, location, date, time, advisor, await user.getIdToken());
+        navigate('/');
     }
 
     return (
