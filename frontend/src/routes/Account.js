@@ -11,7 +11,8 @@ export default function Account()
 
 	useEffect(() => {
 		async function getUser() {
-			setUser(await API.getUser(userId));
+			const user = await API.getUser(userId);
+			setUser(user);
 		}
 
 		getUser();

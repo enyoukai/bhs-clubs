@@ -18,11 +18,9 @@ export default function NewClub() {
 
 	const navigate = useNavigate();
 
-	const auth = useAuth();
-
-	function submitClub() {
+	async function submitClub() {
 		const club = new Club(name, description, location, date, time, advisor);
-		API.createClub(club);
+		await API.createClub(club);
 		navigate('/');
 	}
 
