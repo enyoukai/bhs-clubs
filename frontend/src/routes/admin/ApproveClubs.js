@@ -15,7 +15,7 @@ export default function ApproveClubs()
 		}
 		
 		fetchClubs();
-	}, []);
+	}, [user]);
 	console.log(clubs);
 	async function approveClub(ID)
 	{
