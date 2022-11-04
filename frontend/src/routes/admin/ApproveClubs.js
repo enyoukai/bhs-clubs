@@ -36,10 +36,15 @@ function Club(props)
 {
 	return (
 		<div>
-			<div>{props.club.name}</div>
 			<div>{props.club.id}</div>
+			<div>{props.club.name}</div>
+			<div>{props.club.description}</div>
+			<div>{props.club.location}</div>
+			<div>{props.club.date}</div>
+			<div>{props.club.time}</div>
+			<div>{props.club.advisor}</div>
+			<div>{props.club.uid}</div>
 			<button onClick={props.approveClub}>Approve Club</button>
-
 		</div>
 	)
 }

@@ -24,6 +24,10 @@ export function AuthProvider(props)
 				const adminStatus = await axios.get(`/admin/adminCheck/${user.uid}`);
 				setIsAdmin(adminStatus.data.isAdmin);
 			}
+			else
+			{
+				setIsAdmin(false);
+			}
 
 			setSignInFetched(true);
 		});

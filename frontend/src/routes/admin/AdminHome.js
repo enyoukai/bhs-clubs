@@ -4,7 +4,7 @@ export default function Admin()
 {
     return (
         <div>
-            <Link to='/admin/clubs'>Clubs</Link>
+            <Link to='/admin/approve'>Clubs</Link>
         </div>
     )
 }

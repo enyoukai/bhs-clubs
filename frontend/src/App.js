@@ -39,7 +39,8 @@ function App() {
           <Route path='club/:id' element={<Club/>}/>
           <Route path='modifyClub/:id' element={<ProtectedRoute><ModifyClub/></ProtectedRoute>}/>
           <Route path="admin">
-            <Route path="clubs" element={<AdminRoute><ApproveClubs/></AdminRoute>}/>
+            <Route index element={<AdminRoute><AdminHome/></AdminRoute>}/>
+            <Route path="approve" element={<AdminRoute><ApproveClubs/></AdminRoute>}/>
           </Route>
         </Route>
       </Routes>
