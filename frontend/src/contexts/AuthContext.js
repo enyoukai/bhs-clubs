@@ -14,6 +14,7 @@ export function AuthProvider(props)
 	const [user, setUser] = useState(null);
 	const [signInFetched, setSignInFetched] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
+	const [token, setToken] = useState();
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(async function(user) {
@@ -23,6 +24,7 @@ export function AuthProvider(props)
 			{
 				const adminStatus = await axios.get(`/admin/adminCheck/${user.uid}`);
 				setIsAdmin(adminStatus.data.isAdmin);
+				setToken(await user.getIdToken());
 			}
 			else
 			{
@@ -39,7 +41,7 @@ export function AuthProvider(props)
 		return auth.signOut();
 	}
 
-	const authValue = {auth, user, signInFetched, isAdmin, signOut};
+	const authValue = {auth, user, signInFetched, isAdmin, token, signOut};
 
 	return (
 		<AuthContext.Provider value={authValue}>

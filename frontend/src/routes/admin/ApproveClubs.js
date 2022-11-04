@@ -4,21 +4,11 @@ import {useAuth} from '../../contexts/AuthContext';
 
 export default function ApproveClubs()
 {
-	const [clubs, setClubs] = useState([]);
-	const {user} = useAuth();
+	const {user, token} = useAuth();
 	
-	const {data, loading} = useApi('/admin/clubs');
-	console.log(data);
-	useEffect(() => {
-		async function fetchClubs()
-		{
-			// const res = await axios.get('/admin/clubs', {headers: {authorization: `Bearer ${await user.getIdToken()}`}});
-			// setClubs(res.data);
-		}
-		
-		fetchClubs();
-	}, [user]);
-	console.log(clubs);
+	const [data, loading] = useApi('/admin/clubs', 'get', token);
+	// console.log(loading);
+
 	async function approveClub(ID)
 	{
 		// await axios.patch(`/admin/clubs/${ID}`, {approved: true}, {headers: {authorization: `Bearer ${await user.getIdToken()}`}});
@@ -28,7 +18,8 @@ export default function ApproveClubs()
 		<div>
 		<div>Peding Clubs...</div>
 		{
-			clubs.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>)
+			!loading &&
+			data.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>)
 		}
 		</div>
 	)

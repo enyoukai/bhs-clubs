@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-const methods = {GET: 'GET', POST: 'POST', PUT: 'PUT', PATCH: 'PATCH', DELETE: 'DELETE'};
+const methods = {GET: 'get', POST: 'post', PUT: 'put', PATCH: 'patch', DELETE: 'delete'};
 
 export default function useApi(endpoint, method=methods.GET, token=null)
 {	
@@ -11,29 +11,17 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 	const config = token ? {headers: {Authorization: `Bearer ${token}`}} : {};
 
 	useEffect(() => {
-		setLoading(true);
-
-		switch(method) {
-			case methods.GET:
-				axios.get(endpoint, config).then(res => setData(res.data)).then(setLoading(false));
-				break;
-			case methods.POST:
-				axios.post(endpoint, config).then(res => setData(res.data)).then(setLoading(false));
-				break;
-			case methods.PUT:
-				axios.put(endpoint, config).then(res => setData(res.data)).then(setLoading(false));
-				break;
-			case methods.PATCH:
-				axios.patch(endpoint, config).then(res => setData(res.data)).then(setLoading(false));
-				break;
-			case methods.DELETE:
-				axios.delete(endpoint, config).then(res => setData(res.data)).then(setLoading(false));
-				break;
+		const fetchAxios = async () => {
+			setLoading(true);
+			const res = await axios({url: endpoint, method: method, ...config});
+			setData(res.data);
+			setLoading(false);
 		}
+		fetchAxios();
+	}
+	, [endpoint, token, method]);
 
-	}, [endpoint, token, method])
-
-	return {data, loading};
+	return [data, loading];
 }
 
 export {methods};
