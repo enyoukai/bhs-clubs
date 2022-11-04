@@ -6,20 +6,23 @@ export default function ApproveClubs()
 {
 	const {user, token} = useAuth();
 	
-	const [data, loading] = useApi('/admin/clubs', 'get', token);
-	// console.log(loading);
+	const getClubs = useApi('/admin/clubs', 'get', token);
+	// const patchClubs = useApi('')
+
+	useEffect(() => getClubs.invoke, []);
 
 	async function approveClub(ID)
 	{
 		// await axios.patch(`/admin/clubs/${ID}`, {approved: true}, {headers: {authorization: `Bearer ${await user.getIdToken()}`}});
+		// useApi(`/admin/clubs/${ID}`, 'patch', token, {approved: true});
 	}
 
 	return (
 		<div>
 		<div>Peding Clubs...</div>
 		{
-			!loading &&
-			data.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>)
+			!getClubs.loading &&
+			getClubs.data.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>)
 		}
 		</div>
 	)
