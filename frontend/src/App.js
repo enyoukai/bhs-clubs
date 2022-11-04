@@ -37,7 +37,7 @@ function App() {
           <Route path='feed' element={<Feed/>}/>
           <Route path='calendar' element={<Calendar/>}/>
           <Route path='club/:id' element={<Club/>}/>
-          <Route path='modifyClub/:id' element={<ProtectedRoute><ModifyClub/></ProtectedRoute>}/>
+          <Route path='modify/:id' element={<ProtectedRoute><ModifyClub/></ProtectedRoute>}/>
           <Route path="admin">
             <Route index element={<AdminRoute><AdminHome/></AdminRoute>}/>
             <Route path="approve" element={<AdminRoute><ApproveClubs/></AdminRoute>}/>
