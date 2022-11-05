@@ -6,6 +6,7 @@ const clubRouter = require("./routes/clubs");
 const authRouter = require("./routes/auth");
 const accountRouter = require("./routes/account");
 const adminRouter = require("./routes/admin");
+const feedRouter = require("./routes/feed");
 
 const serviceAccount = require('./firebase.json');
 
@@ -26,6 +27,7 @@ app.use("/clubs", clubRouter);
 app.use("/auth", authRouter);
 app.use("/account", accountRouter);
 app.use("/admin", adminRouter);
+app.use("/feed", feedRouter);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`)
