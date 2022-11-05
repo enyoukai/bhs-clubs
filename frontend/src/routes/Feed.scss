@@ -1,0 +1,13 @@
+.feed {
+	display:flex;
+	flex-direction: column;
+}
+
+.feed__title {
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+.feed__post {
+	margin-top: 1rem;
+}

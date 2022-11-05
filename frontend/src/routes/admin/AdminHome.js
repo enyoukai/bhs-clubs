@@ -3,8 +3,12 @@ import {Link} from 'react-router-dom';
 export default function Admin()
 {
     return (
-        <div>
-            <Link to='/admin/approve'>Clubs</Link>
-        </div>
+        <ul>
+            <li><Link to='/admin/approve'>Approve Clubs</Link></li>
+            <li><Link to='/admin/approve'>Moderation</Link></li>
+            <li><Link to='/admin/approve'>Users</Link></li>
+            <li><Link to='/admin/approve'>Feed</Link></li>
+
+        </ul>
     )
 }
