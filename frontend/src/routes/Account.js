@@ -1,4 +1,4 @@
-import API from '../api/API.js';
+import useApi from '../hooks/useApi';
 import { useParams, Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 
@@ -6,21 +6,17 @@ import Loading from '../components/Loading';
 
 export default function Account()
 {
-	const userId = useParams().id;
-	const [user, setUser] = useState(null);
+	const userID = useParams().id;
+	const [user, setUser] = useState();
+	const getUser = useApi('/account');
 
 	useEffect(() => {
-		async function getUser() {
-			const user = await API.getUser(userId);
-			setUser(user);
-		}
-
-		getUser();
-	}, [userId])
+		getUser.dispatch({populate: setUser, params: `/${userID}`});
+	}, [userID])
 	
 	return (
 		<div>
-			{ user ? <UserInfo user={user}/> : <Loading/>}
+			{ getUser.loading ? <Loading/> : <UserInfo user={user}/>}
 		</div>
 	)
 }

@@ -1,4 +1,4 @@
-import API from "../api/API";
+import useApi from "../hooks/useApi";
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
@@ -7,21 +7,17 @@ import './Club.scss';
 
 export default function Club()
 {
-    // make a hook later
-    const clubId = useParams().id;
-	const [club, setClub] = useState(null);
+    const clubID = useParams().id;
+	const [club, setClub] = useState();
+	const getClub = useApi('/clubs');
 
 	useEffect(() => {
-		async function getClub() {
-			setClub(await API.getClubById(clubId));
-		}
-
-		getClub();
-	}, [clubId]);
+		getClub.dispatch({params: `/${clubID}`, populate: setClub});
+	}, [clubID]);
 
     return (
 		<>
-            {club ? <ClubInfo club={club}/> : <Loading/>}
+            {getClub.loading ? <Loading/> :<ClubInfo club={club}/>}
 		</>
 	)
 }

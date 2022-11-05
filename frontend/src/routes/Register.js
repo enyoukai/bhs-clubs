@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import API from '../api/API';
-import { auth } from '../firebase';
+import {useAuth} from '../contexts/AuthContext';
+import {createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
 import './SignIn.scss';
@@ -11,6 +11,9 @@ function Register(props)
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
+
+	const {auth} = useAuth();
+
 	const navigate = useNavigate();
 
 	async function register() {
@@ -21,7 +24,7 @@ function Register(props)
 				return;
 
 			}
-			await API.register(email, password);
+			await createUserWithEmailAndPassword(auth, email, password);
 			navigate('/');
 		}
 		catch (error) {

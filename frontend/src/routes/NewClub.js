@@ -1,7 +1,6 @@
-import API from '../api/API'
+import useApi from '../hooks/useApi';
 
 import React, { useState, useEffect } from 'react';
-import { Club } from '../api/API'
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from '../contexts/AuthContext'
@@ -16,13 +15,24 @@ export default function NewClub() {
 	const [time, setTime] = useState('');
 	const [advisor, setAdvisor] = useState('');
 
+	const {token} = useAuth();
+
+	const createClub = useApi('/clubs', 'post', token);
+
 	const navigate = useNavigate();
 
 	async function submitClub() {
-		const club = new Club(name, description, location, date, time, advisor);
-		await API.createClub(club);
-		navigate('/');
+		const body = {name: name, description: description, location: location, date: date, time: time, advisor: advisor};
+		createClub.dispatch({body: body});
+
 	}
+
+	useEffect(() => {
+		if (!createClub.loading)
+		{
+			navigate('/');
+		}
+	}, [createClub.loading])
 
 	return (
 		<div className="newClub">

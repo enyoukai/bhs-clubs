@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
 
 import './Home.scss';
-import API from '../api/API.js';
+import useApi from '../hooks/useApi';
 
 function Home() {
   const [clubs, setClubs] = useState([]);
   const [search, setSearch] = useState('');
+
+  const getClubs = useApi('/clubs');
 
   let mousePosition = null;
 
@@ -26,8 +28,8 @@ function Home() {
 
   useEffect(() => {
     async function updateClubs() {
-      if (search !== '') setClubs(await API.searchClubs(search));
-      else setClubs(await API.getClubs());
+      if (search !== '') getClubs.dispatch({populate: setClubs, params: `?${search}`});
+      else getClubs.dispatch({populate: setClubs});
     }
 
     updateClubs();

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import API from '../api/API.js';
-
+import {useAuth} from '../contexts/AuthContext';
+import {signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
 import './SignIn.scss';
@@ -10,12 +10,14 @@ function SignIn() {
 	const [password, setPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
+	const {auth} = useAuth();
+
 	const navigate = useNavigate();
 
 	async function signIn()
 	{	
 		try {
-			await API.login(email, password);
+			await signInWithEmailAndPassword(auth, email, password);
 			navigate('/');
 		}
 		catch (error) {

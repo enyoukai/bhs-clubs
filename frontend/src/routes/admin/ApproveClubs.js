@@ -4,7 +4,7 @@ import {useAuth} from '../../contexts/AuthContext';
 
 export default function ApproveClubs()
 {
-	const {user, token} = useAuth();
+	const {token} = useAuth();
 	
 	const getClubs = useApi('/admin/clubs', methods.GET, token);
 	const patchClub = useApi('/admin/clubs', methods.PATCH, token);
@@ -15,7 +15,7 @@ export default function ApproveClubs()
 
 	async function approveClub(clubID)
 	{
-		patchClub.dispatch({body: {approved: true}, urlParam: `/${clubID}`});
+		patchClub.dispatch({body: {approved: true}, params: `/${clubID}`});
 		setClubs(prevClubs => prevClubs.filter(club => club.id !== clubID));
 	}
 

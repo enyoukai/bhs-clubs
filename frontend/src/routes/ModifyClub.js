@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import API from '../api/API';
+import useApi from '../hooks/useApi';
 
 import { useAuth } from '../contexts/AuthContext'
 
 import Loading from "../components/Loading";
 
 export default function ModifyClub() {
+    const {user, token} = useAuth();
+
     const clubId = useParams().id;
     const [club, setClub] = useState({});
 	const [description, setDescription] = useState('');
@@ -15,41 +17,44 @@ export default function ModifyClub() {
 	const [time, setTime] = useState('');
 	const [advisor, setAdvisor] = useState('');
 
-    const [loading, setLoading] = useState(true);
+    const getClub = useApi('/clubs');
+    const putClub = useApi('/clubs', 'put', token);
 
-    const {user} = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        async function getClub()
+            getClub.dispatch({populate: setClub, params: `/${clubId}`});
+        }
+    , []);
+
+    useEffect(() => {
+        if (!getClub.loading)
         {
-            const club = await API.getClubById(clubId);
             if (club.uid != user.uid) 
             {
                 navigate('/');
             }
 
-            setLoading(false);
-
-            setClub(club);
             setDescription(club.description);
             setLocation(club.location);
             setDate(club.date);
             setTime(club.time);
             setAdvisor(club.advisor);
         }
-        getClub();
-    }, []);
+    }, [getClub.loading])
+
+    console.log(description);
 
     async function submitChange()
     {
-        await API.putClub(clubId, club.name, description, location, date, time, advisor, await user.getIdToken());
+        const body = {name: club.name, description: description, location: location, date: date, time: time, advisor: advisor};
+        putClub.dispatch({body: body, params: `/${club.id}`});
         navigate('/');
     }
 
     return (
         <>
-            {loading ? <Loading/> :         
+            {getClub.loading ? <Loading/> :         
                 <div className="modify">
                 <header>Modifying {club.name}</header>
                 <div className="modify__form">
