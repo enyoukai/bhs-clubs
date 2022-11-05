@@ -6,15 +6,17 @@ export default function ApproveClubs()
 {
 	const {user, token} = useAuth();
 	
-	const getClubs = useApi('/admin/clubs', 'get', token);
-	// const patchClubs = useApi('')
+	const getClubs = useApi('/admin/clubs', methods.GET, token);
+	const patchClub = useApi('/admin/clubs', methods.PATCH, token);
 
-	useEffect(() => getClubs.invoke, []);
+	const [clubs, setClubs] = useState();
 
-	async function approveClub(ID)
+	useEffect(() => {getClubs.dispatch({populate: setClubs})}, []);
+
+	async function approveClub(clubID)
 	{
-		// await axios.patch(`/admin/clubs/${ID}`, {approved: true}, {headers: {authorization: `Bearer ${await user.getIdToken()}`}});
-		// useApi(`/admin/clubs/${ID}`, 'patch', token, {approved: true});
+		patchClub.dispatch({body: {approved: true}, urlParam: `/${clubID}`});
+		setClubs(prevClubs => prevClubs.filter(club => club.id !== clubID));
 	}
 
 	return (
@@ -22,7 +24,7 @@ export default function ApproveClubs()
 		<div>Peding Clubs...</div>
 		{
 			!getClubs.loading &&
-			getClubs.data.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>)
+			clubs.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>)
 		}
 		</div>
 	)

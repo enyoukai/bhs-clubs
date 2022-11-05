@@ -3,47 +3,32 @@ import { useState, useEffect } from 'react';
 
 const methods = {GET: 'get', POST: 'post', PUT: 'put', PATCH: 'patch', DELETE: 'delete'};
 
-export default function useApi()
+export default function useApi(endpoint, method=methods.GET, token=null)
 {	
-	const [data, setData] = useState();
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState();
 
 	const config = token ? {headers: {Authorization: `Bearer ${token}`}} : {};
 
-	async function invoke(endpoint, method=methods.GET, token=null, body)
+	async function dispatch({populate=null, body={}, urlParam='/'})
 	{
 		setLoading(true);
 		try
 		{
-			const res = await axios({url: endpoint, method: method, ...body, ...config});
-			setData(res.data);
+			const res = await axios({url: endpoint + urlParam, method: method, data: body, ...config});
+			
+			if (populate)
+			{
+				populate(res.data);
+			}
 			setLoading(false);
 		}
 		catch (error) {
 			setError(error);
 		}
-
 	}
-	// useEffect(() => {
-	// 	const fetchAxios = async () => {
-	// 		setLoading(true);
-	// 		try
-	// 		{
-	// 			const res = await axios({url: endpoint, method: method, ...body, ...config});
-	// 			setData(res.data);
-	// 			setLoading(false);
-	// 		}
-	// 		catch (error) {
-	// 			setError(error);
-	// 		}
-
-	// 	}
-	// 	fetchAxios();
-	// }
-	// , [endpoint, token, method]);
-
-	return {data, loading, error, invoke};
+	
+	return {loading, error, dispatch};
 }
 
 export {methods};
