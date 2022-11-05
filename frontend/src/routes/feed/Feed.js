@@ -21,7 +21,6 @@ export default function Feed()
 
 function Post(props)
 {
-	console.log(props.post.club[0]);
 	return (
 		<div className="feed__post">
 			<div><b>{props.post.title}</b> made by <b>{props.post.author}</b> for club <b>{props.post.club.name}</b></div>

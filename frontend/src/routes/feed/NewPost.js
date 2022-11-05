@@ -31,9 +31,6 @@ export default function NewPost()
 		}
 
 		createPost.dispatch({body: {title: title, body: body, club: selectClub}});
-
-		setTitle('');
-		setBody('');
 	}
 
 	useEffect(() => {
@@ -52,6 +49,8 @@ export default function NewPost()
 		if (!createPost.loading && !createPost.error)
 		{
 			setSuccess("Post successfully added!");
+			setTitle('');
+			setBody('');
 		}
 
 	}, [createPost.loading]);
