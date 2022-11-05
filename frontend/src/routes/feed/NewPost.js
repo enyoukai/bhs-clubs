@@ -9,7 +9,9 @@ export default function NewPost()
 	const [body, setBody] = useState('');
 	const [selectClub, setSelectClub] = useState('');
 
-	const [success, setSuccess] = useState(false);
+	const [success, setSuccess] = useState('');
+	const [error, setError] = useState('');
+
 	const [userData, setUserData] = useState();
 	const [clubs, setClubs] = useState();
 
@@ -22,7 +24,14 @@ export default function NewPost()
 	{
 		e.preventDefault();
 
+		if (title === '' || body === '') 
+		{
+			setError("Fields cannot be blank");
+			return;
+		}
+
 		createPost.dispatch({body: {title: title, body: body, club: selectClub}});
+
 		setTitle('');
 		setBody('');
 	}
@@ -35,14 +44,14 @@ export default function NewPost()
 		if (!getUser.loading)
 		{
 			setClubs(userData.clubs);
-			// setSelectClub(userData.clubs[0].id);
+			userData.clubs.length > 0 ? setSelectClub(userData.clubs[0].id) : setSelectClub('');
 		}
 	}, [getUser.loading]);
 	
 	useEffect(() => {
 		if (!createPost.loading && !createPost.error)
 		{
-			setSuccess(true);
+			setSuccess("Post successfully added!");
 		}
 
 	}, [createPost.loading]);
@@ -52,7 +61,8 @@ export default function NewPost()
 			{clubs !== undefined &&
 			<div>
 				<h2>New Post</h2>
-				{success && <div>Post successfully created!</div>}
+				{success && <div>{success}</div>}
+				{error && <div>{error}</div>}
 				<form onSubmit={handleSubmit}>
 					<label>
 						Title:
