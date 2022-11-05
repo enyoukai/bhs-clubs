@@ -6,7 +6,7 @@ const methods = {GET: 'get', POST: 'post', PUT: 'put', PATCH: 'patch', DELETE: '
 export default function useApi(endpoint, method=methods.GET, token=null)
 {	
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState();
+	const [error, setError] = useState(null);
 	const [onComplete, setOnComplete] = useState(0);
 
 	const config = token ? {headers: {Authorization: `Bearer ${token}`}} : {};
@@ -21,14 +21,15 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 			if (populate)
 			{
 				populate(res.data);
+				setError(null);
 			}
-			setOnComplete(prev => prev + 1);
 			setLoading(false);
 		}
 		catch (error) {
 			setError(error);
 		}
 
+		setOnComplete(prev => prev + 1);
 	}
 	
 	return {loading, error, onComplete, dispatch};

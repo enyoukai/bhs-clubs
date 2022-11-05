@@ -11,12 +11,14 @@ import Register from './routes/Register'
 import NewClub from './routes/NewClub'
 import Account from './routes/Account'
 import SignOut from './routes/SignOut';
-import Feed from './routes/Feed';
 import Calendar from './routes/Calendar';
 import Club from './routes/Club';
 import ModifyClub from './routes/ModifyClub';
 import ApproveClubs from './routes/admin/ApproveClubs';
 import AdminHome from './routes/admin/AdminHome';
+
+import Feed from './routes/feed/Feed';
+import NewPost from './routes/feed/NewPost';
 
 import ProtectedRoute from './routes/ProtectedRoute';
 import AdminRoute from './routes/admin/AdminRoute';
@@ -34,7 +36,11 @@ function App() {
           <Route path='newclub' element={<ProtectedRoute><NewClub/></ProtectedRoute>}/>
           <Route path='account/:id' element={<Account/>}/>
           <Route path='signout' element={<SignOut/>}/>
-          <Route path='feed' element={<Feed/>}/>
+          <Route path='feed'>
+            <Route index element={<ProtectedRoute><Feed/></ProtectedRoute>}/>
+            <Route path='newpost' element={<ProtectedRoute><NewPost/></ProtectedRoute>}/>
+          </Route>
+          <Route path='newpost' element={<NewPost/>}/>
           <Route path='calendar' element={<Calendar/>}/>
           <Route path='club/:id' element={<Club/>}/>
           <Route path='modify/:id' element={<ProtectedRoute><ModifyClub/></ProtectedRoute>}/>
