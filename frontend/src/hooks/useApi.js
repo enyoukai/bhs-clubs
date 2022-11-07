@@ -8,8 +8,9 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [onComplete, setOnComplete] = useState(0);
+	const [refreshToken, setRefreshToken] = useState(token);
 
-	const config = token ? {headers: {Authorization: `Bearer ${token}`}} : {};
+	const config = refreshToken ? {headers: {Authorization: `Bearer ${refreshToken}`}} : {};
 
 	async function dispatch({populate=null, body={}, params=''})
 	{

@@ -26,7 +26,7 @@ router.put('/:clubId', async (req, res) => {
 	const club = await Club.findOne({_id: req.params.clubId});
 	if (club.uid != req.headers.uid) return res.sendStatus(401);
 	
-	const dbRes = await Club.updateOne({_id: req.params.clubId}, {name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor});
+	const dbRes = await Club.updateOne({_id: req.params.clubId}, {name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, infoPage: req.body.infoPage});
 	
 	if (dbRes.acknowledged)
 	{
@@ -65,7 +65,7 @@ router.post('/', (req, res) => {
 		return res.sendStatus(400);
 	}
 
-	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, uid: req.headers.uid, approved: false});
+	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, uid: req.headers.uid, approved: false, infoPage: ""});
 	club.save();
 
 	return res.send(club);

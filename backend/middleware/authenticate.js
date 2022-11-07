@@ -1,3 +1,5 @@
+const ERROR_EXPIRED = 'auth/id-token-expired';
+
 // https://medium.com/@athletecoder/authenticate-routes-with-express-firebase-18faff0edea6
 const admin = require('firebase-admin');
 
@@ -27,7 +29,8 @@ function authenticate(req, res, next) {
    next();
   })
   .catch(function (error) {
-   console.log(error);
+   if (error === ERROR_EXPIRED) return res.status(401).send('Expired token');
+
    res.status(401).send('Unauthorized Header. Access Denied')
   });
  

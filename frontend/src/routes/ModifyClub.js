@@ -16,6 +16,7 @@ export default function ModifyClub() {
 	const [date, setDate] = useState('');
 	const [time, setTime] = useState('');
 	const [advisor, setAdvisor] = useState('');
+    const [infoPage, setInfoPage] = useState('');
 
     const getClub = useApi('/clubs');
     const putClub = useApi('/clubs', 'put', token);
@@ -40,12 +41,13 @@ export default function ModifyClub() {
             setDate(club.date);
             setTime(club.time);
             setAdvisor(club.advisor);
+            setInfoPage(club.infoPage);
         }
     }, [getClub.loading])
 
     async function submitChange()
     {
-        const body = {name: club.name, description: description, location: location, date: date, time: time, advisor: advisor};
+        const body = {name: club.name, description: description, location: location, date: date, time: time, advisor: advisor, infoPage: infoPage};
         await putClub.dispatch({body: body, params: `/${club.id}`});
         navigate('/');
     }
@@ -66,6 +68,8 @@ export default function ModifyClub() {
                     <input value={time} onChange={e => setTime(e.target.value)}></input>
                     <div>Advisor</div>
                     <input value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
+                    <div>Info Page</div>
+                    <input value={infoPage} onChange={e => setInfoPage(e.target.value)}></input>
                     <button onClick={submitChange}>submit</button>
                 </div>
             </div>}

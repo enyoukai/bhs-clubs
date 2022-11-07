@@ -29,12 +29,22 @@ function ClubInfo(props)
     return (
 		<div className="clubInfo">
 			<div className="clubInfo__text clubInfo__text--large">{club.name}</div>
+			{club.infoPage ? <div>{club.infoPage}</div> : <InfoFallback club={club}/>}
+
+		</div>
+    )
+}
+
+function InfoFallback(props)
+{
+	const club = props.club;
+	return (
+		<div>
 			<div>{club.description}</div>
 			<div>{club.location}</div>
 			<div>{club.date}</div>
 			<div>{club.time}</div>
 			<div>{club.advisor}</div>
-			<div></div>
 		</div>
-    )
+	)
 }
