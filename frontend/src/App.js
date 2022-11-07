@@ -16,6 +16,7 @@ import Club from './routes/Club';
 import ModifyClub from './routes/ModifyClub';
 import ApproveClubs from './routes/admin/ApproveClubs';
 import AdminHome from './routes/admin/AdminHome';
+import Moderation from './routes/admin/Moderation';
 
 import Feed from './routes/feed/Feed';
 import NewPost from './routes/feed/NewPost';
@@ -47,6 +48,7 @@ function App() {
           <Route path="admin">
             <Route index element={<AdminRoute><AdminHome/></AdminRoute>}/>
             <Route path="approve" element={<AdminRoute><ApproveClubs/></AdminRoute>}/>
+            <Route path="moderation" element={<AdminRoute><Moderation/></AdminRoute>}/>
           </Route>
         </Route>
       </Routes>

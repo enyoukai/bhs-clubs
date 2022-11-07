@@ -21,9 +21,10 @@ export default function Feed()
 
 function Post(props)
 {
+	const post = props.post;
 	return (
 		<div className="feed__post">
-			<div><b>{props.post.title}</b> made by <b>{props.post.author}</b> for club <b>{props.post.club.name}</b></div>
+			<div><b>{post.title}</b> made by <b>{post.author}</b> for club <b>{post.club ? post.club.name : "DELETED CLUB"}</b></div>
 			<div>{props.post.body}</div>
 		</div>
 	)

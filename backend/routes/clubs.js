@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
 		return res.json(await Club.find({approved: true}));
 	}
 
-	console.log(req.query.name);
 	return res.json(await Club.find({name: {$regex: req.query.name, $options: 'i'}}));
 });
 
@@ -39,17 +38,23 @@ router.put('/:clubId', async (req, res) => {
 	}
 });
 
-router.delete('/:clubId', async (req, res) => {
-	const clubId = req.params.clubId;
-	
-	if (await Club.exists({_id: clubId}))
+router.delete('/:id', async (req, res) => {
+	const id = req.params.id;
+	const uid = req.headers.uid;
+	const club = await Club.find({_id: id});
+
+	if (!club)
 	{
-		await Club.deleteOne({_id: clubId});
-		return res.sendStatus(200);
+		return res.sendStatus(404);
 	}
-	else
+	else if (uid !== club.uid || uid !== process.env.ADMIN)
 	{
-		res.sendStatus(400);
+		return res.sendStatus(400);
+	}
+	else (await Club.exists({_id: id}))
+	{
+		console.log(await Club.deleteOne({_id: id}));
+		return res.sendStatus(200);
 	}
 });
 
