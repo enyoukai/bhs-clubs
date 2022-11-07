@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
+const {Schema} = mongoose;
 
 const postSchema = new mongoose.Schema({
 	title: String,
 	author: String,
 	body: String,
 	time: String,
-	club: {},
+	club: {type: Schema.Types.ObjectId, ref: 'Club'}
 })
 
 postSchema.virtual('id').get(function(){
