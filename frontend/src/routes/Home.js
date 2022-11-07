@@ -3,10 +3,13 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import './Home.scss';
 import useApi from '../hooks/useApi';
+import useDebounce from '../hooks/useDebounce';
 
 function Home() {
   const [clubs, setClubs] = useState([]);
   const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 500);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const submitted = searchParams.get('submitted');
 
@@ -30,12 +33,12 @@ function Home() {
 
   useEffect(() => {
     async function updateClubs() {
-      if (search !== '') getClubs.dispatch({populate: setClubs, params: `?${search}`});
+      if (debouncedSearch !== '') getClubs.dispatch({populate: setClubs, params: `?name=${debouncedSearch}`});
       else getClubs.dispatch({populate: setClubs});
     }
 
     updateClubs();
-  }, [search]);
+  }, [debouncedSearch]);
 
   return (
     <div>

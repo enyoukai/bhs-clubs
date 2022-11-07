@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
 		return res.json(await Club.find({approved: true}));
 	}
 
+	console.log(req.query.name);
 	return res.json(await Club.find({name: {$regex: req.query.name, $options: 'i'}}));
 });
 
