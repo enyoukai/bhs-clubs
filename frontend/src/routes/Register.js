@@ -3,6 +3,8 @@ import {useAuth} from '../contexts/AuthContext';
 import {createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
+import useApi from '../hooks/useApi';
+
 import './SignIn.scss';
 
 function Register(props)
@@ -11,8 +13,10 @@ function Register(props)
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
+	const {auth, token} = useAuth();
 
-	const {auth} = useAuth();
+	const {loading: registerLoading, error: registerError, dispatch: registerDispatch} = useApi('/account', 'post', token);
+
 
 	const navigate = useNavigate();
 
@@ -25,6 +29,7 @@ function Register(props)
 
 			}
 			await createUserWithEmailAndPassword(auth, email, password);
+			await registerDispatch({});
 			navigate('/');
 		}
 		catch (error) {

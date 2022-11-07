@@ -11,13 +11,13 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 
 	const config = token ? {headers: {Authorization: `Bearer ${token}`}} : {};
 
-	async function dispatch({populate, body={}, params=''})
+	async function dispatch({populate=null, body={}, params=''})
 	{
 		setLoading(true);
 		try
 		{
 			const res = await axios({url: endpoint + params, method: method, data: body, ...config});
-			
+
 			if (populate)
 			{
 				populate(res.data);
@@ -29,7 +29,7 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 		}
 		setLoading(false);
 		setOnComplete(prev => prev + 1);
-
+		
 		return;
 	}
 	
