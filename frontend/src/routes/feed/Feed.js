@@ -14,7 +14,7 @@ export default function Feed()
 		<div className="feed">
 			<div className="feed__title">Recent Club Activities...</div>
 			<Link to='newpost'>Add new post</Link>
-			{!getFeed.loading && feed.map(post => <Post post={post}/>)}
+			{!getFeed.loading && feed.map(post => <Post key={post.id} post={post}/>)}
 		</div>
 	)
 }

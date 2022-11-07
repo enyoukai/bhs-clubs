@@ -4,11 +4,6 @@ const Club = require("../models/clubs");
 const express = require("express");
 const authenticate = require('../middleware/authenticate');
 
-const {
-	v1: uuidv1,
-	v4: uuidv4,
-} = require('uuid');
-
 const router = express.Router();
   
 router.get('/', async (req, res) => {
@@ -21,17 +16,17 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:clubId', async (req, res) => {
-	const club = await Club.findOne({id: req.params.clubId, approved: true});
+	const club = await Club.findOne({_id: req.params.clubId, approved: true});
 	return res.send(club);
 });
 
 router.use(authenticate);
 
 router.put('/:clubId', async (req, res) => {
-	const club = await Club.findOne({id: req.params.clubId});
+	const club = await Club.findOne({_id: req.params.clubId});
 	if (club.uid != req.headers.uid) return res.sendStatus(401);
 	
-	const dbRes = await Club.updateOne({id: req.params.clubId}, {name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor});
+	const dbRes = await Club.updateOne({_id: req.params.clubId}, {name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor});
 	
 	if (dbRes.acknowledged)
 	{
@@ -46,9 +41,9 @@ router.put('/:clubId', async (req, res) => {
 router.delete('/:clubId', async (req, res) => {
 	const clubId = req.params.clubId;
 	
-	if (await Club.exists({id: clubId}))
+	if (await Club.exists({_id: clubId}))
 	{
-		await Club.deleteOne({id: clubId});
+		await Club.deleteOne({_id: clubId});
 		return res.sendStatus(200);
 	}
 	else
@@ -58,8 +53,13 @@ router.delete('/:clubId', async (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	const clubId = uuidv4();
-	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, id: clubId, uid: req.headers.uid, approved: false});
+	const body = req.body;
+	if (body.name == '' || body.description =='' || body.location == '' || body.date == '' || body.time == '' || body.advisor == '') 
+	{
+		return res.sendStatus(400);
+	}
+
+	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, uid: req.headers.uid, approved: false});
 	club.save();
 
 	return res.send(club);

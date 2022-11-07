@@ -17,7 +17,7 @@ router.get('/clubs', async (req, res) => {
 });
 
 router.patch('/clubs/:clubID', async (req, res) => {
-	const dbRes = await Club.updateOne({id: req.params.clubID}, {approved: req.body.approved});
+	const dbRes = await Club.updateOne({_id: req.params.clubID}, {approved: req.body.approved});
 });
 
 module.exports = router;

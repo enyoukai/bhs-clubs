@@ -23,13 +23,14 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 				populate(res.data);
 				setError(null);
 			}
-			setLoading(false);
 		}
 		catch (error) {
 			setError(error);
 		}
-
+		setLoading(false);
 		setOnComplete(prev => prev + 1);
+
+		return;
 	}
 	
 	return {loading, error, onComplete, dispatch};

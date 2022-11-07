@@ -12,13 +12,11 @@ router.get('/', async (req, res) => {
 router.use(authenticate);
 
 router.post('/', async (req, res) => {
-	console.log(req.body.club);
 	const club = await Club.findOne({id: req.body.club});
-	console.log(club);
 	const post = new Post({title: req.body.title, body: req.body.body, author: req.headers.uid, club: club});
 	post.save();
 
-	return res.sendStatus(200);
+	return res.sendStatus(201);
 });
 
 module.exports = router;

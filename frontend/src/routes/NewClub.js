@@ -8,12 +8,8 @@ import { useAuth } from '../contexts/AuthContext'
 import './NewClub.scss';
 
 export default function NewClub() {
-	const [name, setName] = useState('');
-	const [description, setDescription] = useState('');
-	const [location, setLocation] = useState('');
-	const [date, setDate] = useState('');
-	const [time, setTime] = useState('');
-	const [advisor, setAdvisor] = useState('');
+	const [formState, setFormState] = useState({name: '', description: '', location: '', date: '', time: '', advisor: ''});
+	const [error, setError] = useState('');
 
 	const {token} = useAuth();
 
@@ -22,34 +18,54 @@ export default function NewClub() {
 	const navigate = useNavigate();
 
 	async function submitClub() {
-		const body = {name: name, description: description, location: location, date: date, time: time, advisor: advisor};
-		createClub.dispatch({body: body});
+		let errorFields = [];
 
+		for (const [key, value] of Object.entries(formState))
+		{
+			if (value == '') errorFields.push(key);
+		}
+
+		if (errorFields.length > 0)
+		{
+			setError("Following fields need to be filled: " + errorFields.join(' '));
+			return;
+		}
+		const body = {name: formState.name, description: formState.description, location: formState.location, date: formState.date, time: formState.time, advisor: formState.advisor};
+
+		createClub.dispatch({body: body});
+	}
+
+	function handleChange(e)
+	{
+		setFormState((prevState) => ({...prevState, [e.target.name]: e.target.value}));
+
+		if (error) setError('');
 	}
 
 	useEffect(() => {
-		if (!createClub.loading)
+		if (!createClub.loading && !createClub.error)
 		{
-			navigate('/');
+			navigate('/?submitted=true');
 		}
 	}, [createClub.loading])
 
 	return (
 		<div className="newClub">
 			<div className="newClub__text newClub__text--large">Requesting Club</div>
+			{error && <div className="newClub__error">{error}</div>}
 			<div className="newClub__form">
 				<div className="newClub__text">Name</div>
-				<input value={name} className="newClub__input" onChange={e => setName(e.target.value)}></input>
+				<input name='name' value={formState.name} className="newClub__input" onChange={handleChange}></input>
 				<div className="newClub__text">Description</div>
-				<textarea value={description} className="newClub__input" onChange={e => setDescription(e.target.value)}></textarea>
+				<textarea name='description' value={formState.description} className="newClub__input" onChange={handleChange}></textarea>
 				<div className="newClub__text">Location</div>
-				<input value={location} className="newClub__input" onChange={e => setLocation(e.target.value)}></input>
-				<div className="newClub__text">Day</div>
-				<input value={date} className="newClub__input" onChange={e => setDate(e.target.value)}></input>
+				<input name='location' value={formState.location} className="newClub__input" onChange={handleChange}></input>
+				<div className="newClub__text">Date</div>
+				<input name='date' value={formState.date} className="newClub__input" onChange={handleChange}></input>
 				<div className="newClub__text">Time</div>
-				<input value={time} className="newClub__input" onChange={e => setTime(e.target.value)}></input>
+				<input name='time' value={formState.time} className="newClub__input" onChange={handleChange}></input>
 				<div className="newClub__text">Advisor</div>
-				<input value={advisor} className="newClub__input" onChange={e => setAdvisor(e.target.value)}></input>
+				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleChange}></input>
 			</div>
 			<button className="newClub__btn" onClick={submitClub}>Add Club</button>
 		</div>

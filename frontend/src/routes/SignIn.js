@@ -21,7 +21,6 @@ function SignIn() {
 			navigate('/');
 		}
 		catch (error) {
-			console.log(error.message);
 			setErrorMessage(error.message);
 		}
 	}

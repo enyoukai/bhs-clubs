@@ -43,12 +43,10 @@ export default function ModifyClub() {
         }
     }, [getClub.loading])
 
-    console.log(description);
-
     async function submitChange()
     {
         const body = {name: club.name, description: description, location: location, date: date, time: time, advisor: advisor};
-        putClub.dispatch({body: body, params: `/${club.id}`});
+        await putClub.dispatch({body: body, params: `/${club.id}`});
         navigate('/');
     }
 

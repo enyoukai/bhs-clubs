@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import './Home.scss';
 import useApi from '../hooks/useApi';
@@ -7,6 +7,8 @@ import useApi from '../hooks/useApi';
 function Home() {
   const [clubs, setClubs] = useState([]);
   const [search, setSearch] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const submitted = searchParams.get('submitted');
 
   const getClubs = useApi('/clubs');
 
@@ -37,6 +39,7 @@ function Home() {
 
   return (
     <div>
+      {submitted && <div>Club request has been submitted. It will be approved shortly</div>}
       <OptionsBar setSearch={setSearch}/>
       <table className="clubTable">
         <tbody>
