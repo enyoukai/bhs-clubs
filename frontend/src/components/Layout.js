@@ -26,9 +26,7 @@ function Layout()
         </div>
         {user === null ? <RegisterBar/> : <Avatar user={user}/>}
       </nav>
-      {/* <div className="outlet"> */}
         <Outlet />
-      {/* </div> */}
     </React.Fragment>
   )
 }

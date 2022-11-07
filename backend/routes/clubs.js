@@ -47,9 +47,9 @@ router.delete('/:id', async (req, res) => {
 	{
 		return res.sendStatus(404);
 	}
-	else if (uid !== club.uid || uid !== process.env.ADMIN)
+	else if (uid !== club.uid && uid !== process.env.ADMIN)
 	{
-		return res.sendStatus(400);
+		return res.sendStatus(401);
 	}
 	else (await Club.exists({_id: id}))
 	{
