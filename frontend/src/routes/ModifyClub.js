@@ -6,6 +6,8 @@ import { useAuth } from '../contexts/AuthContext'
 
 import Loading from "../components/Loading";
 
+import axios from 'axios';
+
 export default function ModifyClub() {
     const {user, token} = useAuth();
 
@@ -17,6 +19,7 @@ export default function ModifyClub() {
 	const [time, setTime] = useState('');
 	const [advisor, setAdvisor] = useState('');
     const [infoPage, setInfoPage] = useState('');
+    const [image, setImage] = useState();
 
     const getClub = useApi('/clubs');
     const putClub = useApi('/clubs', 'put', token);
@@ -45,8 +48,13 @@ export default function ModifyClub() {
         }
     }, [getClub.loading])
 
-    async function submitChange()
+    async function submitChange(e)
     {
+        e.preventDefault(); 
+        let imageForm = new FormData();
+        imageForm.append('clubImage', image);
+     
+        await axios.post(`/clubs/${club.id}/upload`, imageForm, {headers: {"Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}`}});
         const body = {name: club.name, description: description, location: location, date: date, time: time, advisor: advisor, infoPage: infoPage};
         await putClub.dispatch({body: body, params: `/${club.id}`});
         navigate('/');
@@ -57,21 +65,31 @@ export default function ModifyClub() {
             {getClub.loading ? <Loading/> :         
                 <div className="modify">
                 <header>Modifying {club.name}</header>
-                <div className="modify__form">
-                    <div>Description</div>
+                <form onSubmit={submitChange} className="modify__form">
+                    <label>Description</label>
                     <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
-                    <div>Location</div>
+                    <br/>
+                    <label>Location</label>
                     <input value={location} onChange={e => setLocation(e.target.value)}></input>
-                    <div >Day</div>
+                    <br/>
+                    <label >Day</label>
                     <input value={date} onChange={e => setDate(e.target.value)}></input>
-                    <div>Time</div>
+                    <br/>
+                    <label>Time</label>
                     <input value={time} onChange={e => setTime(e.target.value)}></input>
-                    <div>Advisor</div>
+                    <br/>
+                    <label>Advisor</label>
                     <input value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
-                    <div>Info Page</div>
-                    <input value={infoPage} onChange={e => setInfoPage(e.target.value)}></input>
-                    <button onClick={submitChange}>submit</button>
-                </div>
+                    <br/>
+                    <label>Info Page</label>
+                    <textarea value={infoPage} onChange={e => setInfoPage(e.target.value)}></textarea>
+                    <br/>
+                    <input type="file" name="clubImage" accept="image/*" onChange={e => setImage(e.target.files[0])}/>
+                    <br/>
+                    {image && <img width={"100rem"} src={URL.createObjectURL(image)}></img>}
+                    <br/>
+                    <button type="submit">submit</button>
+                </form>
             </div>}
         </>
 

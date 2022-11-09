@@ -22,6 +22,8 @@ const PORT = 3001
 
 mongoose.connect("mongodb://localhost/clubsdb");
 
+app.use('/images', express.static('images'));
+
 app.use(express.json());
 app.use("/clubs", clubRouter);
 app.use("/auth", authRouter);
