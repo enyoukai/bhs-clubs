@@ -9,7 +9,8 @@ const clubSchema = new mongoose.Schema({
 	advisor: String,
 	uid: String,
 	approved: Boolean,
-	infoPage: String
+	infoPage: String,
+	img: String
 });
 
 // https://stackoverflow.com/questions/7034848/mongodb-output-id-instead-of-id

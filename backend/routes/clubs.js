@@ -3,10 +3,10 @@ const admin = require('firebase-admin');
 const Club = require("../models/clubs");
 const express = require("express");
 const authenticate = require('../middleware/authenticate');
-const multer = require('multer');
+const upload = require('../middleware/upload');
 
 const router = express.Router();
-  
+
 router.get('/', async (req, res) => {
 	if (Object.keys(req.query).length === 0)
 	{
@@ -71,20 +71,10 @@ router.post('/', async (req, res) => {
 	return res.send(club);
 });
 
-const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-	  cb(null, "./images");
-	},
-	filename: (req, file, cb) => {
-	  cb(null, file.fieldname);
-	}
-  });
-  
-const upload = multer({storage: storage});
-
 router.post('/:id/upload', upload.single('clubImage'), async (req, res) =>
 {
-	// console.log(JSON.stringify(req.file))
+	await Club.updateOne({_id: req.params.id}, {img: req.file.filename});
+
 	return res.sendStatus(200);
 });
 
