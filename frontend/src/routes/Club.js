@@ -2,16 +2,20 @@ import useApi from "../hooks/useApi";
 import React, { useState, useEffect } from 'react';
 import {Buffer} from 'buffer';
 import { useParams } from "react-router-dom";
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import {useAuth} from '../contexts/AuthContext';
 
 import Loading from '../components/Loading';
 import './Club.scss';
 import axios from 'axios';
+import {v4 as uuidv4} from 'uuid';
 
 export default function Club()
 {
     const clubID = useParams().id;
 	const [club, setClub] = useState();
 	const getClub = useApi('/clubs');
+	const {signInFetched} = useAuth();
 
 	useEffect(() => {
 		getClub.dispatch({params: `/${clubID}`, populate: setClub});
@@ -27,36 +31,137 @@ export default function Club()
 function ClubInfo(props)
 {
 	const club = props.club;
+	const [editing, setEditing] = useState(false);
+	const {user, signInFetched} = useAuth();
 
     return (
 		<div className="clubInfo">
 			<div className="clubInfo__text clubInfo__text--large">{club.name}</div>
-			{club.infoPage ? <Info club={club}/> : <InfoFallback club={club}/>}
-
+			{signInFetched && user !== null && club.uid === user.uid && <button onClick={() => setEditing(!editing)}>Edit</button>}
+			{editing ? <ModifyInfo setEditing={setEditing}  club={club}/> : <ReadOnlyInfo club={club}/>}
 		</div>
     )
 }
 
-function Info(props)
+function ModifyInfo(props)
 {
 	const club = props.club;
-	const [image, setImage] = useState();
-	useEffect(() =>
+	const {token, signInFetched} = useAuth();
+
+	const updateForm = useApi(`/clubs/${club.id}/info`, 'put', token);
+
+	const [items, setItems] = useState([]);
+	const [input, setInput] = useState('');
+	const [submitStatus, setSubmitStatus] = useState('');
+
+	function handleOnDragEnd(result) {
+		if (result.destination === null) return;
+
+		const itemsClone = Array.from(items);
+
+		const [source] = itemsClone.splice(result.source.index, 1);
+		itemsClone.splice(result.destination.index, 0, source);
+		setItems(itemsClone);
+	}
+	
+	async function handleSubmit()
 	{
-		async function fetchImage()
+		setSubmitStatus('Saving...');
+		const payload = items.map((item) => ({type: item.type, content: item.content})); 
+		await updateForm.dispatch({body: payload});
+
+		props.setEditing(false);
+	}
+
+	function addDrag()
+	{
+		const newItems = items.concat([{type: 'text', content: input, id: uuidv4()}]);
+		setItems(newItems);
+		setInput('');
+	}
+
+	useEffect(() => {
+		async function fetch()
 		{
-			const res = await axios.get(`/images/${club.img}`, {responseType: 'arraybuffer'});
-			setImage(Buffer.from(res.data, 'binary').toString('base64'));
+			const data = (await axios.get(`/clubs/${club.id}`)).data.infoFormat;
+			const processed = data.map((item) => ({type: item.type, content: item.content, id: uuidv4()}));
+	
+			setItems(processed);
 		}
-		fetchImage();
+		fetch();
+		
 	}, []);
+
+	function deleteItem(index)
+	{
+		return () => {
+			setItems(items => {
+				const nextItems = Array.from(items);
+				nextItems.splice(index, 1);
+
+				return nextItems;
+			});
+		}
+	}
+
 	return (
 		<div>
-			<div>{club.infoPage}</div>
-			<img src={`data:image/jpeg;charset=utf-8;base64,${image}`}/>
+			{submitStatus && <div>{submitStatus}</div>}
+			<DragDropContext onDragEnd={handleOnDragEnd}>
+				<Droppable droppableId="content">
+					{(provided) => (				
+						<ul {...provided.droppableProps} ref={provided.innerRef}>
+							{items.map(({content, id}, index) => {
+								return (
+									<Draggable key={id} draggableId={id} index={index}>
+										{(provided) => (
+											<li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+												<span>{content}</span>
+												<button onClick={deleteItem(index)}>delete</button>
+												{/* <img src="http://localhost:3001/images/image.png"/> */}
+											</li>
+										)}
+									</Draggable>
+								)
+							})}
+							{provided.placeholder}
+						</ul>
+					)}
+				</Droppable>
+			</DragDropContext>
+			<textarea value={input} onChange={(e) => setInput(e.target.value)}/>
+			<br/>
+			<button onClick={addDrag}>add</button>
+			<br/>
+			<button onClick={handleSubmit}>submit</button>
 		</div>
 	)
+}
 
+function ReadOnlyInfo(props)
+{
+	const club = props.club;
+	const [items, setItems] = useState([]);
+
+	useEffect(() => {
+		async function fetch()
+		{
+			const data = (await axios.get(`/clubs/${club.id}`)).data.infoFormat;
+			const processed = data.map((item) => ({type: item.type, content: item.content}));
+	
+			setItems(processed);
+		}
+		fetch();
+		
+	}, []);
+
+	return (
+		<div>
+			<ul>
+				{items.map(({content}, idx) => <li key={idx}>{content}</li>)}
+			</ul>
+		</div>
+	)
 }
 
 function InfoFallback(props)

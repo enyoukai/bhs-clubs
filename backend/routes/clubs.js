@@ -78,4 +78,12 @@ router.post('/:id/upload', upload.single('clubImage'), async (req, res) =>
 	return res.sendStatus(200);
 });
 
+
+
+router.put('/:id/info', async (req, res) => {
+	console.log(req.body);
+	await Club.updateOne({_id: req.params.id}, {infoFormat: req.body});
+	return res.sendStatus(201);
+});
+
 module.exports = router;

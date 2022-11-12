@@ -18,8 +18,6 @@ export default function ModifyClub() {
 	const [date, setDate] = useState('');
 	const [time, setTime] = useState('');
 	const [advisor, setAdvisor] = useState('');
-    const [infoPage, setInfoPage] = useState('');
-    const [image, setImage] = useState();
 
     const getClub = useApi('/clubs');
     const putClub = useApi('/clubs', 'put', token);
@@ -44,18 +42,17 @@ export default function ModifyClub() {
             setDate(club.date);
             setTime(club.time);
             setAdvisor(club.advisor);
-            setInfoPage(club.infoPage);
         }
     }, [getClub.loading])
 
     async function submitChange(e)
     {
         e.preventDefault(); 
-        let imageForm = new FormData();
-        imageForm.append('clubImage', image);
+        // let imageForm = new FormData();
+        // imageForm.append('clubImage', image);
      
-        await axios.post(`/clubs/${club.id}/upload`, imageForm, {headers: {"Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}`}});
-        const body = {name: club.name, description: description, location: location, date: date, time: time, advisor: advisor, infoPage: infoPage};
+        // await axios.post(`/clubs/${club.id}/upload`, imageForm, {headers: {"Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}`}});
+        const body = {name: club.name, description: description, location: location, date: date, time: time, advisor: advisor};
         await putClub.dispatch({body: body, params: `/${club.id}`});
         navigate('/');
     }
@@ -81,13 +78,13 @@ export default function ModifyClub() {
                     <label>Advisor</label>
                     <input value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
                     <br/>
-                    <label>Info Page</label>
+                    {/* <label>Info Page</label>
                     <textarea value={infoPage} onChange={e => setInfoPage(e.target.value)}></textarea>
                     <br/>
                     <input type="file" name="clubImage" accept="image/*" onChange={e => setImage(e.target.files[0])}/>
                     <br/>
                     {image && <img width={"100rem"} src={URL.createObjectURL(image)}></img>}
-                    <br/>
+                    <br/> */}
                     <button type="submit">submit</button>
                 </form>
             </div>}

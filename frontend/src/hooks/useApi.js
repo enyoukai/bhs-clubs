@@ -8,9 +8,9 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [onComplete, setOnComplete] = useState(0);
-	const [refreshToken, setRefreshToken] = useState(token);
+	const [data, setData] = useState();
 
-	const config = refreshToken ? {headers: {Authorization: `Bearer ${refreshToken}`}} : {};
+	const config = token ? {headers: {Authorization: `Bearer ${token}`}} : {};
 
 	async function dispatch({populate=null, body={}, params=''})
 	{
@@ -22,6 +22,7 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 			if (populate)
 			{
 				populate(res.data);
+				setData(res.data);
 				setError(null);
 			}
 		}
@@ -31,7 +32,7 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 		setLoading(false);
 		setOnComplete(prev => prev + 1);
 		
-		return;
+		return data;
 	}
 	
 	return {loading, error, onComplete, dispatch};

@@ -9,6 +9,7 @@ function authenticate(req, res, next) {
  
  //ensure headers are associated with request
  if (!header || !header.startsWith("Bearer ")) {
+  console.log(header);
   res.statusMessage = 'Unauthorized Header. Access Denied'
   return res.status(401).send('Unauthorized Header. Access Denied')
  }
@@ -17,6 +18,7 @@ function authenticate(req, res, next) {
  const token = header.substring(7, header.length)
  
  if (!token) {
+  console.log('1');
   res.statusMessage = 'Unauthorized Header. Access Denied'
   return res.status(401).send('Unauthorized Header. Access Denied')
  }
@@ -29,6 +31,7 @@ function authenticate(req, res, next) {
    next();
   })
   .catch(function (error) {
+    console.log('2');
    if (error === ERROR_EXPIRED) return res.status(401).send('Expired token');
 
    res.status(401).send('Unauthorized Header. Access Denied')
