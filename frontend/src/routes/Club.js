@@ -1,10 +1,10 @@
 import useApi from "../hooks/useApi";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {Buffer} from 'buffer';
 import { useParams } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import {useAuth} from '../contexts/AuthContext';
-
+import {useDropzone} from 'react-dropzone';
 import Loading from '../components/Loading';
 import './Club.scss';
 import axios from 'axios';
@@ -52,6 +52,7 @@ function ModifyInfo(props)
 
 	const [items, setItems] = useState([]);
 	const [input, setInput] = useState('');
+	
 	const [submitStatus, setSubmitStatus] = useState('');
 
 	function handleOnDragEnd(result) {
@@ -73,7 +74,7 @@ function ModifyInfo(props)
 		props.setEditing(false);
 	}
 
-	function addDrag()
+	function addText()
 	{
 		const newItems = items.concat([{type: 'text', content: input, id: uuidv4()}]);
 		setItems(newItems);
@@ -104,6 +105,18 @@ function ModifyInfo(props)
 		}
 	}
 
+	const onDrop = useCallback(acceptedFiles => {
+		const processedFiles = acceptedFiles.map((file) => {
+			return {
+				type: 'img',
+				content: URL.createObjectURL(file),
+				id: uuidv4()
+			}
+		});
+
+		setItems(prevItems => prevItems.concat(processedFiles));
+  	}, []);
+
 	return (
 		<div>
 			{submitStatus && <div>{submitStatus}</div>}
@@ -111,14 +124,13 @@ function ModifyInfo(props)
 				<Droppable droppableId="content">
 					{(provided) => (				
 						<ul {...provided.droppableProps} ref={provided.innerRef}>
-							{items.map(({content, id}, index) => {
+							{items.map(({type, content, id}, index) => {
 								return (
 									<Draggable key={id} draggableId={id} index={index}>
 										{(provided) => (
 											<li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-												<span>{content}</span>
+												{type === 'text' ? <span>{content}</span> : <img width={"200px"} src={content}/>}
 												<button onClick={deleteItem(index)}>delete</button>
-												{/* <img src="http://localhost:3001/images/image.png"/> */}
 											</li>
 										)}
 									</Draggable>
@@ -131,9 +143,24 @@ function ModifyInfo(props)
 			</DragDropContext>
 			<textarea value={input} onChange={(e) => setInput(e.target.value)}/>
 			<br/>
-			<button onClick={addDrag}>add</button>
+			<button onClick={addText}>add</button>
 			<br/>
+			<DropZone onDrop={onDrop}/>
 			<button onClick={handleSubmit}>submit</button>
+		</div>
+	)
+}
+
+function DropZone(props)
+{	
+	const onDrop = props.onDrop;
+
+	const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+	return (
+		<div {...getRootProps({className: 'dropzone'})}>
+			<input {...getInputProps()} />
+			{isDragActive ? <p>Drop here</p> : <p>Drag 'n' drop some files here, or click to select files</p>}
 		</div>
 	)
 }
