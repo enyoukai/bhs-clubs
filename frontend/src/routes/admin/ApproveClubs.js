@@ -42,6 +42,7 @@ function Club(props)
 			<div>{props.club.time}</div>
 			<div>{props.club.advisor}</div>
 			<div>{props.club.uid}</div>
+			<img width={"300rem"} src={'/images/' + props.club.verification}/>
 			<button onClick={props.approveClub}>Approve Club</button>
 		</div>
 	)

@@ -58,14 +58,15 @@ router.delete('/:id', async (req, res) => {
 	}
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('verification'), async (req, res) => {
+	console.log(req.file);
 	const body = req.body;
-	if (body.name == '' || body.description =='' || body.location == '' || body.date == '' || body.time == '' || body.advisor == '') 
+	if (body.name == '' || body.description == '' || body.location == '' || body.date == '' || body.time == '' || body.advisor == '') 
 	{
 		return res.sendStatus(400);
 	}
 
-	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, uid: req.headers.uid, approved: false, infoPage: ""});
+	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, uid: req.headers.uid, approved: false, verification: req.file.filename, infoPage: ""});
 	await club.save();
 
 	return res.send(club);
@@ -77,7 +78,6 @@ router.post('/:id/upload', upload.single('clubImage'), async (req, res) =>
 
 	return res.sendStatus(200);
 });
-
 
 
 router.put('/:id/info', async (req, res) => {

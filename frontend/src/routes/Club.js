@@ -68,11 +68,15 @@ function ModifyInfo(props)
 	async function handleSubmit()
 	{
 		setSubmitStatus('Saving...');
+		const form = new FormData();
+		const files = [];
 		const payload = items.map((item) => ({type: item.type, content: item.content})); 
+		form.append('items', payload);
 		await updateForm.dispatch({body: payload});
 
 		props.setEditing(false);
 	}
+	console.log(items);
 
 	function addText()
 	{
@@ -109,7 +113,7 @@ function ModifyInfo(props)
 		const processedFiles = acceptedFiles.map((file) => {
 			return {
 				type: 'img',
-				content: URL.createObjectURL(file),
+				content: file,
 				id: uuidv4()
 			}
 		});
@@ -129,7 +133,7 @@ function ModifyInfo(props)
 									<Draggable key={id} draggableId={id} index={index}>
 										{(provided) => (
 											<li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-												{type === 'text' ? <span>{content}</span> : <img width={"200px"} src={content}/>}
+												{type === 'text' ? <span>{content}</span> : <img width={"200px"} src={URL.createObjectURL(content)}/>}
 												<button onClick={deleteItem(index)}>delete</button>
 											</li>
 										)}

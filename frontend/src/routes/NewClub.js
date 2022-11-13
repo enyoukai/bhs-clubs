@@ -1,6 +1,6 @@
 import useApi from '../hooks/useApi';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from '../contexts/AuthContext'
@@ -8,7 +8,10 @@ import { useAuth } from '../contexts/AuthContext'
 import './NewClub.scss';
 
 export default function NewClub() {
+	// TODO: make a reducer later
 	const [formState, setFormState] = useState({name: '', description: '', location: '', date: '', time: '', advisor: ''});
+	const [file, setFile] = useState();
+
 	const [error, setError] = useState('');
 
 	const {token} = useAuth();
@@ -30,9 +33,21 @@ export default function NewClub() {
 			setError("Following fields need to be filled: " + errorFields.join(' '));
 			return;
 		}
-		const body = {name: formState.name, description: formState.description, location: formState.location, date: formState.date, time: formState.time, advisor: formState.advisor};
+		// const body = {name: formState.name, description: formState.description, location: formState.location, date: formState.date, time: formState.time, advisor: formState.advisor};
+		
+		const formData = new FormData();
+		for (const key in formState)
+		{
+			formData.append(key, formState[key]);
+		}
 
-		createClub.dispatch({body: body});
+		formData.append('verification', file);
+
+		for (const value of formData.values()) {
+			console.log(value);
+		}
+
+		createClub.dispatch({body: formData});
 	}
 
 	function handleChange(e)
@@ -48,7 +63,6 @@ export default function NewClub() {
 			navigate('/?submitted=true');
 		}
 	}, [createClub.loading])
-
 	return (
 		<div className="newClub">
 			<div className="newClub__text newClub__text--large">Requesting Club</div>
@@ -66,6 +80,8 @@ export default function NewClub() {
 				<input name='time' value={formState.time} className="newClub__input" onChange={handleChange}></input>
 				<div className="newClub__text">Advisor</div>
 				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleChange}></input>
+				<div className="newClub__text">Verification</div>
+				<input name='verification' onChange={(e) => setFile(e.target.files[0])} type="file"/>
 			</div>
 			<button className="newClub__btn" onClick={submitClub}>Add Club</button>
 		</div>
