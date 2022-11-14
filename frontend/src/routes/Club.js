@@ -115,7 +115,6 @@ function ModifyInfo(props)
 
 	function deleteItem(index)
 	{
-		console.log(index);
 		return () => {
 			setItems(items => {
 				const nextItems = Array.from(items);
@@ -197,7 +196,7 @@ function ReadOnlyInfo(props)
 		async function fetch()
 		{
 			const data = (await axios.get(`/clubs/${club.id}`)).data.infoFormat;
-			console.log(data);
+
 			const processed = data.map((item) => ({type: item.type, content: item.content}));
 	
 			setItems(processed);

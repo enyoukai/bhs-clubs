@@ -59,7 +59,6 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.post('/', upload.single('verification'), async (req, res) => {
-	console.log(req.file);
 	const body = req.body;
 	if (body.name == '' || body.description == '' || body.location == '' || body.date == '' || body.time == '' || body.advisor == '') 
 	{
@@ -78,12 +77,9 @@ router.put('/:id/info', upload.any('images'), async (req, res) => {
 	const processedItems = items.map((item) => {
 		if (item.type === 'text' || item.type === 'img-link') return item;
 		else if (item.type === 'img-file') {
-			console.log(req.files[item.content].filename);
 			return {type: 'img-link', content: req.files[item.content].filename}
 		}
 	});
-
-	console.log(processedItems);
 
 	await Club.updateOne({_id: req.params.id}, {infoFormat: processedItems});
 	return res.sendStatus(201);
