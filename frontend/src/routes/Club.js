@@ -43,6 +43,13 @@ function ClubInfo(props)
     )
 }
 
+function conditionalRenderItem(item)
+{
+	if (item.type === 'text') return (<span>{item.content}</span>)
+	if (item.type === 'img-file') return (<img width={"200rem"} src={URL.createObjectURL(item.content)}/>)
+	if (item.type === 'img-link') return (<img width={"200rem"} src={`/images/${item.content}`}/>);
+}
+
 function ModifyInfo(props)
 {
 	const club = props.club;
@@ -69,14 +76,23 @@ function ModifyInfo(props)
 	{
 		setSubmitStatus('Saving...');
 		const form = new FormData();
-		const files = [];
-		const payload = items.map((item) => ({type: item.type, content: item.content})); 
-		form.append('items', payload);
-		await updateForm.dispatch({body: payload});
+		const payload = [];
+		let fileIndex = 0;
+		items.forEach((item, index) => {
+			if (item.type === 'text' || item.type === 'img-link') payload.push({type: item.type, content: item.content});
+			else if (item.type === 'img-file') {
+				form.append(`images[${index}]`, item.content);
+				payload.push({type: item.type, content: fileIndex});
+				fileIndex++;
+			}
+		}); 
+		  
+		form.append('items', JSON.stringify(payload));
+
+		await updateForm.dispatch({body: form});
 
 		props.setEditing(false);
 	}
-	console.log(items);
 
 	function addText()
 	{
@@ -99,6 +115,7 @@ function ModifyInfo(props)
 
 	function deleteItem(index)
 	{
+		console.log(index);
 		return () => {
 			setItems(items => {
 				const nextItems = Array.from(items);
@@ -112,7 +129,7 @@ function ModifyInfo(props)
 	const onDrop = useCallback(acceptedFiles => {
 		const processedFiles = acceptedFiles.map((file) => {
 			return {
-				type: 'img',
+				type: 'img-file',
 				content: file,
 				id: uuidv4()
 			}
@@ -128,12 +145,14 @@ function ModifyInfo(props)
 				<Droppable droppableId="content">
 					{(provided) => (				
 						<ul {...provided.droppableProps} ref={provided.innerRef}>
-							{items.map(({type, content, id}, index) => {
+							{items.map((item, index) => {
 								return (
-									<Draggable key={id} draggableId={id} index={index}>
+									<Draggable key={item.id} draggableId={item.id} index={index}>
 										{(provided) => (
 											<li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-												{type === 'text' ? <span>{content}</span> : <img width={"200px"} src={URL.createObjectURL(content)}/>}
+												{
+													conditionalRenderItem(item)
+												}
 												<button onClick={deleteItem(index)}>delete</button>
 											</li>
 										)}
@@ -178,6 +197,7 @@ function ReadOnlyInfo(props)
 		async function fetch()
 		{
 			const data = (await axios.get(`/clubs/${club.id}`)).data.infoFormat;
+			console.log(data);
 			const processed = data.map((item) => ({type: item.type, content: item.content}));
 	
 			setItems(processed);
@@ -189,7 +209,7 @@ function ReadOnlyInfo(props)
 	return (
 		<div>
 			<ul>
-				{items.map(({content}, idx) => <li key={idx}>{content}</li>)}
+				{items.map((item, idx) => <li key={idx}>{conditionalRenderItem(item)}</li>)}
 			</ul>
 		</div>
 	)

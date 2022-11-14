@@ -72,16 +72,20 @@ router.post('/', upload.single('verification'), async (req, res) => {
 	return res.send(club);
 });
 
-router.post('/:id/upload', upload.single('clubImage'), async (req, res) =>
-{
-	await Club.updateOne({_id: req.params.id}, {img: req.file.filename});
+router.put('/:id/info', upload.any('images'), async (req, res) => {
+	const items = JSON.parse(req.body.items);
 
-	return res.sendStatus(200);
-});
+	const processedItems = items.map((item) => {
+		if (item.type === 'text' || item.type === 'img-link') return item;
+		else if (item.type === 'img-file') {
+			console.log(req.files[item.content].filename);
+			return {type: 'img-link', content: req.files[item.content].filename}
+		}
+	});
 
+	console.log(processedItems);
 
-router.put('/:id/info', async (req, res) => {
-	await Club.updateOne({_id: req.params.id}, {infoFormat: req.body});
+	await Club.updateOne({_id: req.params.id}, {infoFormat: processedItems});
 	return res.sendStatus(201);
 });
 
