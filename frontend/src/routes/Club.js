@@ -42,8 +42,8 @@ function ClubInfo(props) {
 
 function conditionalRenderItem(item) {
 	if (item.type === 'text') return (<span>{item.content}</span>)
-	if (item.type === 'img-file') return (<img width={"200rem"} src={URL.createObjectURL(item.content)} />)
-	if (item.type === 'img-link') return (<img width={"200rem"} src={`/images/${item.content}`} />);
+	if (item.type === 'img-file') return (<img width={"400rem"} src={URL.createObjectURL(item.content)} />)
+	if (item.type === 'img-link') return (<img width={"400rem"} src={`/images/${item.content}`} />);
 }
 
 function ModifyInfo(props) {
