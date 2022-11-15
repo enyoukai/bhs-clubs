@@ -43,10 +43,6 @@ export default function NewClub() {
 
 		formData.append('verification', file);
 
-		for (const value of formData.values()) {
-			console.log(value);
-		}
-
 		createClub.dispatch({body: formData});
 	}
 
