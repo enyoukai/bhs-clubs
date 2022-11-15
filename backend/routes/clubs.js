@@ -52,8 +52,9 @@ router.delete('/:id', async (req, res) => {
 	{
 		return res.sendStatus(401);
 	}
-	else (await Club.exists({_id: id}))
+	else
 	{
+		await Club.deleteOne({_id: id})
 		return res.sendStatus(200);
 	}
 });
