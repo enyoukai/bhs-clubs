@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema({
 	author: String,
 	body: String,
 	time: String,
+	file: String,
 	club: {type: Schema.Types.ObjectId, ref: 'Club'}
 })
 

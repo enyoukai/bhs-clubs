@@ -5,6 +5,8 @@ const admin = require('firebase-admin');
 const Post = require("../models/posts");
 const Club = require("../models/clubs");
 
+const upload = require('../middleware/upload');
+
 router.get('/', async (req, res) => {
 	Post.find().populate('club').exec(function(err, posts) {
 		if (err)
@@ -17,10 +19,11 @@ router.get('/', async (req, res) => {
 
 router.use(authenticate);
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('file'), async (req, res) => {
+	console.log(req.file);
 	if (!req.body.title || !req.body.body || !req.body.club) return res.sendStatus(400);
 
-	const post = new Post({title: req.body.title, body: req.body.body, author: req.headers.uid, club: req.body.club});
+	const post = new Post({title: req.body.title, body: req.body.body, author: req.headers.uid, club: req.body.club, file: req.file.filename});
 	post.save();
 
 	return res.sendStatus(201);
