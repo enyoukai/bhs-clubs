@@ -195,11 +195,11 @@ function ReadOnlyInfo(props) {
 
 	return (
 		<div>
-			{items.length > 0 ? 
-				<ul>
-					{items.map((item, idx) => <li key={idx}>{conditionalRenderItem(item)}</li>)}
-				</ul>
-				: <InfoFallback club={club}/>}
+			{<InfoFallback club={club}/>}
+			<ul>
+				{items.map((item, idx) => <li key={idx}>{conditionalRenderItem(item)}</li>)}
+			</ul>
+
 		</div>
 	)
 }

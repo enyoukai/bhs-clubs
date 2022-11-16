@@ -24,7 +24,7 @@ export default function ApproveClubs()
 		<div>Pending Clubs...</div>
 		{
 			!getClubs.loading &&
-			clubs.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>)
+			(clubs.length > 0 ? clubs.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>) : <div>Nothing to show</div>)
 		}
 		</div>
 	)

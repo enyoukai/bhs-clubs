@@ -18,11 +18,11 @@ function Layout()
       <nav className="nav">
         <Link to='/' className="nav__logo">BHS Clubs</Link>
         <div className="nav__tabs">
-          <Link to='/' className={`nav__tab ${path === '/' ? selected : unselected}`}>Home</Link>
-          <Link to='newclub' className={`nav__tab ${path === '/newclub' ? selected : unselected}`}>Add Club</Link>
+          <Link to='/' className={`nav__tab ${path === '/' || path.startsWith('/club') ? selected : unselected}`}>Home</Link>
+          <Link to='newclub' className={`nav__tab ${path.startsWith('/newclub') ? selected : unselected}`}>Add Club</Link>
           <Link to='feed' className={`nav__tab ${path.startsWith('/feed') ? selected : unselected}`}>Feed</Link>
-          <Link to='calendar' className={`nav__tab ${path === '/calendar' ? selected : unselected}`}>Calendar</Link>
-          {isAdmin && <Link to='admin' className={`nav__tab ${path === '/admin' ? selected : unselected}`}>Admin</Link>}
+          <Link to='calendar' className={`nav__tab ${path.startsWith('/calendar') ? selected : unselected}`}>Calendar</Link>
+          {isAdmin && <Link to='admin' className={`nav__tab ${path.startsWith('/admin') ? selected : unselected}`}>Admin</Link>}
         </div>
         {user === null ? <RegisterBar/> : <Avatar user={user}/>}
       </nav>
