@@ -25,8 +25,8 @@ function Post(props)
 	return (
 		<div className="feed__post">
 			<div><b>{post.title}</b> made by <b>{post.author}</b> for club <b>{post.club ? post.club.name : "DELETED CLUB"}</b></div>
-			{post.file && <img src={`/images/${post.file}`}/>}
 			<div>{props.post.body}</div>
+			{post.file && <img src={`/images/${post.file}`}/>}
 		</div>
 	)
 }
