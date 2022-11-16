@@ -42,7 +42,7 @@ export function AuthProvider(props)
 	}
 
 	const authValue = {auth, user, signInFetched, isAdmin, token, signOut};
-
+	
 	return (
 		<AuthContext.Provider value={authValue}>
 			{props.children}

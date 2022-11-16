@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-	const user = new User({_id: req.headers.uid, username: req.headers.uid});
+	const user = new User({_id: req.headers.uid, username: req.body.username});
 	await user.save();
 
 	return res.sendStatus(201);

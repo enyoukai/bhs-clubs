@@ -77,14 +77,14 @@ export default function NewClub() {
 				<div className="newClub__text">Location</div>
 				<input name='location' value={formState.location} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Date</div>
-				<input name='date' type='time' value={formState.date} className="newClub__input" onChange={handleTextChange}></input>
+				<input name='date' value={formState.date} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Time</div>
 				<input name='time' value={formState.time} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Advisor</div>
 				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Verification</div>
 				<input name='verification' onChange={handleFileChange} type="file"/>
-				{formState.verification && <img width={'300rem'} src={URL.createObjectURL(formState.verification)}/>}
+				{formState.verification && <img width={'300rem'} alt='verification' src={URL.createObjectURL(formState.verification)}/>}
 			</div>
 			<button className="newClub__btn" onClick={submitClub}>Add Club</button>
 		</div>
