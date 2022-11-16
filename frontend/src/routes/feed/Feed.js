@@ -22,7 +22,6 @@ export default function Feed()
 function Post(props)
 {
 	const post = props.post;
-	console.log(post);
 	return (
 		<div className="feed__post">
 			<div><b>{post.title}</b> made by <b>{post.author}</b> for club <b>{post.club ? post.club.name : "DELETED CLUB"}</b></div>

@@ -9,8 +9,7 @@ import './NewClub.scss';
 
 export default function NewClub() {
 	// TODO: make a reducer later
-	const [formState, setFormState] = useState({name: '', description: '', location: '', date: '', time: '', advisor: ''});
-	const [file, setFile] = useState();
+	const [formState, setFormState] = useState({name: '', description: '', location: '', date: '', time: '', advisor: '', verification: null});
 
 	const [error, setError] = useState('');
 
@@ -25,7 +24,9 @@ export default function NewClub() {
 
 		for (const [key, value] of Object.entries(formState))
 		{
-			if (value == '') errorFields.push(key);
+			if (!value) {
+				errorFields.push(key);
+			}
 		}
 
 		if (errorFields.length > 0)
@@ -33,7 +34,6 @@ export default function NewClub() {
 			setError("Following fields need to be filled: " + errorFields.join(' '));
 			return;
 		}
-		// const body = {name: formState.name, description: formState.description, location: formState.location, date: formState.date, time: formState.time, advisor: formState.advisor};
 		
 		const formData = new FormData();
 		for (const key in formState)
@@ -41,16 +41,21 @@ export default function NewClub() {
 			formData.append(key, formState[key]);
 		}
 
-		formData.append('verification', file);
+		formData.append('verification', formState.file);
 
 		createClub.dispatch({body: formData});
 	}
 
-	function handleChange(e)
+	function handleTextChange(e)
 	{
 		setFormState((prevState) => ({...prevState, [e.target.name]: e.target.value}));
 
 		if (error) setError('');
+	}
+
+	function handleFileChange(e)
+	{
+		setFormState((prevState) => ({...prevState, [e.target.name]: e.target.files[0]}));
 	}
 
 	useEffect(() => {
@@ -58,26 +63,27 @@ export default function NewClub() {
 		{
 			navigate('/?submitted=true');
 		}
-	}, [createClub.loading])
+	}, [createClub.loading, createClub.error, navigate])
+
 	return (
 		<div className="newClub">
 			<div className="newClub__text newClub__text--large">Requesting Club</div>
 			{error && <div className="newClub__error">{error}</div>}
 			<div className="newClub__form">
 				<div className="newClub__text">Name</div>
-				<input name='name' value={formState.name} className="newClub__input" onChange={handleChange}></input>
+				<input name='name' value={formState.name} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Description</div>
-				<textarea name='description' value={formState.description} className="newClub__input" onChange={handleChange}></textarea>
+				<textarea name='description' value={formState.description} className="newClub__input" onChange={handleTextChange}></textarea>
 				<div className="newClub__text">Location</div>
-				<input name='location' value={formState.location} className="newClub__input" onChange={handleChange}></input>
+				<input name='location' value={formState.location} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Date</div>
-				<input name='date' value={formState.date} className="newClub__input" onChange={handleChange}></input>
+				<input name='date' value={formState.date} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Time</div>
-				<input name='time' value={formState.time} className="newClub__input" onChange={handleChange}></input>
+				<input name='time' value={formState.time} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Advisor</div>
-				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleChange}></input>
+				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Verification</div>
-				<input name='verification' onChange={(e) => setFile(e.target.files[0])} type="file"/>
+				<input name='verification' onChange={handleFileChange} type="file"/>
 			</div>
 			<button className="newClub__btn" onClick={submitClub}>Add Club</button>
 		</div>
