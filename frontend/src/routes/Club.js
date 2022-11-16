@@ -184,18 +184,18 @@ function ReadOnlyInfo(props) {
 	useEffect(() => {
 		async function fetch() {
 			const data = (await axios.get(`/clubs/${club.id}`)).data.infoFormat;
+			console.log(data);
 
 			const processed = data.map((item) => ({ type: item.type, content: item.content }));
 
 			setItems(processed);
 		}
 		fetch();
-
-	}, []);
+	}, [club.id]);
 
 	return (
 		<div>
-			{club.infoFormat.length > 0 ? 
+			{items.length > 0 ? 
 				<ul>
 					{items.map((item, idx) => <li key={idx}>{conditionalRenderItem(item)}</li>)}
 				</ul>
