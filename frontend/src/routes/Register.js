@@ -29,7 +29,6 @@ function Register(props)
 
 			}
 			await createUserWithEmailAndPassword(auth, email, password);
-			console.log(username);
 			await registerDispatch({body: {username: username}});
 			navigate('/');
 		}

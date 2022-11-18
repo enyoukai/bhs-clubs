@@ -18,7 +18,6 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 		try
 		{
 			const res = await axios({url: endpoint + params, method: method, data: body, ...config});
-			console.log(res);
 			if (populate)
 			{
 				populate(res.data);
@@ -27,7 +26,6 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 			}
 		}
 		catch (error) {
-			console.log(error);
 			setError(error);
 		}
 		setLoading(false);

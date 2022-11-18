@@ -21,6 +21,7 @@ export default function Club() {
 
 	return (
 		<>
+			<button>Register</button>
 			{getClub.loading ? <Loading /> : <ClubInfo club={club} />}
 		</>
 	)

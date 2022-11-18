@@ -1,12 +1,38 @@
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom'
 
 import './Layout.scss'
 
 function Layout()
 {
+
+  // DEBUG
+  // const MINUTE_MS = 1000;
+
+  // useEffect(() => {
+  //   console.log('hi');
+  //   const interval = setInterval(() => {
+  //     const formatMemoryUsage = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`;
+
+  //     const memoryData = process.memoryUsage();
+      
+  //     const memoryUsage = {
+  //       rss: `${formatMemoryUsage(memoryData.rss)} -> Resident Set Size - total memory allocated for the process execution`,
+  //       heapTotal: `${formatMemoryUsage(memoryData.heapTotal)} -> total size of the allocated heap`,
+  //       heapUsed: `${formatMemoryUsage(memoryData.heapUsed)} -> actual memory used during the execution`,
+  //       external: `${formatMemoryUsage(memoryData.external)} -> V8 external memory`,
+  //     };
+      
+  //     console.log(memoryUsage);
+  //   }, MINUTE_MS);
+
+  //   return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  // }, [])
+
+  // --------------------------------------------
+
   const { user, isAdmin } = useAuth();
   const path = useLocation().pathname;
 

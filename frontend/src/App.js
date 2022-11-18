@@ -13,6 +13,8 @@ import Account from './routes/Account'
 import SignOut from './routes/SignOut';
 import Calendar from './routes/Calendar';
 import Club from './routes/Club';
+import Settings from './routes/Settings';
+
 import ModifyClub from './routes/ModifyClub';
 import ApproveClubs from './routes/admin/ApproveClubs';
 import AdminHome from './routes/admin/AdminHome';
@@ -36,6 +38,7 @@ function App() {
           <Route path='register' element={<Register/>}/>
           <Route path='newclub' element={<ProtectedRoute><NewClub/></ProtectedRoute>}/>
           <Route path='account/:id' element={<Account/>}/>
+          <Route path='settings' element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
           <Route path='signout' element={<SignOut/>}/>
           <Route path='feed'>
             <Route index element={<ProtectedRoute><Feed/></ProtectedRoute>}/>
