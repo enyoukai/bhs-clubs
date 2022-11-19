@@ -28,6 +28,7 @@ function authenticate(req, res, next) {
   .then(function (decodedToken) {
    //attach uid to body for the route to use
    req.headers.uid = decodedToken.uid;
+
    next();
   })
   .catch(function (error) {

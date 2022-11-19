@@ -4,6 +4,7 @@ const authenticate = require('../middleware/authenticate');
 const adminAuthenticate = require('../middleware/adminAuthenticate');
 const admin = require('firebase-admin');
 const Club = require("../models/clubs");
+const User = require('../models/user');
 
 router.get(`/adminCheck/:userID`, async (req, res) => {
 	return res.json({isAdmin: req.params.userID === process.env.ADMIN});

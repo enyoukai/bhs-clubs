@@ -13,15 +13,19 @@ export default function Club() {
 	const clubID = useParams().id;
 	const [club, setClub] = useState();
 	const getClub = useApi('/clubs');
-	const { signInFetched } = useAuth();
+	const { user } = useAuth();
 
 	useEffect(() => {
 		getClub.dispatch({ params: `/${clubID}`, populate: setClub });
 	}, [clubID]);
 
+	function register()
+	{
+
+	}
+
 	return (
 		<>
-			<button>Register</button>
 			{getClub.loading ? <Loading /> : <ClubInfo club={club} />}
 		</>
 	)
@@ -33,9 +37,11 @@ function ClubInfo(props) {
 	const { user, signInFetched } = useAuth();
 
 	return (
-		<div className="clubInfo">
-			<div className="clubInfo__text clubInfo__text--large">{club.name}</div>
-			{signInFetched && user !== null && club.uid === user.uid && <button onClick={() => setEditing(!editing)}>Edit</button>}
+		<div>
+			<div className="flex flex-col items-center">
+				<h2 className="text-xl font-bold">{club.name}</h2>
+				{signInFetched && user !== null && club.uid === user.uid && <button onClick={() => setEditing(!editing)}>Edit</button>}
+			</div>
 			{editing ? <ModifyInfo setEditing={setEditing} club={club} /> : <ReadOnlyInfo club={club} />}
 		</div>
 	)
@@ -194,10 +200,10 @@ function ReadOnlyInfo(props) {
 	}, [club.id]);
 
 	return (
-		<div>
+		<div className="p-6">
 			{<InfoFallback club={club}/>}
 			<ul>
-				{items.map((item, idx) => <li key={idx}>{conditionalRenderItem(item)}</li>)}
+				{items.map((item, idx) => <li className="mt-4" key={idx}>{conditionalRenderItem(item)}</li>)}
 			</ul>
 
 		</div>
@@ -207,7 +213,7 @@ function ReadOnlyInfo(props) {
 function InfoFallback(props) {
 	const club = props.club;
 	return (
-		<div>
+		<div className="bg-gray-100 pl-6">
 			<div>{club.description}</div>
 			<div>{club.location}</div>
 			<div>{club.date}</div>
