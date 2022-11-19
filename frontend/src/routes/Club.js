@@ -33,7 +33,7 @@ export default function Club() {
 
 function ClubInfo(props) {
 	const club = props.club;
-	const [editing, setEditing] = useState(false);
+	const [editing, setEditing] = useState(true);
 	const { user, signInFetched } = useAuth();
 
 	return (
@@ -136,7 +136,7 @@ function ModifyInfo(props) {
 	}, []);
 
 	return (
-		<div className="ml-4">
+		<div className="mx-4">
 			{submitStatus && <div>{submitStatus}</div>}
 			<DragDropContext onDragEnd={handleOnDragEnd}>
 				<Droppable droppableId="content">
@@ -163,7 +163,7 @@ function ModifyInfo(props) {
 			</DragDropContext>
 			<textarea className="border-solid border-2" value={input} onChange={(e) => setInput(e.target.value)} />
 			<br />
-			<button onClick={addText}>add</button>
+			<button className="bg-neutral-300 p-2 rounded-md" onClick={addText}>Add Text Box</button>
 			<br />
 			<DropZone onDrop={onDrop} />
 			<button onClick={handleSubmit}>submit</button>
@@ -177,7 +177,7 @@ function DropZone(props) {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
 	return (
-		<div {...getRootProps({ className: 'border-dotted border-2 p-5 dropzone' })}>
+		<div {...getRootProps({ className: 'border-dashed border-black border-2 p-5 dropzone' })}>
 			<input {...getInputProps()} />
 			{isDragActive ? <p>Drop here</p> : <p>Drag files or click here</p>}
 		</div>

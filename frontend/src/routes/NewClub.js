@@ -20,9 +20,14 @@ export default function NewClub() {
 
 	const navigate = useNavigate();
 
+	function capitalizeFirstLetter(str)
+	{
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	}
+
 	async function submitClub(e) {
 		e.preventDefault();
-		let errorFields = [];
+		const errorFields = [];
 
 		for (const [key, value] of Object.entries(formState))
 		{
@@ -33,7 +38,14 @@ export default function NewClub() {
 
 		if (errorFields.length > 0)
 		{
-			setError("Following fields need to be filled: " + errorFields.join(' '));
+			let errorMessage = "Following fields need to be filled: "; 
+			for (let i = 0; i < errorFields.length; i++)
+			{
+				errorMessage += capitalizeFirstLetter(errorFields[i]);
+				if (i !== errorFields.length - 1) errorMessage += ", "
+			}
+			setError(errorMessage);
+
 			return;
 		}
 		
@@ -70,7 +82,7 @@ export default function NewClub() {
 	return (
 		<div className="bg-neutral-800 mx-auto w-1/2 rounded-lg p-10 my-10 text-neutral-100 text-4xl">
 			<div className="text-5xl text-center">Requesting Club</div>
-			{error && <div className="newClub__error">{error}</div>}
+			{error && <div className="text-red-500 my-4 text-base">* {error}</div>}
 			<form onSubmit={submitClub} className="flex flex-col gap-8">
 				<div className="newClub__text">Name</div>
 				<input name='name' value={formState.name} className="newClub__input" onChange={handleTextChange}></input>
@@ -87,7 +99,7 @@ export default function NewClub() {
 				<div className="newClub__text">Verification</div>
 				<DropZone onDrop={handleDrop}/>
 				{formState.verification && <img width={'300rem'} alt='verification' src={URL.createObjectURL(formState.verification)}/>}
-				<button type="submit" className="mt-4 text-4xl text-neutral-800 bg-neutral-100 p-6 rounded-lg">Add Club</button>
+				<button type="submit" className="mt-4 text-4xl text-neutral-800 bg-neutral-100 p-6 rounded-lg font-medium">Add Club</button>
 			</form>
 		</div>
 	)
