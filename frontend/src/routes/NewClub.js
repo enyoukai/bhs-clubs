@@ -19,7 +19,8 @@ export default function NewClub() {
 
 	const navigate = useNavigate();
 
-	async function submitClub() {
+	async function submitClub(e) {
+		e.preventDefault();
 		let errorFields = [];
 
 		for (const [key, value] of Object.entries(formState))
@@ -69,7 +70,7 @@ export default function NewClub() {
 		<div className="newClub">
 			<div className="newClub__text newClub__text--large">Requesting Club</div>
 			{error && <div className="newClub__error">{error}</div>}
-			<div className="newClub__form">
+			<form onSubmit={submitClub} className="newClub__form ">
 				<div className="newClub__text">Name</div>
 				<input name='name' value={formState.name} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Description</div>
@@ -85,8 +86,8 @@ export default function NewClub() {
 				<div className="newClub__text">Verification</div>
 				<input name='verification' onChange={handleFileChange} type="file"/>
 				{formState.verification && <img width={'300rem'} alt='verification' src={URL.createObjectURL(formState.verification)}/>}
-			</div>
-			<button className="newClub__btn" onClick={submitClub}>Add Club</button>
+				<button type="submit" className="mt-4 text-4xl text-neutral-100 bg-neutral-700 p-6 rounded-lg">Add Club</button>
+			</form>
 		</div>
 	)
 

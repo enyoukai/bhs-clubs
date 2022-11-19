@@ -37,10 +37,10 @@ function ClubInfo(props) {
 	const { user, signInFetched } = useAuth();
 
 	return (
-		<div>
+		<div className="pt-9">
 			<div className="flex flex-col items-center">
-				<h2 className="text-xl font-bold">{club.name}</h2>
-				{signInFetched && user !== null && club.uid === user.uid && <button onClick={() => setEditing(!editing)}>Edit</button>}
+				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
+				{signInFetched && user !== null && club.uid === user.uid && <button className="text-2xl" onClick={() => setEditing(!editing)}>Edit</button>}
 			</div>
 			{editing ? <ModifyInfo setEditing={setEditing} club={club} /> : <ReadOnlyInfo club={club} />}
 		</div>
@@ -48,9 +48,9 @@ function ClubInfo(props) {
 }
 
 function conditionalRenderItem(item) {
-	if (item.type === 'text') return (<span>{item.content}</span>)
-	if (item.type === 'img-file') return (<img width={"400rem"} src={URL.createObjectURL(item.content)} />)
-	if (item.type === 'img-link') return (<img width={"400rem"} src={`/images/${item.content}`} />);
+	if (item.type === 'text') return (<span className="text-lg">{item.content}</span>)
+	if (item.type === 'img-file') return (<img className="mx-auto" width={"400rem"} src={URL.createObjectURL(item.content)} />)
+	if (item.type === 'img-link') return (<img className="mx-auto" width={"400rem"} src={`/images/${item.content}`} />);
 }
 
 function ModifyInfo(props) {
@@ -136,7 +136,7 @@ function ModifyInfo(props) {
 	}, []);
 
 	return (
-		<div>
+		<div className="ml-4">
 			{submitStatus && <div>{submitStatus}</div>}
 			<DragDropContext onDragEnd={handleOnDragEnd}>
 				<Droppable droppableId="content">
@@ -146,11 +146,11 @@ function ModifyInfo(props) {
 								return (
 									<Draggable key={item.id} draggableId={item.id} index={index}>
 										{(provided) => (
-											<li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+											<li className="flex gap-2" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
 												{
 													conditionalRenderItem(item)
 												}
-												<button onClick={deleteItem(index)}>delete</button>
+												<button className="text-red-400" onClick={deleteItem(index)}>Delete</button>
 											</li>
 										)}
 									</Draggable>
@@ -161,7 +161,7 @@ function ModifyInfo(props) {
 					)}
 				</Droppable>
 			</DragDropContext>
-			<textarea value={input} onChange={(e) => setInput(e.target.value)} />
+			<textarea className="border-solid border-2" value={input} onChange={(e) => setInput(e.target.value)} />
 			<br />
 			<button onClick={addText}>add</button>
 			<br />
@@ -177,7 +177,7 @@ function DropZone(props) {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
 	return (
-		<div {...getRootProps({ className: 'dropzone' })}>
+		<div {...getRootProps({ className: 'border-dotted border-2 p-5 dropzone' })}>
 			<input {...getInputProps()} />
 			{isDragActive ? <p>Drop here</p> : <p>Drag files or click here</p>}
 		</div>
@@ -201,7 +201,7 @@ function ReadOnlyInfo(props) {
 
 	return (
 		<div className="p-6">
-			{<InfoFallback club={club}/>}
+			{<InfoDefault club={club}/>}
 			<ul>
 				{items.map((item, idx) => <li className="mt-4" key={idx}>{conditionalRenderItem(item)}</li>)}
 			</ul>
@@ -210,10 +210,10 @@ function ReadOnlyInfo(props) {
 	)
 }
 
-function InfoFallback(props) {
+function InfoDefault(props) {
 	const club = props.club;
 	return (
-		<div className="bg-gray-100 pl-6">
+		<div className="flex flex-col gap-3 bg-neutral-100 pl-6 pt-3 pb-3 rounded-lg width w-1/12">
 			<div>{club.description}</div>
 			<div>{club.location}</div>
 			<div>{club.date}</div>
