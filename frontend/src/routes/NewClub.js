@@ -80,8 +80,8 @@ export default function NewClub() {
 	}, [createClub.loading, createClub.error, navigate])
 
 	return (
-		<div className="bg-neutral-800 mx-auto w-1/2 rounded-lg p-10 my-10 text-neutral-100 text-4xl">
-			<div className="text-5xl text-center">Requesting Club</div>
+		<div className="bg-neutral-800 mx-auto w-1/2 rounded-lg p-20 my-10 text-neutral-100 text-4xl">
+			<div className="text-6xl text-center mb-20">Requesting Club</div>
 			{error && <div className="text-red-500 my-4 text-base">* {error}</div>}
 			<form onSubmit={submitClub} className="flex flex-col gap-8">
 				<div className="newClub__text">Name</div>
@@ -97,8 +97,7 @@ export default function NewClub() {
 				<div className="newClub__text">Advisor</div>
 				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Verification</div>
-				<DropZone onDrop={handleDrop}/>
-				{formState.verification && <img width={'300rem'} alt='verification' src={URL.createObjectURL(formState.verification)}/>}
+				<DropZone currentImg={formState.verification} onDrop={handleDrop}/>
 				<button type="submit" className="mt-4 text-4xl text-neutral-800 bg-neutral-100 p-6 rounded-lg font-medium">Add Club</button>
 			</form>
 		</div>
@@ -114,7 +113,7 @@ function DropZone(props) {
 	return (
 		<div {...getRootProps({ className: 'border-dotted border-2 p-5 dropzone text-neutral-100' })}>
 			<input {...getInputProps()} />
-			{isDragActive ? <p>Drop here</p> : <p>Drag file here</p>}
+			{props.currentImg ? <img className='mx-auto' src={URL.createObjectURL(props.currentImg)}/> : <p>Drag file here</p>}
 		</div>
 	)
 }

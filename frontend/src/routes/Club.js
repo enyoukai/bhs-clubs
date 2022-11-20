@@ -37,7 +37,7 @@ function ClubInfo(props) {
 	const { user, signInFetched } = useAuth();
 
 	return (
-		<div className="pt-9">
+		<div className="pt-9 px-20">
 			<div className="flex flex-col items-center">
 				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
 				{signInFetched && user !== null && club.uid === user.uid && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}
@@ -48,7 +48,7 @@ function ClubInfo(props) {
 }
 
 function conditionalRenderItem(item) {
-	if (item.type === 'text') return (<span className="text-xl">{item.content}</span>)
+	if (item.type === 'text') return (<span className="text-2xl">{item.content}</span>)
 	if (item.type === 'img-file') return (<img className="mx-auto" width={"400rem"} src={URL.createObjectURL(item.content)} />)
 	if (item.type === 'img-link') return (<img className="mx-auto" width={"400rem"} src={`/images/${item.content}`} />);
 }
@@ -211,7 +211,7 @@ function ReadOnlyInfo(props) {
 function InfoDefault(props) {
 	const club = props.club;
 	return (
-		<div className="flex flex-col gap-3 bg-neutral-100 pl-6 pt-3 pb-3 rounded-lg width w-1/12">
+		<div className="flex flex-col gap-3 bg-neutral-100 px-6 py-3 rounded-lg width w-1/4 text-2xl mb-20">
 			<div>{club.description}</div>
 			<div>{club.location}</div>
 			<div>{club.date}</div>

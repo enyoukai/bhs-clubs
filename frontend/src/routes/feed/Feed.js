@@ -23,7 +23,7 @@ function Post(props)
 {
 	const post = props.post;
 	return (
-		<div className="flex flex-col gap-8 border-solid border bg-neutral-100 rounded-md w-1/2 mx-auto my-5 p-10">
+		<div className="flex flex-col gap-8 border-solid border bg-neutral-100 rounded-md w-2/5 mx-auto my-5 p-10">
 			<div>
 				<div className="text-xl font-bold">{post.title}</div>
 				<div className="text-sm">by {post.author} for {post.club ? post.club.name : "DELETED CLUB"}</div>
