@@ -25,8 +25,8 @@ function Post(props)
 	return (
 		<div className="flex flex-col gap-8 border-solid border bg-neutral-100 rounded-md w-2/5 mx-auto my-5 p-10">
 			<div>
-				<div className="text-xl font-bold">{post.title}</div>
-				<div className="text-sm">by {post.author} for {post.club ? post.club.name : "DELETED CLUB"}</div>
+				<Link to={`${post.id}`} className="text-xl font-bold">{post.title}</Link>
+				<div className="text-sm">by {<Link to={`/account/${post.author}`}>{post.author}</Link>} for {post.club ? <Link to={`/club/${post.club.id}`}>{post.club.name}</Link> : "DELETED CLUB"}</div>
 			</div>
 			<div className="text-xl">{props.post.body}</div>
 			{post.file && <img className="mx-auto" width={'400rem'} src={`/images/${post.file}`}/>}
