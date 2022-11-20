@@ -146,10 +146,8 @@ function ModifyInfo(props) {
 								return (
 									<Draggable key={item.id} draggableId={item.id} index={index}>
 										{(provided) => (
-											<li className="flex gap-2" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-												{
-													conditionalRenderItem(item)
-												}
+											<li className="flex gap-2 flex-col items-start" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+												{conditionalRenderItem(item)}
 												<button className="text-red-400" onClick={deleteItem(index)}>Delete</button>
 											</li>
 										)}
@@ -166,7 +164,7 @@ function ModifyInfo(props) {
 			<button className="bg-neutral-300 p-2 rounded-md" onClick={addText}>Add Text Box</button>
 			<br />
 			<DropZone onDrop={onDrop} />
-			<button onClick={handleSubmit}>submit</button>
+			<button className="bg-neutral-600 text-neutral-100 p-5" onClick={handleSubmit}>Save</button>
 		</div>
 	)
 }
