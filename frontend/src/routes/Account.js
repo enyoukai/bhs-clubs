@@ -14,8 +14,6 @@ export default function Account()
 		getUser.dispatch({populate: setUser, params: `/${userID}`});
 	}, [userID])
 	
-	console.log(user);
-
 	return (
 		<div>
 			{ getUser.loading ? <Loading/> : <UserInfo user={user}/>}
@@ -26,7 +24,7 @@ export default function Account()
 function UserInfo(props)
 {
 	const clubs = props.user.clubs.map(club => <Club key={club.id} club={club}/>);
-	
+
 	return (
 		<div>
 			<div>Username: {props.user.username}</div>

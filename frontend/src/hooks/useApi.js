@@ -12,7 +12,7 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 
 	const config = token ? {headers: {Authorization: `Bearer ${token}`}} : {};
 
-	async function dispatch({populate=null, body={}, params='', headers={}})
+	async function dispatch({populate=null, body={}, params='', headers=null})
 	{
 		setLoading(true);
 		try

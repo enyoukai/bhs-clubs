@@ -8,6 +8,15 @@ const userSchema = new mongoose.Schema({
 	creationTime: String,
 	clubs: [{type: Schema.Types.ObjectId, ref: 'Club'}],
 	profile: String
-})
+});
+
+userSchema.virtual('id').get(function(){
+    return this._id;
+});
+
+// Ensure virtual fields are serialised.
+userSchema.set('toJSON', {
+    virtuals: true
+});
 
 module.exports = mongoose.model("User", userSchema);

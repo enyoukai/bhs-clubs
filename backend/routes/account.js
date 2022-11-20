@@ -7,7 +7,10 @@ const User = require('../models/user');
 
 
 router.get('/:userId', async (req, res) => {
-	return res.send(await User.findOne({_id: req.params.userId}));
+	User.findOne({_id: req.params.userId}).populate('clubs').exec(function(err, user) {
+		if (err) return res.sendStatus(500);
+		return res.send(user);
+	});
 });
 
 router.use(authenticate);
@@ -17,6 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+	console.log(req.headers.uid);
 	const fbUser = await admin.auth().getUser(req.headers.uid);
 
 	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email, creationTime: fbUser.metadata.creationTime});
