@@ -41,7 +41,7 @@ function App() {
           <Route path='settings' element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
           <Route path='signout' element={<SignOut/>}/>
           <Route path='feed'>
-            <Route index element={<ProtectedRoute><Feed/></ProtectedRoute>}/>
+            <Route index element={<Feed/>}/>
             <Route path='newpost' element={<ProtectedRoute><NewPost/></ProtectedRoute>}/>
           </Route>
           <Route path='newpost' element={<NewPost/>}/>

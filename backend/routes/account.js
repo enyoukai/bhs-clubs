@@ -19,7 +19,8 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-	const user = new User({_id: req.headers.uid, username: req.body.username});
+	console.log(req.headers.id);
+	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email});
 	await user.save();
 
 	return res.sendStatus(201);

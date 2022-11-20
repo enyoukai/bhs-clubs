@@ -16,6 +16,7 @@ function Register(props)
 	const [errorMessage, setErrorMessage] = useState('');
 	const {auth, token} = useAuth();
 
+	console.log(token);
 	const {loading: registerLoading, error: registerError, dispatch: registerDispatch} = useApi('/account', 'post', token);
 
 	const navigate = useNavigate();

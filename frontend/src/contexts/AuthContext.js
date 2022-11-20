@@ -14,7 +14,7 @@ export function AuthProvider(props)
 	const [user, setUser] = useState(null);
 	const [signInFetched, setSignInFetched] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
-	const [token, setToken] = useState();
+	const [token, setToken] = useState(null);
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(async function(user) {
@@ -28,6 +28,7 @@ export function AuthProvider(props)
 			}
 			else
 			{
+				setToken(null);
 				setIsAdmin(false);
 			}
 
