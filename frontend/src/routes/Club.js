@@ -33,14 +33,14 @@ export default function Club() {
 
 function ClubInfo(props) {
 	const club = props.club;
-	const [editing, setEditing] = useState(true);
+	const [editing, setEditing] = useState(false);
 	const { user, signInFetched } = useAuth();
 
 	return (
 		<div className="pt-9">
 			<div className="flex flex-col items-center">
 				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
-				{signInFetched && user !== null && club.uid === user.uid && <button className="text-2xl" onClick={() => setEditing(!editing)}>Edit</button>}
+				{signInFetched && user !== null && club.uid === user.uid && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}
 			</div>
 			{editing ? <ModifyInfo setEditing={setEditing} club={club} /> : <ReadOnlyInfo club={club} />}
 		</div>
@@ -48,7 +48,7 @@ function ClubInfo(props) {
 }
 
 function conditionalRenderItem(item) {
-	if (item.type === 'text') return (<span className="text-lg">{item.content}</span>)
+	if (item.type === 'text') return (<span className="text-xl">{item.content}</span>)
 	if (item.type === 'img-file') return (<img className="mx-auto" width={"400rem"} src={URL.createObjectURL(item.content)} />)
 	if (item.type === 'img-link') return (<img className="mx-auto" width={"400rem"} src={`/images/${item.content}`} />);
 }
