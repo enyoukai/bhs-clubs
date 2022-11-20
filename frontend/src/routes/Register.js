@@ -14,10 +14,9 @@ function Register(props)
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
-	const {auth, token} = useAuth();
+	const {auth} = useAuth();
 
-	console.log(token);
-	const {loading: registerLoading, error: registerError, dispatch: registerDispatch} = useApi('/account', 'post', token);
+	const {loading: registerLoading, error: registerError, dispatch: registerDispatch} = useApi('/account', 'post');
 
 	const navigate = useNavigate();
 
@@ -27,10 +26,13 @@ function Register(props)
 			{
 				setErrorMessage("Confirm Password not equal to password");
 				return;
-
 			}
-			await createUserWithEmailAndPassword(auth, email, password);
-			await registerDispatch({body: {username: username}});
+			
+			const userCred = await createUserWithEmailAndPassword(auth, email, password);
+			const token = await userCred.user.getIdToken();
+
+			await registerDispatch({body: {username: username}, headers: {Authorization: `Bearer ${token}`}});
+
 			navigate('/');
 		}
 		catch (error) {
