@@ -51,7 +51,7 @@ function Register(props)
 				<input className="signin__input" placeholder="Email" onChange={e => {setEmail(e.target.value); setErrorMessage('');}}/>
 				<input className="signin__input" placeholder="Password" type='password' onChange={e => {setPassword(e.target.value); setErrorMessage('');}}/>
 				<input className="signin__input" placeholder="Confirm Password" type='password' onChange={e => {setConfirmPassword(e.target.value); setErrorMessage('');}}/>
-				<button type="submit" className="signin__btn signin__btn--submit" onClick={register}>Register</button>
+				<button type="submit" className="signin__btn bg-neutral-200 hover:bg-white" onClick={register}>Register</button>
 			</form>
 		</div>
 	)

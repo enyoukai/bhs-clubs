@@ -33,7 +33,7 @@ function SignIn() {
 				<div className="signin__error">{errorMessage}</div>
 				<input className="signin__input" placeholder="Email" onChange={e => {setEmail(e.target.value); setErrorMessage('');}}/>
 				<input className="signin__input" placeholder="Password" type='password' onChange={e => {setPassword(e.target.value); setErrorMessage('');}}/>
-				<button type="submit" className="signin__btn signin__btn--submit" onClick={signIn}>Sign In</button>
+				<button type="submit" className="signin__btn bg-neutral-200 hover:bg-white" onClick={signIn}>Sign In</button>
 			</form>
 		</div>
 	)
