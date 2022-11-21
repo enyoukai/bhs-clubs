@@ -2,6 +2,7 @@ import useApi from '../hooks/useApi';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useDropzone } from 'react-dropzone';
 
 import { useAuth } from '../contexts/AuthContext'
 
@@ -19,8 +20,14 @@ export default function NewClub() {
 
 	const navigate = useNavigate();
 
-	async function submitClub() {
-		let errorFields = [];
+	function capitalizeFirstLetter(str)
+	{
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	}
+
+	async function submitClub(e) {
+		e.preventDefault();
+		const errorFields = [];
 
 		for (const [key, value] of Object.entries(formState))
 		{
@@ -31,7 +38,14 @@ export default function NewClub() {
 
 		if (errorFields.length > 0)
 		{
-			setError("Following fields need to be filled: " + errorFields.join(' '));
+			let errorMessage = "Following fields need to be filled: "; 
+			for (let i = 0; i < errorFields.length; i++)
+			{
+				errorMessage += capitalizeFirstLetter(errorFields[i]);
+				if (i !== errorFields.length - 1) errorMessage += ", "
+			}
+			setError(errorMessage);
+
 			return;
 		}
 		
@@ -53,9 +67,9 @@ export default function NewClub() {
 		if (error) setError('');
 	}
 
-	function handleFileChange(e)
+	function handleDrop(files)
 	{
-		setFormState((prevState) => ({...prevState, [e.target.name]: e.target.files[0]}));
+		setFormState((prevState) => ({...prevState, ['verification']: files[0]}));
 	}
 
 	useEffect(() => {
@@ -66,10 +80,10 @@ export default function NewClub() {
 	}, [createClub.loading, createClub.error, navigate])
 
 	return (
-		<div className="newClub">
-			<div className="newClub__text newClub__text--large">Requesting Club</div>
-			{error && <div className="newClub__error">{error}</div>}
-			<div className="newClub__form">
+		<div className="bg-neutral-800 mx-auto w-1/2 rounded-lg p-20 my-10 text-neutral-100 text-4xl">
+			<div className="text-6xl text-center mb-20">Requesting Club</div>
+			{error && <div className="text-red-500 my-4 text-base">* {error}</div>}
+			<form onSubmit={submitClub} className="flex flex-col gap-8">
 				<div className="newClub__text">Name</div>
 				<input name='name' value={formState.name} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Description</div>
@@ -83,11 +97,23 @@ export default function NewClub() {
 				<div className="newClub__text">Advisor</div>
 				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Verification</div>
-				<input name='verification' onChange={handleFileChange} type="file"/>
-				{formState.verification && <img width={'300rem'} alt='verification' src={URL.createObjectURL(formState.verification)}/>}
-			</div>
-			<button className="newClub__btn" onClick={submitClub}>Add Club</button>
+				<DropZone currentImg={formState.verification} onDrop={handleDrop}/>
+				<button type="submit" className="mt-4 text-4xl text-neutral-800 bg-neutral-100 p-6 rounded-lg font-medium">Add Club</button>
+			</form>
 		</div>
 	)
 
+}
+
+function DropZone(props) {
+	const onDrop = props.onDrop;
+
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+	return (
+		<div {...getRootProps({ className: 'border-dotted border-2 p-5 dropzone text-neutral-100' })}>
+			<input {...getInputProps()} />
+			{props.currentImg ? <img className='mx-auto' src={URL.createObjectURL(props.currentImg)}/> : <p>Drag file here</p>}
+		</div>
+	)
 }

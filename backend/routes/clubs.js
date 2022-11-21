@@ -1,6 +1,8 @@
 require('dotenv').config();
 const admin = require('firebase-admin');
 const Club = require("../models/clubs");
+const User = require("../models/user");
+
 const express = require("express");
 const authenticate = require('../middleware/authenticate');
 const upload = require('../middleware/upload');
@@ -68,6 +70,8 @@ router.post('/', upload.single('verification'), async (req, res) => {
 
 	const club = new Club({name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, uid: req.headers.uid, approved: false, verification: req.file.filename, infoPage: ""});
 	await club.save();
+
+	await User.updateOne({_id: req.headers.uid}, {$push: {clubs: club._id}});
 
 	return res.send(club);
 });

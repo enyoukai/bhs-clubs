@@ -11,9 +11,9 @@ export default function Feed()
 	useEffect(() => {getFeed.dispatch({populate: setFeed})}, []);
 
 	return (
-		<div className="feed">
-			<div className="feed__title">Recent Club Activities...</div>
-			<Link to='newpost'>Add new post</Link>
+		<div className="pt-10 px-10">
+			<div className="text-center text-4xl">Recent Club Activities...</div>
+			<Link to='newpost' className="text-2xl">Add new post</Link>
 			{!getFeed.loading && feed.map(post => <Post key={post.id} post={post}/>)}
 		</div>
 	)
@@ -23,10 +23,13 @@ function Post(props)
 {
 	const post = props.post;
 	return (
-		<div className="feed__post">
-			<div><b>{post.title}</b> made by <b>{post.author}</b> for club <b>{post.club ? post.club.name : "DELETED CLUB"}</b></div>
-			<div>{props.post.body}</div>
-			{post.file && <img src={`/images/${post.file}`}/>}
+		<div className="flex flex-col gap-8 border-solid border bg-neutral-100 rounded-md w-2/5 mx-auto my-5 p-10">
+			<div>
+				<Link to={`${post.id}`} className="text-xl font-bold">{post.title}</Link>
+				<div className="text-sm">by {<Link to={`/account/${post.author.id}`}>{post.author.username}</Link>} for {post.club ? <Link to={`/club/${post.club.id}`}>{post.club.name}</Link> : "DELETED CLUB"}</div>
+			</div>
+			<div className="text-xl">{props.post.body}</div>
+			{post.file && <img className="mx-auto" width={'400rem'} src={`/images/${post.file}`}/>}
 		</div>
 	)
 }

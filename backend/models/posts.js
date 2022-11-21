@@ -3,7 +3,7 @@ const {Schema} = mongoose;
 
 const postSchema = new mongoose.Schema({
 	title: String,
-	author: String,
+	author: {type: String, ref: 'User'},
 	body: String,
 	time: String,
 	file: String,

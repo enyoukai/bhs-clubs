@@ -43,7 +43,7 @@ function Club(props)
 			<div>{props.club.advisor}</div>
 			<div>{props.club.uid}</div>
 			<img width={"300rem"} src={'/images/' + props.club.verification}/>
-			<button onClick={props.approveClub}>Approve Club</button>
+			<button className="text-green-500" onClick={props.approveClub}>Approve Club</button>
 		</div>
 	)
 }

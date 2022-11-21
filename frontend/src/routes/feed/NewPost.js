@@ -76,34 +76,23 @@ export default function NewPost()
 	return (
 		<>
 			{clubs !== undefined &&
-			<div>
-				<h2>New Post</h2>
+			<div className='p-5'>
+				<h2 className='text-3xl text-center'>New Post</h2>
 				{success && <div>{success}</div>}
 				{error && <div>{error}</div>}
 				<form onSubmit={handleSubmit}>
-					<label>
-						Title:
-						<input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
-					</label>
-					<br/>
-					<label>
-						Body:
-						<textarea type="text" value={body} onChange={(e) => setBody(e.target.value)}/>
-					</label>
-					<br/>
-					<label>Club:</label>
-					<select value={selectClub} onChange={(e) => setSelectClub(e.target.value)}>
+					<div className="text-xl mt-4">Title:</div>
+					<textarea className="border border-neutral-400 rounded-sm" type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+					<div className="text-xl mt-4">Body</div>
+					<textarea className="border border-neutral-400 rounded-sm" type="text" value={body} onChange={(e) => setBody(e.target.value)}/>
+					<div className="text-xl mt-4">Club:</div>
+					<select className="border border-neutral-400 rounded-sm" value={selectClub} onChange={(e) => setSelectClub(e.target.value)}>
 						{clubs.map((club) => <option key={club.id} value={club.id}>{club.name}</option>)}
 					</select>
-					<br/>
-					<label>
-						Photo:
-						<input type="file" onChange={(e) => setFile(e.target.files[0])}/>
-					</label>
-					<br/>
-					{file && <img alt="uploaded" src={URL.createObjectURL(file)}/>}
-					<br/>
-					<button type="submit">Submit</button>
+					<div className="text-xl mt-4">Photo:</div>
+					<input className="block" type="file" onChange={(e) => setFile(e.target.files[0])}/>
+					{file && <img className="mt-4" alt="uploaded" src={URL.createObjectURL(file)}/>}
+					<button className="text-2xl bg-neutral-200 p-5 rounded-md mt-5" type="submit">Submit</button>
 				</form>
 			</div>
 			}

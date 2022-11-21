@@ -13,15 +13,19 @@ export default function Club() {
 	const clubID = useParams().id;
 	const [club, setClub] = useState();
 	const getClub = useApi('/clubs');
-	const { signInFetched } = useAuth();
+	const { user } = useAuth();
 
 	useEffect(() => {
 		getClub.dispatch({ params: `/${clubID}`, populate: setClub });
 	}, [clubID]);
 
+	function register()
+	{
+
+	}
+
 	return (
 		<>
-			<button>Register</button>
 			{getClub.loading ? <Loading /> : <ClubInfo club={club} />}
 		</>
 	)
@@ -33,18 +37,20 @@ function ClubInfo(props) {
 	const { user, signInFetched } = useAuth();
 
 	return (
-		<div className="clubInfo">
-			<div className="clubInfo__text clubInfo__text--large">{club.name}</div>
-			{signInFetched && user !== null && club.uid === user.uid && <button onClick={() => setEditing(!editing)}>Edit</button>}
+		<div className="pt-9 px-20">
+			<div className="flex flex-col items-center">
+				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
+				{signInFetched && user !== null && club.uid === user.uid && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}
+			</div>
 			{editing ? <ModifyInfo setEditing={setEditing} club={club} /> : <ReadOnlyInfo club={club} />}
 		</div>
 	)
 }
 
 function conditionalRenderItem(item) {
-	if (item.type === 'text') return (<span>{item.content}</span>)
-	if (item.type === 'img-file') return (<img width={"400rem"} src={URL.createObjectURL(item.content)} />)
-	if (item.type === 'img-link') return (<img width={"400rem"} src={`/images/${item.content}`} />);
+	if (item.type === 'text') return (<span className="text-2xl">{item.content}</span>)
+	if (item.type === 'img-file') return (<img className="mx-auto" width={"400rem"} src={URL.createObjectURL(item.content)} />)
+	if (item.type === 'img-link') return (<img className="mx-auto" width={"400rem"} src={`/images/${item.content}`} />);
 }
 
 function ModifyInfo(props) {
@@ -130,7 +136,7 @@ function ModifyInfo(props) {
 	}, []);
 
 	return (
-		<div>
+		<div className="mx-4">
 			{submitStatus && <div>{submitStatus}</div>}
 			<DragDropContext onDragEnd={handleOnDragEnd}>
 				<Droppable droppableId="content">
@@ -140,11 +146,9 @@ function ModifyInfo(props) {
 								return (
 									<Draggable key={item.id} draggableId={item.id} index={index}>
 										{(provided) => (
-											<li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-												{
-													conditionalRenderItem(item)
-												}
-												<button onClick={deleteItem(index)}>delete</button>
+											<li className="flex gap-2 flex-col items-start" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+												{conditionalRenderItem(item)}
+												<button className="text-red-400" onClick={deleteItem(index)}>Delete</button>
 											</li>
 										)}
 									</Draggable>
@@ -155,12 +159,12 @@ function ModifyInfo(props) {
 					)}
 				</Droppable>
 			</DragDropContext>
-			<textarea value={input} onChange={(e) => setInput(e.target.value)} />
+			<textarea className="border-solid border-2" value={input} onChange={(e) => setInput(e.target.value)} />
 			<br />
-			<button onClick={addText}>add</button>
+			<button className="bg-neutral-300 p-2 rounded-md" onClick={addText}>Add Text Box</button>
 			<br />
 			<DropZone onDrop={onDrop} />
-			<button onClick={handleSubmit}>submit</button>
+			<button className="bg-neutral-600 text-neutral-100 p-5" onClick={handleSubmit}>Save</button>
 		</div>
 	)
 }
@@ -171,7 +175,7 @@ function DropZone(props) {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
 	return (
-		<div {...getRootProps({ className: 'dropzone' })}>
+		<div {...getRootProps({ className: 'border-dashed border-black border-2 p-5 dropzone' })}>
 			<input {...getInputProps()} />
 			{isDragActive ? <p>Drop here</p> : <p>Drag files or click here</p>}
 		</div>
@@ -194,20 +198,20 @@ function ReadOnlyInfo(props) {
 	}, [club.id]);
 
 	return (
-		<div>
-			{<InfoFallback club={club}/>}
+		<div className="p-6">
+			{<InfoDefault club={club}/>}
 			<ul>
-				{items.map((item, idx) => <li key={idx}>{conditionalRenderItem(item)}</li>)}
+				{items.map((item, idx) => <li className="mt-4" key={idx}>{conditionalRenderItem(item)}</li>)}
 			</ul>
 
 		</div>
 	)
 }
 
-function InfoFallback(props) {
+function InfoDefault(props) {
 	const club = props.club;
 	return (
-		<div>
+		<div className="flex flex-col gap-3 bg-neutral-100 px-6 py-3 rounded-lg width w-1/4 text-2xl mb-20">
 			<div>{club.description}</div>
 			<div>{club.location}</div>
 			<div>{club.date}</div>
