@@ -14,8 +14,9 @@ function SignIn() {
 
 	const navigate = useNavigate();
 
-	async function signIn()
+	async function signIn(e)
 	{	
+		e.preventDefault();
 		try {
 			await signInWithEmailAndPassword(auth, email, password);
 			navigate('/');
@@ -28,12 +29,12 @@ function SignIn() {
 	return (
 		<div className="signin">
 			<div className="signin__text signin__text--big">Welcome Back</div>
-			<div className="signin__form">
+			<form onSubmit={signIn} className="signin__form">
 				<div className="signin__error">{errorMessage}</div>
 				<input className="signin__input" placeholder="Email" onChange={e => {setEmail(e.target.value); setErrorMessage('');}}/>
 				<input className="signin__input" placeholder="Password" type='password' onChange={e => {setPassword(e.target.value); setErrorMessage('');}}/>
-				<button className="signin__btn signin__btn--submit" onClick={signIn}>Sign In</button>
-			</div>
+				<button type="submit" className="signin__btn signin__btn--submit" onClick={signIn}>Sign In</button>
+			</form>
 		</div>
 	)
 }

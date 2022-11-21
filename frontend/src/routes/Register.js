@@ -20,7 +20,9 @@ function Register(props)
 
 	const navigate = useNavigate();
 
-	async function register() {
+	async function register(e) {
+		e.preventDefault();
+		
 		try{
 			if (confirmPassword !== password)
 			{
@@ -39,15 +41,15 @@ function Register(props)
 
 	return (
 		<div className="signin">
-			<div className="signin__form">
+			<form className="signin__form" onSubmit={register}>
 				<div className="signin__text signin__text--big">Hello New User</div>
 				<div className="signin__error">{errorMessage}</div>
 				<input className="signin__input" placeholder="Username" onChange={e => {setUsername(e.target.value); setErrorMessage('');}}/>
 				<input className="signin__input" placeholder="Email" onChange={e => {setEmail(e.target.value); setErrorMessage('');}}/>
 				<input className="signin__input" placeholder="Password" type='password' onChange={e => {setPassword(e.target.value); setErrorMessage('');}}/>
 				<input className="signin__input" placeholder="Confirm Password" type='password' onChange={e => {setConfirmPassword(e.target.value); setErrorMessage('');}}/>
-				<button className="signin__btn signin__btn--submit" onClick={register}>Register</button>
-			</div>
+				<button type="submit" className="signin__btn signin__btn--submit" onClick={register}>Register</button>
+			</form>
 		</div>
 	)
 }
