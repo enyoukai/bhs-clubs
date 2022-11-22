@@ -46,7 +46,7 @@ function Club(props)
 	return (
 		<div>
 			<div>{club.name}</div>
-			<button onClick={() => props.deleteClub(club.id)}>Delete Club</button>
+			<button className="text-red-500" onClick={() => props.deleteClub(club.id)}>Delete Club</button>
 		</div>
 	)
 }
