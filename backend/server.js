@@ -10,7 +10,7 @@ const feedRouter = require("./routes/feed");
 
 const serviceAccount = require('./firebase.json');
 
-require('dotenv').config();
+require('dotenv').config({ path: '.env.local' });
 
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
@@ -20,6 +20,7 @@ firebase.initializeApp({
 const app = express()
 const PORT = 3001
 
+console.log(process.env.MONGODB_URI);
 try {
   // Connect to the MongoDB cluster
    mongoose.connect(

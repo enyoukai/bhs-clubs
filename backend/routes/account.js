@@ -20,9 +20,10 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+	console.log(req.headers.uid);
 	const fbUser = await admin.auth().getUser(req.headers.uid);
 
-	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email, creationTime: fbUser.metadata.creationTime});
+	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email, creationTime: fbUser.metadata.creationTime, isAdmin: false});
 	await user.save();
 
 	return res.sendStatus(201);
