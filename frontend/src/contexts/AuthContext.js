@@ -22,7 +22,8 @@ export function AuthProvider(props)
 
 			if (user !== null)
 			{
-				const adminStatus = await axios.get(`/admin/adminCheck/${user.uid}`);
+				const adminStatus = (await axios.get(`/account/${user.uid}`));
+
 				setIsAdmin(adminStatus.data.isAdmin);
 				setToken(await user.getIdToken());
 			}

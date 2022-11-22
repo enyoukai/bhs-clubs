@@ -58,6 +58,11 @@ function OptionsBar(props) {
   return (
     <div className="options">
       <input className="options__search" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
+      <button className="border rounded-xl px-5 bg-neutral-100">Service</button>
+      <button className="border rounded-xl px-5 bg-neutral-100">Academic</button>
+      <button className="border rounded-xl px-5 bg-neutral-100">Educational</button>
+      <button className="border rounded-xl px-5 bg-neutral-100">Misc</button>
+
       <Link className="options__addClub" to={'newclub'}>Add Club +</Link>
     </div>
   )
