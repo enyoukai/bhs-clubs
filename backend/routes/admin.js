@@ -7,7 +7,10 @@ const Club = require("../models/clubs");
 const User = require('../models/user');
 
 router.get(`/adminCheck/:userID`, async (req, res) => {
-	return res.json({isAdmin: req.params.userID === process.env.ADMIN});
+    const user = await User.findOne({_id: req.headers.uid});
+	console.log(req.headers.uid);
+	console.log(user);
+	return res.json({isAdmin: user.isAdmin});
 });
 
 router.use(authenticate);

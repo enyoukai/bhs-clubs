@@ -20,7 +20,17 @@ firebase.initializeApp({
 const app = express()
 const PORT = 3001
 
-mongoose.connect("mongodb://localhost/clubsdb");
+try {
+  // Connect to the MongoDB cluster
+   mongoose.connect(
+    process.env.MONGODB_URI,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    () => console.log(" Mongoose is connected")
+  );
+
+} catch (e) {
+  console.log("could not connect");
+}
 
 app.use('/images', express.static('images'));
 

@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
 	email: String,
 	creationTime: String,
 	clubs: [{type: Schema.Types.ObjectId, ref: 'Club'}],
-	profile: String
+	profile: String,
+	isAdmin: Boolean
 });
 
 userSchema.virtual('id').get(function(){
