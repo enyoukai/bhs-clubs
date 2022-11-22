@@ -20,17 +20,16 @@ firebase.initializeApp({
 const app = express()
 const PORT = 3001
 
-console.log(process.env.MONGODB_URI);
 try {
   // Connect to the MongoDB cluster
    mongoose.connect(
-    process.env.MONGODB_URI,
+    process.env.MONGODB_URI_LOCAL,
     { useNewUrlParser: true, useUnifiedTopology: true },
-    () => console.log(" Mongoose is connected")
+    () => console.log("Mongoose is connected")
   );
 
 } catch (e) {
-  console.log("could not connect");
+  console.log("Could not connect");
 }
 
 app.use('/images', express.static('images'));

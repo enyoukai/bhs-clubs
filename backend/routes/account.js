@@ -5,7 +5,6 @@ const admin = require('firebase-admin');
 const Club = require("../models/clubs");
 const User = require('../models/user');
 
-
 router.get('/:userId', async (req, res) => {
 	User.findOne({_id: req.params.userId}).populate('clubs').exec(function(err, user) {
 		if (err) return res.sendStatus(500);
@@ -20,10 +19,11 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-	console.log(req.headers.uid);
+	let isAdmin = false;
+	if (req.headers.email === process.env.ADMIN) isAdmin = true;
 	const fbUser = await admin.auth().getUser(req.headers.uid);
 
-	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email, creationTime: fbUser.metadata.creationTime, isAdmin: false});
+	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email, creationTime: fbUser.metadata.creationTime, isAdmin: isAdmin});
 	await user.save();
 
 	return res.sendStatus(201);

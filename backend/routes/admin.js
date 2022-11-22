@@ -6,10 +6,10 @@ const admin = require('firebase-admin');
 const Club = require("../models/clubs");
 const User = require('../models/user');
 
-router.get(`/adminCheck/:userID`, async (req, res) => {
-    const user = await User.findOne({_id: req.headers.uid});
-	console.log(req.headers.uid);
-	console.log(user);
+router.get(`/adminCheck/:userId`, async (req, res) => {
+    const user = await User.findOne({_id: req.params.userId});
+	if (user === null) return res.sendStatus(404);
+
 	return res.json({isAdmin: user.isAdmin});
 });
 

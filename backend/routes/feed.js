@@ -23,8 +23,7 @@ router.use(authenticate);
 
 router.post('/', upload.single('file'), async (req, res) => {
 	const user = await User.findOne({_id: req.headers.uid});
-	console.log(user._id);
-	console.log(req.body.club);
+	if (user === null) return res.sendStatus(404);
 
 	if (!req.body.title || !req.body.body || !req.body.club) return res.sendStatus(400);
 
