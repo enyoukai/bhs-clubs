@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useReducer} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import useApi from '../../hooks/useApi';
 import {useAuth} from '../../contexts/AuthContext';
@@ -21,6 +22,8 @@ export default function NewPost()
 
 	const {user, token} = useAuth();
 
+	const navigate = useNavigate();
+
 	const createPost = useApi('/feed', 'post', token);
 	const getUser = useApi(`/account/${user.uid}`);
 	
@@ -28,7 +31,7 @@ export default function NewPost()
 	{
 		e.preventDefault();
 
-		if (title === '' || body === '') 
+		if (!title || !body || !selectClub) 
 		{
 			setError("Fields cannot be blank");
 			return;
@@ -50,16 +53,13 @@ export default function NewPost()
 		if (!getUser.loading)
 		{
 			setClubs(userData.clubs);
-			userData.clubs.length > 0 ? setSelectClub(userData.clubs[0].id) : setSelectClub('');
 		}
 	}, [getUser.loading]);
 	
 	useEffect(() => {
 		if (!createPost.loading && !createPost.error)
 		{
-			setSuccess("Post successfully added!");
-			setTitle('');
-			setBody('');
+			navigate('/feed');
 		}
 
 	}, [createPost.loading]);
@@ -70,7 +70,6 @@ export default function NewPost()
 
 	function handleSelectChange(e) {
 		formDispatch({type: 'text', field: e.target.name, value: e.target.value});
-
 	}
 
 	return (
@@ -87,6 +86,7 @@ export default function NewPost()
 					<textarea className="border border-neutral-400 rounded-sm" type="text" value={body} onChange={(e) => setBody(e.target.value)}/>
 					<div className="text-xl mt-4">Club:</div>
 					<select className="border border-neutral-400 rounded-sm" value={selectClub} onChange={(e) => setSelectClub(e.target.value)}>
+						<option value="" disabled>Select Club</option>
 						{clubs.map((club) => <option key={club.id} value={club.id}>{club.name}</option>)}
 					</select>
 					<div className="text-xl mt-4">Photo:</div>

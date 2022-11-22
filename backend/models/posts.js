@@ -7,7 +7,8 @@ const postSchema = new mongoose.Schema({
 	body: String,
 	time: String,
 	file: String,
-	club: {type: Schema.Types.ObjectId, ref: 'Club'}
+	club: {type: Schema.Types.ObjectId, ref: 'Club'},
+	createdAt: {type: Date, default: Date.now}
 })
 
 postSchema.virtual('id').get(function(){

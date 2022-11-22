@@ -10,7 +10,7 @@ const upload = require('../middleware/upload');
 const { default: mongoose } = require("mongoose");
 
 router.get('/', async (req, res) => {
-	Post.find().populate('club').populate('author').exec(function(err, posts) {
+	Post.find().sort({createdAt: -1}).populate('club').populate('author').exec(function(err, posts) {
 		if (err)
 		{
 			return res.sendStatus(500);
@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
 		return res.json(posts);
 	})
 });
+
 
 router.use(authenticate);
 
