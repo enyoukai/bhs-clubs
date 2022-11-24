@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 export default function Calendar()
 {
@@ -83,9 +84,11 @@ function DayColumn(props)
 
 function ClubTime(props) {
 	return (
-		<li className='border'>
-			<div>{props.club.time}</div>
-			<div>{props.club.name}</div>
-		</li>
+		<Link to={`/club/${props.club.id}`}>
+			<li className='border'>
+				<div>{props.club.time}</div>
+				<div>{props.club.name}</div>
+			</li>
+		</Link>
 	)
 }
