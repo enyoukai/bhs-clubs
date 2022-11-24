@@ -32,7 +32,7 @@ export default function ModifyClub() {
     useEffect(() => {
         if (!getClub.loading)
         {
-            if (club.uid != user.uid) 
+            if (club.uid !== user.uid) 
             {
                 navigate('/');
             }
@@ -62,30 +62,26 @@ export default function ModifyClub() {
             {getClub.loading ? <Loading/> :         
                 <div className="modify">
                 <header>Modifying {club.name}</header>
-                <form onSubmit={submitChange} className="modify__form">
-                    <label>Description</label>
-                    <textarea value={description} onChange={e => setDescription(e.target.value)}></textarea>
-                    <br/>
-                    <label>Location</label>
-                    <input value={location} onChange={e => setLocation(e.target.value)}></input>
-                    <br/>
-                    <label >Day</label>
-                    <input value={date} onChange={e => setDate(e.target.value)}></input>
-                    <br/>
-                    <label>Time</label>
-                    <input value={time} onChange={e => setTime(e.target.value)}></input>
-                    <br/>
-                    <label>Advisor</label>
-                    <input value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
-                    <br/>
-                    {/* <label>Info Page</label>
+                <form onSubmit={submitChange} className="modify__form ">
+                    <p>Description: </p>
+                    <textarea className='border' value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                    <p>Location: </p>
+                    <input className='border' value={location} onChange={e => setLocation(e.target.value)}></input>
+                    <p >Day:  TODO: FIX AND ADD MULTISELECT</p>
+                    {/* <input className='border' value={date} onChange={e => setDate(e.target.value)}></input> */}
+                    <p>Time: </p>
+                    <input className='border' value={time} onChange={e => setTime(e.target.value)}></input>
+                    <p>Advisor: </p>
+                    <input className='border' value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
+                    {/* <p>Info Page</p>
                     <textarea value={infoPage} onChange={e => setInfoPage(e.target.value)}></textarea>
                     <br/>
                     <input type="file" name="clubImage" accept="image/*" onChange={e => setImage(e.target.files[0])}/>
                     <br/>
                     {image && <img width={"100rem"} src={URL.createObjectURL(image)}></img>}
                     <br/> */}
-                    <button type="submit">submit</button>
+                    <br/>
+                    <button className='bg-neutral-800 text-neutral-100' type="submit">submit</button>
                 </form>
             </div>}
         </>

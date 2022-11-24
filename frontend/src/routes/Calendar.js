@@ -86,10 +86,10 @@ function ClubTime(props) {
 	return (
 		<li>
 			<Link to={`/club/${props.club.id}`}>
-				<li className='border'>
+				<div className='border'>
 					<div>{props.club.time}</div>
 					<div>{props.club.name}</div>
-				</li>
+				</div>
 			</Link>
 		</li>
 	)

@@ -25,7 +25,7 @@ const PORT = 3001
 try {
   // Connect to the MongoDB cluster
    mongoose.connect(
-    process.env.MONGODB_URI_LOCAL,
+    process.env.MONGODB_URI,
     { useNewUrlParser: true, useUnifiedTopology: true },
     () => console.log("Mongoose is connected")
   );

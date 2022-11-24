@@ -41,7 +41,7 @@ function Club(props) {
 	return (
 		<div>
 			<div>{props.club.name}</div>
-			<Link to={`/modify/${props.club.id}`}>EDIT</Link>
+			<Link className="text-green-500" to={`/modify/${props.club.id}`}>EDIT</Link>
 		</div>
 	)
 }
