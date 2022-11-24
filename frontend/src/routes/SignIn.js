@@ -27,13 +27,13 @@ function SignIn() {
 	}
 
 	return (
-		<div className="signin">
-			<div className="signin__text signin__text--big">Welcome Back</div>
-			<form onSubmit={signIn} className="signin__form">
-				<div className="signin__error">{errorMessage}</div>
-				<input className="signin__input" placeholder="Email" onChange={e => {setEmail(e.target.value); setErrorMessage('');}}/>
-				<input className="signin__input" placeholder="Password" type='password' onChange={e => {setPassword(e.target.value); setErrorMessage('');}}/>
-				<button type="submit" className="signin__btn bg-neutral-200 hover:bg-white" onClick={signIn}>Sign In</button>
+		<div className="bg-neutral-800 w-1/3 mx-auto px-10 py-8 my-5 rounded-md">
+			<div className="text-4xl text-center text-neutral-100 mb-7">Welcome Back</div>
+			<form onSubmit={signIn} className="flex flex-col flex-start gap-5 text-center text-neutral-100">
+				<input className="signin__input text-lg pl-4" placeholder="Email" onChange={e => {setEmail(e.target.value); setErrorMessage('');}}/>
+				<input className="signin__input text-lg pl-4" placeholder="Password" type='password' onChange={e => {setPassword(e.target.value); setErrorMessage('');}}/>
+				{errorMessage && <div className="text-md text-left text-red-500">{errorMessage}</div>}
+				<button type="submit" className="text-xl p-2 rounded-md text-neutral-800 bg-neutral-200 hover:bg-white" onClick={signIn}>Sign In</button>
 			</form>
 		</div>
 	)

@@ -43,15 +43,15 @@ function Register(props)
 	}
 
 	return (
-		<div className="signin">
-			<form className="signin__form" onSubmit={register}>
-				<div className="signin__text signin__text--big">Hello New User</div>
-				<div className="signin__error">{errorMessage}</div>
-				<input className="signin__input" placeholder="Username" onChange={e => {setUsername(e.target.value); setErrorMessage('');}}/>
-				<input className="signin__input" placeholder="Email" onChange={e => {setEmail(e.target.value); setErrorMessage('');}}/>
-				<input className="signin__input" placeholder="Password" type='password' onChange={e => {setPassword(e.target.value); setErrorMessage('');}}/>
-				<input className="signin__input" placeholder="Confirm Password" type='password' onChange={e => {setConfirmPassword(e.target.value); setErrorMessage('');}}/>
-				<button type="submit" className="signin__btn bg-neutral-200 hover:bg-white" onClick={register}>Register</button>
+		<div className="bg-neutral-800 w-1/3 mx-auto px-10 py-8 my-5 rounded-md">
+			<div className="text-4xl text-center text-neutral-100 mb-7">Hello New User</div>
+			<form className="flex flex-col flex-start gap-5 text-center text-neutral-100" onSubmit={register}>
+				<input className="signin__input text-lg pl-4" placeholder="Username" onChange={e => {setUsername(e.target.value); setErrorMessage('');}}/>
+				<input className="signin__input text-lg pl-4" placeholder="Email" onChange={e => {setEmail(e.target.value); setErrorMessage('');}}/>
+				<input className="signin__input text-lg pl-4" placeholder="Password" type='password' onChange={e => {setPassword(e.target.value); setErrorMessage('');}}/>
+				<input className="signin__input text-lg pl-4" placeholder="Confirm Password" type='password' onChange={e => {setConfirmPassword(e.target.value); setErrorMessage('');}}/>
+				{errorMessage && <div className="text-md text-left text-red-500">{errorMessage}</div>}
+				<button type="submit" className="text-xl p-2 rounded-md text-neutral-800 bg-neutral-200 hover:bg-white" onClick={register}>Sign Up</button>
 			</form>
 		</div>
 	)
