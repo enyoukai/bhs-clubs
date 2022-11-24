@@ -31,7 +31,7 @@ export default function NewClub() {
 
 		for (const [key, value] of Object.entries(formState))
 		{
-			if (!value) {
+			if (!value || (Array.isArray(value) && value.length === 0)) {
 				errorFields.push(key);
 			}
 		}
@@ -73,6 +73,8 @@ export default function NewClub() {
 		dates.forEach((isSelected, day) => isSelected && newDateState.push(day))
 
 		setFormState((prevState) => ({...prevState, dates: newDateState}));
+
+		if (error) setError('');
 	}
 
 	function handleDrop(files)
@@ -98,7 +100,7 @@ export default function NewClub() {
 				<textarea name='description' value={formState.description} className="newClub__input" onChange={handleTextChange}></textarea>
 				<div className="newClub__text">Location</div>
 				<input name='location' value={formState.location} className="newClub__input" onChange={handleTextChange}></input>
-				<div className="newClub__text">Date</div>
+				<div className="newClub__text">Days</div>
 				<DatePicker dateHandler={handleDateChange}/>
 				{/* <input name='date' value={formState.date} className="newClub__input" onChange={handleTextChange}></input> */}
 				<div className="newClub__text">Time</div>
