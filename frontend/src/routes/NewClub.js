@@ -10,7 +10,7 @@ import './NewClub.scss';
 
 export default function NewClub() {
 	// TODO: make a reducer later
-	const [formState, setFormState] = useState({name: '', description: '', location: '', date: '', time: '', advisor: '', verification: null});
+	const [formState, setFormState] = useState({name: '', description: '', location: '', dates: [], time: '', advisor: '', verification: null});
 
 	const [error, setError] = useState('');
 
@@ -52,12 +52,12 @@ export default function NewClub() {
 		const formData = new FormData();
 		for (const key in formState)
 		{
-			formData.append(key, formState[key]);
+			formData.append(key, JSON.stringify(formState[key]));
 		}
 
-		formData.append('verification', formState.file);
+		formData.append('verification', formState.verification);
 
-		createClub.dispatch({body: formData});
+		createClub.dispatch({body: formData, headers: {'Content-Type': 'multipart/form-data'}});
 	}
 
 	function handleTextChange(e)
@@ -67,9 +67,17 @@ export default function NewClub() {
 		if (error) setError('');
 	}
 
+	function handleDateChange(dates) {
+		const newDateState = [];
+
+		dates.forEach((isSelected, day) => isSelected && newDateState.push(day))
+
+		setFormState((prevState) => ({...prevState, dates: newDateState}));
+	}
+
 	function handleDrop(files)
 	{
-		setFormState((prevState) => ({...prevState, ['verification']: files[0]}));
+		setFormState((prevState) => ({...prevState, verification: files[0]}));
 	}
 
 	useEffect(() => {
@@ -91,7 +99,8 @@ export default function NewClub() {
 				<div className="newClub__text">Location</div>
 				<input name='location' value={formState.location} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Date</div>
-				<input name='date' value={formState.date} className="newClub__input" onChange={handleTextChange}></input>
+				<DatePicker dateHandler={handleDateChange}/>
+				{/* <input name='date' value={formState.date} className="newClub__input" onChange={handleTextChange}></input> */}
 				<div className="newClub__text">Time</div>
 				<input name='time' value={formState.time} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Advisor</div>
@@ -113,7 +122,37 @@ function DropZone(props) {
 	return (
 		<div {...getRootProps({ className: 'border-dotted border-2 p-5 dropzone text-neutral-100' })}>
 			<input {...getInputProps()} />
-			{props.currentImg ? <img className='mx-auto' src={URL.createObjectURL(props.currentImg)}/> : <p>Drag file here</p>}
+			{props.currentImg ? <img className='mx-auto' alt='verification' src={URL.createObjectURL(props.currentImg)}/> : <p>Drag file here</p>}
+		</div>
+	)
+}
+
+function DatePicker(props) {
+	const {dateHandler} = props;
+	const [selectedDates, setSelectedDates] = useState(Array.apply(null, Array(7)).map(() => false));
+ 
+	function toggleDate(date) {
+		return () => {
+			setSelectedDates((prevDates) => {
+				const cloneDates = Array.from(prevDates);
+				cloneDates[date] = !cloneDates[date];
+
+				return cloneDates;
+			});
+		}
+	}
+
+	useEffect(() => dateHandler(selectedDates), [selectedDates]);
+
+	return (
+		<div className="grid grid-cols-7 text-center gap-4">
+			<button type="button" onClick={toggleDate(0)} className={`border rounded-md ${selectedDates[0] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>S</button>
+			<button type="button" onClick={toggleDate(1)} className={`border rounded-md ${selectedDates[1] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>M</button>
+			<button type="button" onClick={toggleDate(2)} className={`border rounded-md ${selectedDates[2] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>T</button>
+			<button type="button" onClick={toggleDate(3)} className={`border rounded-md ${selectedDates[3] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>W</button>
+			<button type="button" onClick={toggleDate(4)} className={`border rounded-md ${selectedDates[4] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>T</button>
+			<button type="button" onClick={toggleDate(5)} className={`border rounded-md ${selectedDates[5] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>F</button>
+			<button type="button" onClick={toggleDate(6)} className={`border rounded-md ${selectedDates[6] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>S</button>
 		</div>
 	)
 }

@@ -10,16 +10,15 @@ export default function useApi(endpoint, method=methods.GET, token=null)
 	const [onComplete, setOnComplete] = useState(0);
 	const [data, setData] = useState();
 
-	const config = token ? {headers: {Authorization: `Bearer ${token}`}} : {};
+	// const config = token ? {Authorization: `Bearer ${token}`} : {};
 
 	async function dispatch({populate=null, body={}, params='', headers=null})
 	{
+		const mergedHeaders = token ? {...headers, Authorization: `Bearer ${token}`} : headers;
 		setLoading(true);
 		try
 		{
-			let res;
-			if (!headers) res = await axios({url: endpoint + params, method: method, data: body, ...config});
-			else res = await axios({url: endpoint + params, method: method, data: body, headers: headers});
+			const res = await axios({url: endpoint + params, method: method, data: body, headers: mergedHeaders});
 			
 			if (populate)
 			{

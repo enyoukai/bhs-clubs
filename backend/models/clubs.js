@@ -4,7 +4,7 @@ const clubSchema = new mongoose.Schema({
 	name: String,
 	description: String,
 	location: String,
-	date: String,
+	// date: String,
 	time: String,
 	advisor: String,
 	uid: String,
@@ -12,7 +12,7 @@ const clubSchema = new mongoose.Schema({
 	infoFormat: [],
 	verification: String,
 	createdAt: {type: Date, default: Date.now},
-	day: Number
+	dates: [{type: Number}]
 });
 
 // https://stackoverflow.com/questions/7034848/mongodb-output-id-instead-of-id
