@@ -15,7 +15,7 @@ export default function Calendar()
 function CalendarUI()
 {
 	return (
-		<table className="mt-10 py-10 border w-full table-fixed">
+		<table className="mt-10 border w-full table-fixed">
 			<thead>
 				<tr>
 					<th>Sunday</th>
@@ -72,7 +72,7 @@ function CalendarColumns() {
 function DayColumn(props)
 {
 	return (
-		<td >
+		<td className="align-baseline">
 			<ul>
 				{
 					props.clubs.map((club) => <ClubTime key={club.id} club={club}/>)
@@ -84,11 +84,13 @@ function DayColumn(props)
 
 function ClubTime(props) {
 	return (
-		<Link to={`/club/${props.club.id}`}>
-			<li className='border'>
-				<div>{props.club.time}</div>
-				<div>{props.club.name}</div>
-			</li>
-		</Link>
+		<li>
+			<Link to={`/club/${props.club.id}`}>
+				<li className='border'>
+					<div>{props.club.time}</div>
+					<div>{props.club.name}</div>
+				</li>
+			</Link>
+		</li>
 	)
 }
