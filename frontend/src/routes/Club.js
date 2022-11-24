@@ -9,6 +9,9 @@ import './Club.scss';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
+import {arrayToDates} from 'utils/dateUtils';
+
+
 export default function Club() {
 	const clubID = useParams().id;
 	const [club, setClub] = useState();
@@ -214,7 +217,7 @@ function InfoDefault(props) {
 		<div className="flex flex-col gap-3 bg-neutral-100 px-6 py-3 rounded-lg width w-1/4 text-2xl mb-20">
 			<div>{club.description}</div>
 			<div>{club.location}</div>
-			<div>{club.date}</div>
+			<div>{arrayToDates(club.dates).join(', ')}</div>
 			<div>{club.time}</div>
 			<div>{club.advisor}</div>
 		</div>

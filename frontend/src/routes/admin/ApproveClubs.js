@@ -1,6 +1,8 @@
-import useApi, {methods} from '../../hooks/useApi';
+import useApi, {methods} from 'hooks/useApi';
 import React, {useState, useEffect} from 'react';
-import {useAuth} from '../../contexts/AuthContext';
+import {useAuth} from 'contexts/AuthContext';
+
+import {arrayToDates} from 'utils/dateUtils';
 
 export default function ApproveClubs()
 {
@@ -38,7 +40,7 @@ function Club(props)
 			<div>{props.club.name}</div>
 			<div>{props.club.description}</div>
 			<div>{props.club.location}</div>
-			<div>{props.club.dates}</div>
+			<div>{arrayToDates(props.club.dates).join(', ')}</div>
 			<div>{props.club.time}</div>
 			<div>{props.club.advisor}</div>
 			<div>{props.club.uid}</div>
