@@ -18,6 +18,8 @@ firebase.initializeApp({
 });
 
 const app = express()
+app.use(express.json());
+
 const PORT = 3001
 
 try {
@@ -34,7 +36,6 @@ try {
 
 app.use('/images', express.static('images'));
 
-app.use(express.json());
 app.use("/clubs", clubRouter);
 app.use("/auth", authRouter);
 app.use("/account", accountRouter);

@@ -28,14 +28,14 @@ function CalendarUI()
 			</thead>
 			<tbody>
 				<tr>
-					<ClubColumns/>
+					<CalendarColumns/>
 				</tr>
 			</tbody>
 		</table>
 	)
 }
 
-function ClubColumns() {
+function CalendarColumns() {
 	const [dayMap, setDayMap] = useState();
 	const [loading, setLoading] = useState(true);
 
@@ -47,7 +47,9 @@ function ClubColumns() {
 			const dayMapNext = Array.apply(null, Array(7)).map(() => []);
 
 			clubs.forEach((club) => {
-				dayMapNext[1].push(club);
+				club.dates.forEach(date => {
+					dayMapNext[date].push(club);
+				})
 			});
 
 			setDayMap(dayMapNext);
