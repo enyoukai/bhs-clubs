@@ -39,11 +39,7 @@ export default function NewClub() {
 		if (errorFields.length > 0)
 		{
 			let errorMessage = "Following fields need to be filled: "; 
-			for (let i = 0; i < errorFields.length; i++)
-			{
-				errorMessage += capitalizeFirstLetter(errorFields[i]);
-				if (i !== errorFields.length - 1) errorMessage += ", "
-			}
+			errorMessage += errorFields.map(field => capitalizeFirstLetter(field)).join(', ');
 			setError(errorMessage);
 
 			return;
