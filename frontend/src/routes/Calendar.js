@@ -15,7 +15,7 @@ export default function Calendar()
 function CalendarUI()
 {
 	return (
-		<table className="mt-10 py-10 border w-full">
+		<table className="mt-10 py-10 border w-full table-fixed">
 			<thead>
 				<tr>
 					<th>Sunday</th>

@@ -5,6 +5,8 @@ import './Home.scss';
 import useApi from '../hooks/useApi';
 import useDebounce from '../hooks/useDebounce';
 
+import {arrayToDates} from 'utils/dateUtils';
+
 function Home() {
   const [clubs, setClubs] = useState([]);
   const [search, setSearch] = useState('');
@@ -113,7 +115,7 @@ function Club(props)
     <tr className="clubTable__club" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
       <td><Link className="clubTable__link" to={'club/' + club.id}>{club.name}</Link></td>
       <td><Link className="clubTable__link" to={'club/' + club.id}>{club.location}</Link></td>
-      <td><Link className="clubTable__link" to={'club/' + club.id}>{club.date}</Link></td>
+      <td><Link className="clubTable__link" to={'club/' + club.id}>{arrayToDates(club.dates).join(', ')}</Link></td>
       <td><Link className="clubTable__link" to={'club/' + club.id}>{club.time}</Link></td>
       <td><Link className="clubTable__link" to={'club/' + club.id}>{club.advisor}</Link></td>
     </tr>
