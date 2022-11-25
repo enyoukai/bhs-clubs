@@ -72,13 +72,20 @@ router.post('/', upload.single('verification'), async (req, res) => {
 	}
 
 
-	const club = new Club({name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, uid: req.headers.uid, approved: false, verification: req.file.filename, infoPage: ""});
+	const club = new Club({name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, uid: req.headers.uid, approved: false, verification: req.file.filename});
 	await club.save();
 
 	await User.updateOne({_id: req.headers.uid}, {$push: {clubs: club._id}});
 
 	return res.send(club);
 });
+
+router.get('/:id/info', async (req, res) => {
+	const club = await Club.find({_id: req.params.id});
+	if (club === null) return res.send("Club not found").status(404);
+
+	return res.send(club.infoFormat);
+})
 
 router.put('/:id/info', upload.any('images'), async (req, res) => {
 	const items = JSON.parse(req.body.items);
