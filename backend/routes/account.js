@@ -29,4 +29,13 @@ router.post('/', async (req, res) => {
 	return res.sendStatus(201);
 });
 
+router.post('/:userId/clubs', async (req, res) => {
+	if (!Club.exists({_id: req.body.clubId})) return res.sendStatus(404);
+		
+	await User.updateOne(
+		{_id: req.params.userId}, 
+		{$push: {clubs: req.body.clubId}});
+
+	return res.sendStatus(201);
+});
 module.exports = router;

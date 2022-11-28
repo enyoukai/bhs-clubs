@@ -13,23 +13,25 @@ import {arrayToDates} from 'utils/dateUtils';
 
 
 export default function Club() {
-	const clubID = useParams().id;
+	const { user, token } = useAuth();
+
+	const clubId = useParams().id;
 	const [club, setClub] = useState();
 	const getClub = useApi('/clubs');
-	const { user } = useAuth();
 
 	useEffect(() => {
-		getClub.dispatch({ params: `/${clubID}`, populate: setClub });
-	}, [clubID]);
+		getClub.dispatch({ params: `/${clubId}`, populate: setClub });
+	}, [clubId]);
 
-	function register()
+	async function register()
 	{
-
+		console.log(user.uid);
+		await axios.post(`/account/${user.uid}/clubs`, {clubId: clubId}, {headers: {Authorization: `Bearer ${token}`}});		
 	}
-
+	
 	return (
 		<>
-			{getClub.loading ? <Loading /> : <ClubInfo club={club} />}
+			{getClub.loading ? <Loading /> : <ClubInfo register={register} club={club} />}
 		</>
 	)
 }
@@ -41,6 +43,7 @@ function ClubInfo(props) {
 
 	return (
 		<div className="pt-9 px-20">
+			<button onClick={props.register}>Register</button>
 			<div className="flex flex-col items-center">
 				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
 				{signInFetched && user !== null && club.uid === user.uid && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}

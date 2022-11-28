@@ -100,12 +100,13 @@ export default function NewClub() {
 				<DatePicker dateHandler={handleDateChange}/>
 				{/* <input name='date' value={formState.date} className="newClub__input" onChange={handleTextChange}></input> */}
 				<div className="newClub__text">Time</div>
-				<input name='time' value={formState.time} className="newClub__input" onChange={handleTextChange}></input>
+				<input name='time' value={formState.time} className="newClub__input" onChange={handleTextChange}/> 
 				<div className="newClub__text">Advisor</div>
 				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Verification</div>
 				<DropZone currentImg={formState.verification} onDrop={handleDrop}/>
 				<button type="submit" className="mt-4 text-4xl text-neutral-800 bg-neutral-100 p-6 rounded-lg font-medium">Add Club</button>
+				<TimePicker/>
 			</form>
 		</div>
 	)
@@ -125,6 +126,7 @@ function DropZone(props) {
 	)
 }
 
+// LIFT THIS STATE UP
 function DatePicker(props) {
 	const {dateHandler} = props;
 	const [selectedDates, setSelectedDates] = useState(Array.apply(null, Array(7)).map(() => false));
@@ -153,4 +155,14 @@ function DatePicker(props) {
 			<button type="button" onClick={toggleDate(6)} className={`border rounded-md ${selectedDates[6] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>S</button>
 		</div>
 	)
+}
+
+function TimePicker(props)
+{
+	return (
+		<div>
+
+		</div>
+	)
+
 }
