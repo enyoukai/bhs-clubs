@@ -13,25 +13,50 @@ import {arrayToDates} from 'utils/dateUtils';
 
 
 export default function Club() {
-	const { user, token } = useAuth();
+	const { user, token, signInFetched } = useAuth();
 
 	const clubId = useParams().id;
 	const [club, setClub] = useState();
+	const [userObj, setUserObj] = useState();
+
 	const getClub = useApi('/clubs');
 
 	useEffect(() => {
+		async function fetch()
+		{
+			if (signInFetched)
+			{
+				const res = await axios.get(`/account/${user.uid}`);
+				setUserObj(res.data);
+			}
+
+		}
+
 		getClub.dispatch({ params: `/${clubId}`, populate: setClub });
-	}, [clubId]);
+		fetch();
+	}, [signInFetched]);
 
 	async function register()
 	{
-		console.log(user.uid);
 		await axios.post(`/account/${user.uid}/clubs`, {clubId: clubId}, {headers: {Authorization: `Bearer ${token}`}});		
 	}
 	
+	function isUserRegistered(user, id)
+	{
+		let registered = false;
+		user.clubs.forEach(club => {
+			if (club.id === id) 
+			{
+				registered = true;
+			}
+		});
+
+		return registered;
+	}
 	return (
 		<>
-			{getClub.loading ? <Loading /> : <ClubInfo register={register} club={club} />}
+			{userObj && <Register registered={isUserRegistered(userObj, clubId)} register={register}/>}
+			{getClub.loading ? <Loading /> : <ClubInfo club={club} />}
 		</>
 	)
 }
@@ -43,7 +68,6 @@ function ClubInfo(props) {
 
 	return (
 		<div className="pt-9 px-20">
-			<button onClick={props.register}>Register</button>
 			<div className="flex flex-col items-center">
 				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
 				{signInFetched && user !== null && club.uid === user.uid && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}
@@ -225,4 +249,15 @@ function InfoDefault(props) {
 			<div>{club.advisor}</div>
 		</div>
 	)
+}
+
+function Register(props) {
+	console.log(props.registered);
+	if (props.registered)
+	{
+		return <div>Already Registered</div>
+	}
+	else {
+		return <button onClick={props.register}>Register</button>
+	}
 }

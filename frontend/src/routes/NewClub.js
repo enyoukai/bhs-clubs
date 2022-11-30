@@ -161,6 +161,8 @@ function TimePicker(props)
 {
 	return (
 		<div>
+			<input/>
+			<input/>
 
 		</div>
 	)
