@@ -36,6 +36,10 @@ router.post('/:userId/clubs', async (req, res) => {
 		{_id: req.params.userId}, 
 		{$push: {clubs: req.body.clubId}});
 
+	await Club.updateOne(
+		{_id: req.body.clubId},
+		{$push: {members: req.params.userId}});
+
 	return res.sendStatus(201);
 });
 module.exports = router;
