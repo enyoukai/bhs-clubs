@@ -71,8 +71,7 @@ router.post('/', upload.single('verification'), async (req, res) => {
 		return res.sendStatus(400);
 	}
 
-
-	const club = new Club({name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, uid: req.headers.uid, approved: false, verification: req.file.filename});
+	const club = new Club({name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, uid: req.headers.uid, approved: false, verification: req.file.filename, officers: [req.headers.uid]});
 	await club.save();
 
 	await User.updateOne({_id: req.headers.uid}, {$push: {clubs: club._id}});

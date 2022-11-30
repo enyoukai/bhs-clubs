@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const User = require('./user');
+
 const clubSchema = new mongoose.Schema({
 	name: String,
 	description: String,
@@ -12,7 +14,8 @@ const clubSchema = new mongoose.Schema({
 	infoFormat: [],
 	verification: String,
 	createdAt: {type: Date, default: Date.now},
-	dates: [{type: Number}]
+	dates: [{type: Number}],
+	officers: [{type: String, ref: User}]
 });
 
 // https://stackoverflow.com/questions/7034848/mongodb-output-id-instead-of-id

@@ -1,3 +1,6 @@
+// everything below here is a mess that sometimes works and other times doesn't 
+// TODO: REFACTOR EVERYTHING OTNEAUH SONEAUH SOCAUH S,.ACR AHPLEASTNUHS OTNEUHASTN HKTNAEHKS TNAHOET UHATUH TH.UC,HA ,HAC H
+
 import useApi from "../hooks/useApi";
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from "react-router-dom";
