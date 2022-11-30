@@ -12,7 +12,7 @@ export function useAuth()
 export function AuthProvider(props)
 {
 	const [user, setUser] = useState(null);
-	const [signInFetched, setSignInFetched] = useState(false);
+	const [authLoading, setAuthLoading] = useState(true);
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [token, setToken] = useState(null);
 
@@ -33,7 +33,7 @@ export function AuthProvider(props)
 				setIsAdmin(false);
 			}
 
-			setSignInFetched(true);
+			setAuthLoading(false);
 		});
 		return unsubscribe
 	}, []);
@@ -43,7 +43,7 @@ export function AuthProvider(props)
 		return auth.signOut();
 	}
 
-	const authValue = {auth, user, signInFetched, isAdmin, token, signOut};
+	const authValue = {auth, user, authLoading, isAdmin, token, signOut};
 	
 	return (
 		<AuthContext.Provider value={authValue}>

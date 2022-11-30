@@ -16,7 +16,7 @@ import {arrayToDates} from 'utils/dateUtils';
 
 
 export default function Club() {
-	const { user, token, signInFetched } = useAuth();
+	const { user, token, authLoading } = useAuth();
 
 	const clubId = useParams().id;
 	const [club, setClub] = useState();
@@ -27,7 +27,7 @@ export default function Club() {
 	useEffect(() => {
 		async function fetch()
 		{
-			if (signInFetched)
+			if (!authLoading)
 			{
 				const res = await axios.get(`/account/${user.uid}`);
 				setUserObj(res.data);
@@ -37,7 +37,7 @@ export default function Club() {
 
 		getClub.dispatch({ params: `/${clubId}`, populate: setClub });
 		fetch();
-	}, [signInFetched]);
+	}, [!authLoading]);
 
 	async function register()
 	{
@@ -67,13 +67,13 @@ export default function Club() {
 function ClubInfo(props) {
 	const club = props.club;
 	const [editing, setEditing] = useState(false);
-	const { user, signInFetched } = useAuth();
+	const { user, authLoading } = useAuth();
 
 	return (
 		<div className="pt-9 px-20">
 			<div className="flex flex-col items-center">
 				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
-				{signInFetched && user !== null && club.uid === user.uid && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}
+				{!authLoading && user !== null && club.uid === user.uid && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}
 			</div>
 			{editing ? <ModifyInfo setEditing={setEditing} club={club} /> : <ReadOnlyInfo club={club} />}
 		</div>
@@ -88,7 +88,7 @@ function conditionalRenderItem(item) {
 
 function ModifyInfo(props) {
 	const club = props.club;
-	const { token, signInFetched } = useAuth();
+	const { token, authLoading } = useAuth();
 
 	const updateForm = useApi(`/clubs/${club.id}/info`, 'put', token);
 

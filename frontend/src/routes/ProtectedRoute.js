@@ -7,9 +7,9 @@ import Loading from '../components/Loading';
 
 export default function ProtectedRoute({children})
 {
-	const { user, signInFetched } = useAuth();
+	const { user, authLoading } = useAuth();
 
-	if (!signInFetched) return <Loading/>;
+	if (authLoading) return <Loading/>;
 
 	return user == null ? <Navigate to='/register'/> : children;
 
