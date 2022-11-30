@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
 	creationTime: String,
 	clubs: [{type: Schema.Types.ObjectId, ref: 'Club'}],
 	profile: String,
-	isAdmin: Boolean
+	isAdmin: Boolean,
+	unreadPosts: [{type: Schema.Types.ObjectId, ref: 'Post'}]
 });
 
 userSchema.virtual('id').get(function(){

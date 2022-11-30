@@ -26,6 +26,8 @@ import NewPost from './routes/feed/NewPost';
 import ProtectedRoute from './routes/ProtectedRoute';
 import AdminRoute from './routes/admin/AdminRoute';
 
+import Notifications from 'routes/Notifications';
+
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
@@ -44,6 +46,7 @@ function App() {
             <Route index element={<Feed/>}/>
             <Route path='newpost' element={<ProtectedRoute><NewPost/></ProtectedRoute>}/>
           </Route>
+          <Route path='notifications' element={<ProtectedRoute><Notifications/></ProtectedRoute>}/>
           <Route path='newpost' element={<NewPost/>}/>
           <Route path='calendar' element={<Calendar/>}/>
           <Route path='club/:id' element={<Club/>}/>

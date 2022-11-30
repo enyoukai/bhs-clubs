@@ -42,4 +42,11 @@ router.post('/:userId/clubs', async (req, res) => {
 
 	return res.sendStatus(201);
 });
+
+router.get('/:userId/notifications', async (req, res) => {
+	if (!User.exists({_id: req.params.userId})) return res.send("User not found").status(404);
+
+	const notifications = await User.findOne({_id: req.headers.uid}).unreadPosts;
+	return res.send(notifications).status(200);
+});
 module.exports = router;
