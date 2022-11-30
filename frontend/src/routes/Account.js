@@ -1,4 +1,4 @@
-import useApi from '../hooks/useApi';
+import axios from 'axios';
 import { useParams, Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 
@@ -6,17 +6,18 @@ import Loading from '../components/Loading';
 
 export default function Account()
 {
+	const [accountLoading, setAccountLoading] = useState(true);
+
 	const userID = useParams().id;
 	const [user, setUser] = useState();
-	const getUser = useApi('/account');
 
 	useEffect(() => {
-		getUser.dispatch({populate: setUser, params: `/${userID}`});
+		axios.get(`/account/${userID}`).then(res => setUser(res.data)).then(()=>setAccountLoading(false));
 	}, [userID])
 	
 	return (
 		<div>
-			{ getUser.loading ? <Loading/> : <UserInfo user={user}/>}
+			{ accountLoading ? <Loading/> : <UserInfo user={user}/>}
 		</div>
 	)
 }

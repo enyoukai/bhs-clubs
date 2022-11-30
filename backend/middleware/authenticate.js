@@ -4,9 +4,7 @@ const ERROR_EXPIRED = 'auth/id-token-expired';
 const admin = require('firebase-admin');
 
 function authenticate(req, res, next) {
- 
  const header = req.headers.authorization;
- 
  //ensure headers are associated with request
  if (!header || !header.startsWith("Bearer ")) {
   console.log(header);
@@ -23,13 +21,11 @@ function authenticate(req, res, next) {
   return res.status(401).send('Unauthorized Header. Access Denied')
  }
 //reference => https://firebase.google.com/docs/auth/admin/manage-sessions
- 
  admin.auth().verifyIdToken(token)
   .then(function (decodedToken) {
    //attach uid to body for the route to use
    req.headers.uid = decodedToken.uid;
    req.headers.email = decodedToken.email;
-
    next();
   })
   .catch(function (error) {

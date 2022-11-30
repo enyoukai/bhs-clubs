@@ -42,21 +42,20 @@ router.put('/:clubId', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-	const id = req.params.id;
-	const uid = req.headers.uid;
-	const club = await Club.find({_id: id});
-
+	const clubId = req.params.id;
+	const club = await Club.findOne({_id: clubId});
+	const user = await User.findOne({_id: req.headers.uid});
 	if (!club)
 	{
 		return res.sendStatus(404);
 	}
-	else if (uid !== club.uid && uid !== process.env.ADMIN)
+	else if (!club.officers.includes(user.id) && !user.isAdmin)
 	{
 		return res.sendStatus(401);
 	}
 	else
 	{
-		await Club.deleteOne({_id: id})
+		await Club.deleteOne({_id: clubId})
 		return res.sendStatus(200);
 	}
 });

@@ -4,6 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import './Home.scss';
 import useApi from '../hooks/useApi';
 import useDebounce from '../hooks/useDebounce';
+import axios from 'axios';
 
 import {arrayToDates} from 'utils/dateUtils';
 
@@ -34,12 +35,9 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    async function updateClubs() {
-      if (debouncedSearch !== '') getClubs.dispatch({populate: setClubs, params: `?name=${debouncedSearch}`});
-      else getClubs.dispatch({populate: setClubs});
-    }
+      if (debouncedSearch !== '') axios.get(`/clubs?name=${debouncedSearch}`).then(res => setClubs(res.data));
+      else axios.get('/clubs').then(res => setClubs(res.data));
 
-    updateClubs();
   }, [debouncedSearch]);
 
   return (

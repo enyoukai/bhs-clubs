@@ -14,25 +14,29 @@ export function AuthProvider(props)
 	const [user, setUser] = useState(null);
 	const [authLoading, setAuthLoading] = useState(true);
 	const [isAdmin, setIsAdmin] = useState(false);
-	const [token, setToken] = useState(null);
+	const [token, setToken] = useState();
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(async function(user) {
-			setUser(user);
-
 			if (user !== null)
 			{
 				const adminStatus = (await axios.get(`/account/${user.uid}`));
 
 				setIsAdmin(adminStatus.data.isAdmin);
-				setToken(await user.getIdToken());
+				const token = await user.getIdToken();
+
+				axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+				setToken(token);
 			}
 			else
 			{
+				axios.defaults.headers.common['Authorization'] = null;
 				setToken(null);
 				setIsAdmin(false);
 			}
 
+			setUser(user);
 			setAuthLoading(false);
 		});
 		return unsubscribe
@@ -43,7 +47,7 @@ export function AuthProvider(props)
 		return auth.signOut();
 	}
 
-	const authValue = {auth, user, authLoading, isAdmin, token, signOut};
+	const authValue = {auth, user, authLoading, token, isAdmin, signOut};
 	
 	return (
 		<AuthContext.Provider value={authValue}>
