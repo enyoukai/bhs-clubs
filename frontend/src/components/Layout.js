@@ -33,7 +33,7 @@ function Layout()
 
   // --------------------------------------------
 
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, authLoading } = useAuth();
   const path = useLocation().pathname;
 
   const selected = "nav__tab--selected";
@@ -50,7 +50,7 @@ function Layout()
           <Link to='calendar' className={`nav__tab ${path.startsWith('/calendar') ? selected : unselected}`}>Calendar</Link>
           {isAdmin && <Link to='admin' className={`nav__tab ${path.startsWith('/admin') ? selected : unselected}`}>Admin</Link>}
         </div>
-        {user === null ? <RegisterBar/> : <Avatar user={user}/>}
+        {!authLoading && (user === null ? <RegisterBar/> : <Avatar uid={user.uid}/>)}
       </nav>
         <Outlet />
     </React.Fragment>
@@ -70,7 +70,6 @@ function RegisterBar()
 function Avatar(props)
 {
   const [dropdown, setDropdown] = useState(false);
-  const { user } = useAuth();
 
   function handleMouseEnter()
   {
@@ -84,23 +83,26 @@ function Avatar(props)
 
   return (
     <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link to={'account/' + user.uid}><img className="account__avatar" src="https://cdn.dribbble.com/users/1165288/screenshots/6008531/document-hierarchy.jpg" alt="profile"/></Link>
-      {dropdown && <Dropdown/>}
+      <Link to={'account/' + props.uid}><img className="account__avatar" src="https://cdn.dribbble.com/users/1165288/screenshots/6008531/document-hierarchy.jpg" alt="profile"/></Link>
+      {dropdown && <Dropdown uid={props.uid}/>}
     </div>
   )
 }
 
 function Dropdown(props)
 {
-  const { user } = useAuth();
-
   return (
     <div className="account__dropdown">
-      <Link className="account__text" to={'account/' + user.uid}>Profile</Link>
+      <Link className="account__text" to={'account/' + props.uid}>Profile</Link>
+      <Link className="account__text" to={'notifications'}>Unread</Link>
       <Link className="account__text" to='settings'>Settings</Link>
       <Link className="account__text" to='signout'>Sign Out</Link>
     </div>
   )
 }
 
+function useUnreadCount()
+{
+  
+}
 export default Layout;

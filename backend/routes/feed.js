@@ -24,12 +24,18 @@ router.use(authenticate);
 
 router.post('/', upload.single('file'), async (req, res) => {
 	const user = await User.findOne({_id: req.headers.uid});
-	if (user === null) return res.sendStatus(404);
+	if (user === null) return res.send("User not found").status(404);
 
-	if (!req.body.title || !req.body.body || !req.body.club) return res.sendStatus(400);
+	if (!req.body.title || !req.body.body || !req.body.club) return res.send("Missing fields").status(400);
+	if (!(await Club.exists({_id: req.body.club}))) return res.send("Club not found").status(404);
 
 	const post = new Post({title: req.body.title, body: req.body.body, author: user._id, club: req.body.club, file: (req.file ? req.file.filename : '')});
-	post.save();
+	await post.save();
+
+	const club = await Club.findOne({_id: req.body.club});
+	club.officers.forEach(async (memberId) => {
+		await User.updateOne({_id: memberId}, {$push: {'unreadPosts': post.id}});
+	});
 
 	return res.sendStatus(201);
 });	
