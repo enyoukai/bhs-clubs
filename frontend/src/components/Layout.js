@@ -7,32 +7,6 @@ import './Layout.scss'
 
 function Layout()
 {
-
-  // DEBUG
-  // const MINUTE_MS = 1000;
-
-  // useEffect(() => {
-  //   console.log('hi');
-  //   const interval = setInterval(() => {
-  //     const formatMemoryUsage = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`;
-
-  //     const memoryData = process.memoryUsage();
-      
-  //     const memoryUsage = {
-  //       rss: `${formatMemoryUsage(memoryData.rss)} -> Resident Set Size - total memory allocated for the process execution`,
-  //       heapTotal: `${formatMemoryUsage(memoryData.heapTotal)} -> total size of the allocated heap`,
-  //       heapUsed: `${formatMemoryUsage(memoryData.heapUsed)} -> actual memory used during the execution`,
-  //       external: `${formatMemoryUsage(memoryData.external)} -> V8 external memory`,
-  //     };
-      
-  //     console.log(memoryUsage);
-  //   }, MINUTE_MS);
-
-  //   return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  // }, [])
-
-  // --------------------------------------------
-
   const { user, isAdmin, authLoading } = useAuth();
   const path = useLocation().pathname;
 
@@ -50,7 +24,12 @@ function Layout()
           <Link to='calendar' className={`nav__tab ${path.startsWith('/calendar') ? selected : unselected}`}>Calendar</Link>
           {isAdmin && <Link to='admin' className={`nav__tab ${path.startsWith('/admin') ? selected : unselected}`}>Admin</Link>}
         </div>
-        {!authLoading && (user === null ? <RegisterBar/> : <Avatar uid={user.uid}/>)}
+        {!authLoading && 
+          (user === null ? <RegisterBar/> : 
+          <div className="flex flex-row gap-10">
+            <Notifications/>
+            <Avatar uid={user.uid}/>
+          </div>)}
       </nav>
         <Outlet />
     </React.Fragment>
@@ -65,6 +44,16 @@ function RegisterBar()
       <Link to={'register'} className="login-bar__text">Register</Link>
     </div>
   )
+}
+
+function Notifications(props)
+{
+  return (
+    <button>
+      <img className="w-12 h-12 rounded-full" src="https://freeiconshop.com/wp-content/uploads/edd/notification-outline.png" alt="notifications"/>
+    </button>
+  )
+
 }
 
 function Avatar(props)
