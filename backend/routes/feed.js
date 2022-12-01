@@ -33,7 +33,7 @@ router.post('/', upload.single('file'), async (req, res) => {
 	await post.save();
 
 	const club = await Club.findOne({_id: req.body.club});
-	club.officers.forEach(async (memberId) => {
+	club.members.forEach(async (memberId) => {
 		await User.updateOne({_id: memberId}, {$push: {'unreadPosts': post.id}});
 	});
 

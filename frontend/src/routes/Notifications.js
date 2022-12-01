@@ -13,7 +13,8 @@ export default function NotificationsPage() {
 	useEffect(() => {
 		axios.get(`/account/${user.uid}/unreadPosts`)
 			.then(res => setNotifications(res.data))
-			.then(() => setNotifsLoading(false));
+			.then(() => setNotifsLoading(false))
+			.then(() => axios.delete(`/account/${user.uid}/unreadPosts`));
 	}, [user.uid]);
 
 	return (

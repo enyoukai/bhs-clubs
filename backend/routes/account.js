@@ -44,7 +44,7 @@ router.post('/:userId/clubs', async (req, res) => {
 });
 
 router.get('/:userId/unreadPosts', async (req, res) => {
-	if (!(await User.exists({_id: req.headers.uid}))) return res.send("User not found").status(404);
+	if (req.params.userId !== req.headers.uid) return res.send("Cannot access this resource").status(400);
 
 	User.findOne({_id: req.headers.uid}).
 		populate('unreadPosts').
@@ -52,6 +52,12 @@ router.get('/:userId/unreadPosts', async (req, res) => {
 			if (err) return res.sendStatus(500);
 			return res.send(user.unreadPosts);
 		})
+});
+
+router.delete('/:userId/unreadPosts', async (req, res) => {
+	if (req.params.userId !== req.headers.uid) return res.send("Cannot access this resource").status(400);
+
+	await User.updateOne({_id: req.headers.uid}, {unreadPosts: []});
 });
 
 module.exports = router;
