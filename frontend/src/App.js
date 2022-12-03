@@ -22,6 +22,7 @@ import Moderation from './routes/admin/Moderation';
 
 import Feed from './routes/feed/Feed';
 import NewPost from './routes/feed/NewPost';
+import PostPage from 'routes/feed/Post';
 
 import ProtectedRoute from './routes/ProtectedRoute';
 import AdminRoute from './routes/admin/AdminRoute';
@@ -45,6 +46,7 @@ function App() {
           <Route path='feed'>
             <Route index element={<Feed/>}/>
             <Route path='newpost' element={<ProtectedRoute><NewPost/></ProtectedRoute>}/>
+            <Route path=':id' element={<PostPage/>}/>
           </Route>
           <Route path='notifications' element={<ProtectedRoute><NotificationsPage/></ProtectedRoute>}/>
           <Route path='newpost' element={<NewPost/>}/>

@@ -16,7 +16,18 @@ router.get('/', async (req, res) => {
 			return res.sendStatus(500);
 		}
 		return res.json(posts);
-	})
+	});
+});
+
+router.get('/:postId', async (req, res) => {	
+	Post.findOne({_id: req.params.postId}).populate('club').populate('author').exec(function(err, post) {
+		if (err)
+		{
+			return res.sendStatus(500);
+		}
+		
+		return res.send(post);
+	});
 });
 
 
@@ -39,5 +50,14 @@ router.post('/', upload.single('file'), async (req, res) => {
 
 	return res.sendStatus(201);
 });	
+
+router.delete('/:postId', async (req, res) => {
+	const post = await Post.findOne({_id: req.params.postId});
+	if (post.author.id !== req.headers.uid) return res.sendStatus(400);
+
+	await Post.deleteOne({_id: req.params.postId});
+
+	return res.sendStatus(200);
+});
 
 module.exports = router;
