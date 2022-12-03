@@ -10,20 +10,21 @@ export default function Feed()
 	const getFeed = useApi('/feed');
 	const [feed, setFeed] = useState();
 
-	const {user} = useAuth();
+	const {user, authLoading} = useAuth();
 
 	useEffect(() => {getFeed.dispatch({populate: setFeed})}, []);
 
 	function handleDelete(id) {
-		axios.delete()
-
+		axios.delete(`/feed/${id}`).then(setFeed(prevFeed => prevFeed.filter(post => post.id !== id)));
 	}
 
 	return (
 		<div className="pt-10 px-10">
 			<div className="text-center text-4xl">Recent Club Activities...</div>
 			<Link to='newpost'><div className="text-2xl text-center mt-5 text-green-500">Add new post</div></Link>
-			{!getFeed.loading && feed.map(post => <Post key={post.id} post={post} isAuthor={user.uid === post.author.id} handleDelete={handleDelete}/>)}
+			{!getFeed.loading && feed.map(post => 
+				<Post key={post.id} post={post} isAuthor={authLoading ? false : (user.uid === post.author.id)} handleDelete={handleDelete}/>
+			)}
 		</div>
 	)
 }
@@ -56,7 +57,7 @@ function PostOptions(props)
 			{props.isAuthor && 
 				<>
 					<div>Edit</div>
-					<div onClick={() => props.handleDelete(props.id)}>Delete</div>
+					<div className='text-red-600' onClick={() => props.handleDelete(props.id)}>Delete</div>
 				</>
 			}
 		</div>

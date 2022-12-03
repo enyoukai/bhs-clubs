@@ -53,7 +53,8 @@ router.post('/', upload.single('file'), async (req, res) => {
 
 router.delete('/:postId', async (req, res) => {
 	const post = await Post.findOne({_id: req.params.postId});
-	if (post.author.id !== req.headers.uid) return res.sendStatus(400);
+	
+	if (post.author !== req.headers.uid) return res.sendStatus(400);
 
 	await Post.deleteOne({_id: req.params.postId});
 
