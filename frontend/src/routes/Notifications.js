@@ -8,8 +8,6 @@ export default function NotificationsPage() {
 	const [notifications, setNotifications] = useState();
 	const [notifsLoading, setNotifsLoading] = useState(true);
 
-	axios.get(`/account/${user.id}/unreadCount`).then(res => console.log(res.data));
-
 	useEffect(() => {
 		axios.get(`/account/${user.uid}/unreadPosts`)
 			.then(res => setNotifications(res.data))

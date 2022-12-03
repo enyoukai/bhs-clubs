@@ -55,13 +55,19 @@ function Home() {
 }
 
 function OptionsBar(props) {
+  const [selected, setSelected] = useState({service: false, academic: false, educational: false, misc: false});
+  
+  function handleSelect(field) {
+    setSelected(prevSelected => ({...prevSelected, [field]: !prevSelected[field]}));
+  }
+
   return (
     <div className="options">
       <input className="options__search" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
-      <button className="border border-neutral-800 rounded-xl px-5">Service</button>
-      <button className="border border-neutral-800 rounded-xl px-5">Academic</button>
-      <button className="border border-neutral-800 rounded-xl px-5">Educational</button>
-      <button className="border border-neutral-800 rounded-xl px-5">Misc</button>
+      <button onClick={() => handleSelect('service')} className={`${selected.service && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Service</button>
+      <button onClick={() => handleSelect('academic')} className={`${selected.academic && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Academic</button>
+      <button onClick={() => handleSelect('educational')} className={`${selected.educational && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Educational</button>
+      <button onClick={() => handleSelect('misc')} className={`${selected.misc && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Misc</button>
 
       <Link className="options__addClub" to={'newclub'}>Add Club +</Link>
     </div>

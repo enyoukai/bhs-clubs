@@ -60,7 +60,7 @@ function Notifications(props)
 
   return (
     <div onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
-      <img className="w-12 h-12 rounded-full" src="https://freeiconshop.com/wp-content/uploads/edd/notification-outline.png" alt="notifications"/>
+      <Link to={'/notifications'}><img className="w-12 h-12 rounded-full" src="https://freeiconshop.com/wp-content/uploads/edd/notification-outline.png" alt="notifications"/></Link>
       {dropdown && <NotificationsDropdown notifications={props.notifications}/>}
     </div>
   )
