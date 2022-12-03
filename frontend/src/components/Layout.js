@@ -4,14 +4,22 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom'
 
 import './Layout.scss'
+import axios from "axios";
 
 function Layout()
 {
   const { user, isAdmin, authLoading } = useAuth();
+  const [notifications, setNotifications] = useState([]);
   const path = useLocation().pathname;
 
   const selected = "nav__tab--selected";
   const unselected = "nav__tab--unselected";
+
+  useEffect(() => {
+    if (user) {
+      axios.get(`/account/${user.uid}/unreadPosts`).then(res => setNotifications(res.data));
+    }
+  }, [user]);
 
   return (
     <React.Fragment>
@@ -27,7 +35,7 @@ function Layout()
         {!authLoading && 
           (user === null ? <RegisterBar/> : 
           <div className="flex flex-row gap-10">
-            <Notifications/>
+            <Notifications notifications={notifications}/>
             <Avatar uid={user.uid}/>
           </div>)}
       </nav>
@@ -48,12 +56,30 @@ function RegisterBar()
 
 function Notifications(props)
 {
-  return (
-    <button>
-      <img className="w-12 h-12 rounded-full" src="https://freeiconshop.com/wp-content/uploads/edd/notification-outline.png" alt="notifications"/>
-    </button>
-  )
+  const [dropdown, setDropdown] = useState(false);
 
+  return (
+    <div onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
+      <img className="w-12 h-12 rounded-full" src="https://freeiconshop.com/wp-content/uploads/edd/notification-outline.png" alt="notifications"/>
+      {dropdown && <NotificationsDropdown notifications={props.notifications}/>}
+    </div>
+  )
+}
+
+// dropdown component?
+function NotificationsDropdown(props)
+{
+  return (
+    <div className="absolute bg-neutral-800 flex flex-col text-neutral-200 text-xl p-5 right-0">
+      {props.notifications.length > 0 ? 
+      <ul>
+        {props.notifications.map((notif, idx) => 
+        <li key={idx}>
+          <Link>{notif.title} - {notif.body}</Link>
+        </li>)}
+      </ul> : <div>Nothing to show</div>}
+    </div>
+  )
 }
 
 function Avatar(props)
@@ -73,12 +99,12 @@ function Avatar(props)
   return (
     <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Link to={'account/' + props.uid}><img className="account__avatar" src="https://cdn.dribbble.com/users/1165288/screenshots/6008531/document-hierarchy.jpg" alt="profile"/></Link>
-      {dropdown && <Dropdown uid={props.uid}/>}
+      {dropdown && <AccountDropdown uid={props.uid}/>}
     </div>
   )
 }
 
-function Dropdown(props)
+function AccountDropdown(props)
 {
   return (
     <div className="account__dropdown">
@@ -90,8 +116,4 @@ function Dropdown(props)
   )
 }
 
-function useUnreadCount()
-{
-  
-}
 export default Layout;
