@@ -243,7 +243,7 @@ function ReadOnlyInfo(props) {
 function InfoDefault(props) {
 	const club = props.club;
 	return (
-		<div className="flex flex-col gap-3 bg-neutral-100 px-6 py-3 rounded-lg width w-1/4 text-2xl mb-20">
+		<div className="float-left mr-10 flex flex-col gap-3 bg-neutral-100 px-6 py-3 rounded-lg width w-1/4 text-2xl mb-20">
 			<div>{club.description}</div>
 			<div>{club.location}</div>
 			<div>{arrayToDates(club.dates).join(', ')}</div>
