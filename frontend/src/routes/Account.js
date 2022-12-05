@@ -7,24 +7,37 @@ import Loading from '../components/Loading';
 export default function Account()
 {
 	const [accountLoading, setAccountLoading] = useState(true);
+	const [account, setAccount] = useState();
 
 	const userID = useParams().id;
-	const [user, setUser] = useState();
 
 	useEffect(() => {
-		axios.get(`/account/${userID}`).then(res => setUser(res.data)).then(()=>setAccountLoading(false));
+		axios.get(`/account/${userID}`).then(res => setAccount(res.data)).then(()=>setAccountLoading(false));
 	}, [userID])
 	
 	return (
 		<div>
-			{ accountLoading ? <Loading/> : <UserInfo user={user}/>}
+			{ accountLoading ? <Loading/> : <UserInfo user={account}/>}
 		</div>
 	)
 }
 
 function UserInfo(props)
 {
-	const clubs = props.user.clubs.map(club => <Club key={club.id} club={club}/>);
+	const memberClubs = [];
+	const officerClubs = [];
+
+	props.user.clubs.forEach(club => {
+		if (club.officers.includes(props.user.id)) officerClubs.push(club);
+		else if (club.members.includes(props.user.id)) memberClubs.push(club);
+		else {
+			console.error(`Something went wrong with club ${club.name}`);
+			console.error(club);
+		}
+	});
+
+	console.log(memberClubs);
+	console.log(officerClubs);
 
 	return (
 		<div>
@@ -32,17 +45,19 @@ function UserInfo(props)
 			<div>Created Account: {props.user.creationTime}</div>
 			<div>Email: {props.user.email}</div>
 
-			<div>Clubs added:</div>
-			<ul>{clubs}</ul>
+			<div>Officer in:</div>
+			<ul>{officerClubs.map(club => <Club key={club.id} club={club} officer={true}/>)}</ul>
+			<div>Member in:</div>
+			<ul>{memberClubs.map(club => <Club key={club.id} club={club} officer={false}/>)}</ul>
 		</div>
 	)
 }
 
 function Club(props) {
 	return (
-		<div>
+		<li>
 			<div>{props.club.name}</div>
-			<Link className="text-green-500" to={`/modify/${props.club.id}`}>EDIT</Link>
-		</div>
+			{props.officer && <Link className="text-green-500" to={`/modify/${props.club.id}`}>EDIT</Link>}
+		</li>
 	)
 }
