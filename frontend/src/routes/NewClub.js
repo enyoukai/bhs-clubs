@@ -156,13 +156,13 @@ function DatePicker(props) {
 
 	return (
 		<div className="grid grid-cols-7 text-center gap-4">
-			<button type="button" onClick={toggleDate(0)} className={`border rounded-md ${selectedDates[0] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>S</button>
-			<button type="button" onClick={toggleDate(1)} className={`border rounded-md ${selectedDates[1] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>M</button>
-			<button type="button" onClick={toggleDate(2)} className={`border rounded-md ${selectedDates[2] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>T</button>
-			<button type="button" onClick={toggleDate(3)} className={`border rounded-md ${selectedDates[3] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>W</button>
-			<button type="button" onClick={toggleDate(4)} className={`border rounded-md ${selectedDates[4] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>T</button>
-			<button type="button" onClick={toggleDate(5)} className={`border rounded-md ${selectedDates[5] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>F</button>
-			<button type="button" onClick={toggleDate(6)} className={`border rounded-md ${selectedDates[6] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>S</button>
+			<button type="button" onClick={toggleDate(0)} className={`border rounded-md ease-in-out duration-300 ${selectedDates[0] ? 'bg-neutral-100 text-neutral-900 ' : 'bg-neutral-800 text-neutral-100'}`}>S</button>
+			<button type="button" onClick={toggleDate(1)} className={`border rounded-md ease-in-out duration-300 ${selectedDates[1] ? 'bg-neutral-100 text-neutral-900 ' : 'bg-neutral-800 text-neutral-100'}`}>M</button>
+			<button type="button" onClick={toggleDate(2)} className={`border rounded-md ease-in-out duration-300 ${selectedDates[2] ? 'bg-neutral-100 text-neutral-900 ' : 'bg-neutral-800 text-neutral-100'}`}>T</button>
+			<button type="button" onClick={toggleDate(3)} className={`border rounded-md ease-in-out duration-300 ${selectedDates[3] ? 'bg-neutral-100 text-neutral-900 ' : 'bg-neutral-800 text-neutral-100'}`}>W</button>
+			<button type="button" onClick={toggleDate(4)} className={`border rounded-md ease-in-out duration-300 ${selectedDates[4] ? 'bg-neutral-100 text-neutral-900 ' : 'bg-neutral-800 text-neutral-100'}`}>T</button>
+			<button type="button" onClick={toggleDate(5)} className={`border rounded-md ease-in-out duration-300 ${selectedDates[5] ? 'bg-neutral-100 text-neutral-900 ' : 'bg-neutral-800 text-neutral-100'}`}>F</button>
+			<button type="button" onClick={toggleDate(6)} className={`border rounded-md ease-in-out duration-300 ${selectedDates[6] ? 'bg-neutral-100 text-neutral-900 ' : 'bg-neutral-800 text-neutral-100'}`}>S</button>
 		</div>
 	)
 }
@@ -172,7 +172,7 @@ function TagPicker(props)
 	return (
 		<div>
 			{Object.entries(props.tags).map(([tag, value]) => 
-				<button onClick={() => props.handleTagChange(tag)} className={`block border p-5 rounded-md w-full mb-5 text-left ${value && 'bg-neutral-100 text-neutral-900'}`}>
+				<button onClick={() => props.handleTagChange(tag)} className={`block border p-5 rounded-md w-full mb-5 text-left ease-in-out duration-300 ${value ? 'bg-neutral-100 text-neutral-900' : 'bg-neutral-800 text-neutral-100' }`}>
 					{capitalizeFirstLetter(tag)}	
 				</button>
 			
