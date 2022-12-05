@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import useApi from '../../hooks/useApi';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {useAuth} from 'contexts/AuthContext';
 
 import './Feed.scss'
@@ -23,7 +23,7 @@ export default function Feed()
 			<div className="text-center text-4xl">Recent Club Activities...</div>
 			<Link to='newpost'><div className="text-2xl text-center mt-5 text-green-500">Add new post</div></Link>
 			{!getFeed.loading && feed.map(post => 
-				<Post key={post.id} post={post} isAuthor={authLoading ? false : (user.uid === post.author.id)} handleDelete={handleDelete}/>
+				<Post key={post.id} post={post} isAuthor={authLoading || user === null ? false : (user.uid === post.author.id)} handleDelete={handleDelete}/>
 			)}
 		</div>
 	)
@@ -51,13 +51,15 @@ function Post(props)
 
 function PostOptions(props)
 {
+	const shareLink = `${window.location.href}/${props.id}`;
+	
 	return (
-		<div className='absolute border border-neutral-800'>
-			<div>Share</div>
+		<div className='absolute border border-neutral-800 bg-white text-neutral-800 p-1 rounded-sm'>
+			<button className='p-1 block w-full hover:bg-neutral-200' onClick={() => {navigator.clipboard.writeText(shareLink)}}>Share</button>
 			{props.isAuthor && 
 				<>
-					<div>Edit</div>
-					<div className='text-red-600' onClick={() => props.handleDelete(props.id)}>Delete</div>
+					<button className='p-1 block w-full hover:bg-neutral-200'>Edit</button>
+					<button className='p-1 block w-full text-red-600 hover:bg-red-600 hover:text-white' onClick={() => props.handleDelete(props.id)}>Delete</button>
 				</>
 			}
 		</div>
