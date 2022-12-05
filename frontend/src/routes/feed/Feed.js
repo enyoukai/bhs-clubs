@@ -52,10 +52,22 @@ function Post(props)
 function PostOptions(props)
 {
 	const shareLink = `${window.location.href}/${props.id}`;
+	const [copied, setCopied] = useState(false);
+	const [copyInterval, setCopyInterval] = useState();
+
+	function handleCopy() {
+		navigator.clipboard.writeText(shareLink); 
+		if (copyInterval) clearInterval(copyInterval);
+
+		setCopied(true);
+		setCopyInterval(setInterval(() => {
+			setCopied(false);
+		}, 1000));
+	}
 	
 	return (
 		<div className='absolute border border-neutral-800 bg-white text-neutral-800 p-1 rounded-sm'>
-			<button className='p-1 block w-full hover:bg-neutral-200' onClick={() => {navigator.clipboard.writeText(shareLink)}}>Share</button>
+			<button className='p-1 block w-full hover:bg-neutral-200' onClick={handleCopy}>{copied ? 'Copied!' : 'Share'}</button>
 			{props.isAuthor && 
 				<>
 					<button className='p-1 block w-full hover:bg-neutral-200'>Edit</button>
