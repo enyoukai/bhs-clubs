@@ -42,7 +42,6 @@ function Home() {
 
   }, [debouncedSearch]);
 
-  // TODO: WRAP THIS IN A USEMEMO
   function tagFilter(clubs) {
     if (Object.values(tags).every((tag) => tag === false)) return clubs;
 
