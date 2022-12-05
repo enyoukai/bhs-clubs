@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useSearchParams } from "react-router-dom";
 
 import './Home.scss';
@@ -14,25 +14,27 @@ function Home() {
   const debouncedSearch = useDebounce(search, 500);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const [tags, setTags] = useState({service: false, academic: false, educational: false, misc: false});
+
   const submitted = searchParams.get('submitted');
 
   const getClubs = useApi('/clubs');
 
   let mousePosition = null;
 
-  useEffect(() => {
-    const handleWindowMouseMove = event => {
-      mousePosition = {
-        x: event.pageX,
-        y: event.pageY
-      }
-    };
-    window.addEventListener('mousemove', handleWindowMouseMove);
+  // useEffect(() => {
+  //   const handleWindowMouseMove = event => {
+  //     mousePosition = {
+  //       x: event.pageX,
+  //       y: event.pageY
+  //     }
+  //   };
+  //   window.addEventListener('mousemove', handleWindowMouseMove);
 
-    return () => {
-      window.removeEventListener('mousemove', handleWindowMouseMove);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('mousemove', handleWindowMouseMove);
+  //   };
+  // }, []);
 
   useEffect(() => {
       if (debouncedSearch !== '') axios.get(`/clubs?name=${debouncedSearch}`).then(res => setClubs(res.data));
@@ -40,34 +42,51 @@ function Home() {
 
   }, [debouncedSearch]);
 
+  // TODO: WRAP THIS IN A USEMEMO
+  function tagFilter(clubs) {
+    if (Object.values(tags).every((tag) => tag === false)) return clubs;
+
+    const requiredTags = [];
+    Object.entries(tags).forEach(([tag, value]) => {
+      if (value) requiredTags.push(tag);
+    });
+
+    return clubs.filter((club) => {
+      const currentTags = [];
+      Object.entries(club.tags).forEach(([tag, value]) => {
+        if (value) currentTags.push(tag);
+      });
+      
+      return requiredTags.every(tag => currentTags.includes(tag));
+    });
+  }
+
   return (
     <div>
       {submitted && <div>Club request has been submitted. It will be approved shortly</div>}
-      <OptionsBar setSearch={setSearch}/>
+      <OptionsBar tags={tags} setTags={setTags} setSearch={setSearch}/>
       <table className="clubTable">
         <tbody>
           <ListHeader/>
-          <ClubList mousePosition={mousePosition} clubs={clubs}/>
+          <ClubList mousePosition={mousePosition} clubs={tagFilter(clubs)}/>
         </tbody>
       </table>
     </div>
   );
 }
 
-function OptionsBar(props) {
-  const [selected, setSelected] = useState({service: false, academic: false, educational: false, misc: false});
-  
+function OptionsBar(props) {  
   function handleSelect(field) {
-    setSelected(prevSelected => ({...prevSelected, [field]: !prevSelected[field]}));
+    props.setTags(prevTags => ({...prevTags, [field]: !prevTags[field]}));
   }
 
   return (
     <div className="options">
       <input className="options__search" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
-      <button onClick={() => handleSelect('service')} className={`${selected.service && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Service</button>
-      <button onClick={() => handleSelect('academic')} className={`${selected.academic && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Academic</button>
-      <button onClick={() => handleSelect('educational')} className={`${selected.educational && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Educational</button>
-      <button onClick={() => handleSelect('misc')} className={`${selected.misc && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Misc</button>
+      <button onClick={() => handleSelect('service')} className={`${props.tags.service && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Service</button>
+      <button onClick={() => handleSelect('academic')} className={`${props.tags.academic && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Academic</button>
+      <button onClick={() => handleSelect('educational')} className={`${props.tags.educational && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Educational</button>
+      <button onClick={() => handleSelect('misc')} className={`${props.tags.misc && 'bg-neutral-600 text-neutral-100'} text-xl border border-neutral-800 rounded-xl px-5`}>Misc</button>
 
       <Link className="options__addClub" to={'newclub'}>Add Club +</Link>
     </div>
