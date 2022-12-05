@@ -8,9 +8,14 @@ import { useAuth } from '../contexts/AuthContext'
 
 import './NewClub.scss';
 
+function capitalizeFirstLetter(str)
+{
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export default function NewClub() {
 	// TODO: make a reducer later
-	const [formState, setFormState] = useState({name: '', description: '', location: '', dates: [], time: '', advisor: '', verification: null});
+	const [formState, setFormState] = useState({name: '', description: '', location: '', dates: [], time: '', advisor: '', tags: {service: false, academic: false, educational: false, misc: false }, verification: null});
 
 	const [error, setError] = useState('');
 
@@ -19,11 +24,6 @@ export default function NewClub() {
 	const createClub = useApi('/clubs', 'post', token);
 
 	const navigate = useNavigate();
-
-	function capitalizeFirstLetter(str)
-	{
-		return str.charAt(0).toUpperCase() + str.slice(1);
-	}
 
 	async function submitClub(e) {
 		e.preventDefault();
@@ -78,6 +78,15 @@ export default function NewClub() {
 		setFormState((prevState) => ({...prevState, verification: files[0]}));
 	}
 
+	function handleTagChange(tag) {
+		setFormState((prevState) => {
+			const newTagState = prevState.tags;
+			newTagState[tag] = !newTagState[tag];
+			
+			return {...prevState, tags: newTagState};
+ 		});
+	}
+
 	useEffect(() => {
 		if (!createClub.loading && !createClub.error)
 		{
@@ -103,10 +112,11 @@ export default function NewClub() {
 				<input name='time' value={formState.time} className="newClub__input" onChange={handleTextChange}/> 
 				<div className="newClub__text">Advisor</div>
 				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleTextChange}></input>
+				<div className="newClub__text">Tags</div>
+				<TagPicker tags={formState.tags} handleTagChange={handleTagChange}/>
 				<div className="newClub__text">Verification</div>
 				<DropZone currentImg={formState.verification} onDrop={handleDrop}/>
 				<button type="submit" className="mt-4 text-4xl text-neutral-800 bg-neutral-100 p-6 rounded-lg font-medium">Add Club</button>
-				<TimePicker/>
 			</form>
 		</div>
 	)
@@ -153,6 +163,20 @@ function DatePicker(props) {
 			<button type="button" onClick={toggleDate(4)} className={`border rounded-md ${selectedDates[4] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>T</button>
 			<button type="button" onClick={toggleDate(5)} className={`border rounded-md ${selectedDates[5] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>F</button>
 			<button type="button" onClick={toggleDate(6)} className={`border rounded-md ${selectedDates[6] && 'bg-neutral-100 text-neutral-900 ease-in-out duration-300'}`}>S</button>
+		</div>
+	)
+}
+
+function TagPicker(props)
+{
+	return (
+		<div>
+			{Object.entries(props.tags).map(([tag, value]) => 
+				<button onClick={() => props.handleTagChange(tag)} className={`block border p-5 rounded-md w-full mb-5 text-left ${value && 'bg-neutral-100 text-neutral-900'}`}>
+					{capitalizeFirstLetter(tag)}	
+				</button>
+			
+			)}
 		</div>
 	)
 }

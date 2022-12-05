@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 
 import axios from 'axios';
 
+// TODO: REAASFKLASJFK;LASDJ REFACTOR ALL THIS WHAT EVEN IS ANY OF THIS
 export default function ModifyClub() {
     const {user, token} = useAuth();
 
@@ -48,10 +49,7 @@ export default function ModifyClub() {
     async function submitChange(e)
     {
         e.preventDefault(); 
-        // let imageForm = new FormData();
-        // imageForm.append('clubImage', image);
-     
-        // await axios.post(`/clubs/${club.id}/upload`, imageForm, {headers: {"Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}`}});
+
         const body = {name: club.name, description: description, location: location, date: date, time: time, advisor: advisor};
         await putClub.dispatch({body: body, params: `/${club.id}`});
         navigate('/');
@@ -68,18 +66,13 @@ export default function ModifyClub() {
                     <p>Location: </p>
                     <input className='border' value={location} onChange={e => setLocation(e.target.value)}></input>
                     <p >Day:  TODO: FIX AND ADD MULTISELECT</p>
-                    {/* <input className='border' value={date} onChange={e => setDate(e.target.value)}></input> */}
                     <p>Time: </p>
                     <input className='border' value={time} onChange={e => setTime(e.target.value)}></input>
                     <p>Advisor: </p>
                     <input className='border' value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
-                    {/* <p>Info Page</p>
-                    <textarea value={infoPage} onChange={e => setInfoPage(e.target.value)}></textarea>
                     <br/>
-                    <input type="file" name="clubImage" accept="image/*" onChange={e => setImage(e.target.files[0])}/>
-                    <br/>
-                    {image && <img width={"100rem"} src={URL.createObjectURL(image)}></img>}
-                    <br/> */}
+                    <label>Officers</label>
+                    {club.officers.map(officer => <div>{officer}</div>)}
                     <br/>
                     <button className='bg-neutral-800 text-neutral-100' type="submit">submit</button>
                 </form>

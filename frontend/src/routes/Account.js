@@ -36,9 +36,6 @@ function UserInfo(props)
 		}
 	});
 
-	console.log(memberClubs);
-	console.log(officerClubs);
-
 	return (
 		<div>
 			<div>Username: {props.user.username}</div>
