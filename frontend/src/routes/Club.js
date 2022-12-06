@@ -16,33 +16,23 @@ import {arrayToDates} from 'utils/dateUtils';
 
 
 export default function Club() {
-	const { user, token, authLoading } = useAuth();
+	const { user, authLoading } = useAuth();
 
 	const clubId = useParams().id;
-	const [club, setClub] = useState();
-	const [userObj, setUserObj] = useState();
 
-	const getClub = useApi('/clubs');
+	const [club, setClub] = useState();
+	const [clubLoading, setClubLoading] = useState(true);
+
+	const [userClubs, setUserClubs] = useState();
 
 	useEffect(() => {
-		async function fetch()
-		{
-			if (!authLoading)
-			{
-				const res = await axios.get(`/account/${user.uid}`);
-				setUserObj(res.data);
-			}
+		axios.get(`/clubs/${clubId}`).then(res => setClub(res.data)).then(() => setClubLoading(false));
+	}, [clubId]);
 
-		}
-
-		getClub.dispatch({ params: `/${clubId}`, populate: setClub });
-		fetch();
-	}, [!authLoading]);
-
-	async function register()
-	{
-		await axios.post(`/account/${user.uid}/clubs`, {clubId: clubId}, {headers: {Authorization: `Bearer ${token}`}});		
-	}
+	useEffect(() => {
+		if (authLoading) return;
+		if (user) axios.get(`/account/${user.uid}/clubs`).then(res => setUserClubs(res.data));
+	}, [authLoading, user]);
 	
 	function isUserRegistered(user, id)
 	{
@@ -58,8 +48,8 @@ export default function Club() {
 	}
 	return (
 		<>
-			{userObj && <Register registered={isUserRegistered(userObj, clubId)} register={register}/>}
-			{getClub.loading ? <Loading /> : <ClubInfo club={club} />}
+			{userClubs && <Register userId={user.uid} userClubs={userClubs} clubId={club.id}/>}
+			{clubLoading ? <Loading /> : <ClubInfo club={club} />}
 		</>
 	)
 }
@@ -253,13 +243,15 @@ function InfoDefault(props) {
 	)
 }
 
+// RACE CONDITION CAUSED BY TRYING TO GET USER.UID BUT NO CHECK ON IT
+
 function Register(props) {
-	console.log(props.registered);
-	if (props.registered)
-	{
-		return <div>Already Registered</div>
+	const [registered, setRegistered] = useState(props.userClubs.includes(props.clubId))
+
+	function handleRegister() {
+		axios.post(`/account/${props.uid}/clubs`, {clubId: props.clubId}).then(() => setRegistered(true));
 	}
-	else {
-		return <button onClick={props.register}>Register</button>
-	}
+
+	if (registered) return <div>Already registered</div>
+	else return <button onClick={handleRegister}>Register</button>
 }

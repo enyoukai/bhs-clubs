@@ -12,6 +12,13 @@ router.get('/:userId', async (req, res) => {
 	});
 });
 
+router.get('/:userId/clubs', async (req, res) => {
+	if (!(await User.exists({_id: req.params.userId}))) return res.sendStatus(404);
+	
+	const user = await User.findOne({_id: req.params.userId});
+	return res.send(user.clubs);
+});
+
 router.use(authenticate);
 
 router.get('/', async (req, res) => {
