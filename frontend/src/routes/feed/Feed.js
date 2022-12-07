@@ -9,7 +9,7 @@ export default function Feed()
 {
 	const [feed, setFeed] = useState();
 	const [feedLoading, setFeedLoading] = useState(true);
-
+console.log(feed);
 	const {user, authLoading} = useAuth();
 
 	useEffect(() => {
@@ -21,8 +21,13 @@ export default function Feed()
 	}
 
 	function handleSave(postId, body) {
+		console.log(postId);
 		return axios.patch(`/feed/${postId}`, {body: body}).then(setFeed(prevFeed => {
-			console.log(prevFeed);
+			prevFeed.forEach((post) => {
+				if (post.id !== postId) return;
+				post.body = body;
+			});
+
 			return prevFeed;
 		}));
 	}

@@ -67,6 +67,8 @@ router.patch('/:postId', async (req, res) => {
 	if (post === null) return res.sendStatus(404);
 	if (post.author !== req.headers.uid) return res.sendStatus(400);
 
+	console.log(req.params.postId);
+
 	await Post.updateOne({id: req.params.postId}, {body: req.body.body});
 
 	return res.sendStatus(200);
