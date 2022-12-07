@@ -58,12 +58,12 @@ function ClubInfo(props) {
 	const club = props.club;
 	const [editing, setEditing] = useState(false);
 	const { user, authLoading } = useAuth();
-
+	
 	return (
 		<div className="pt-9 px-20">
 			<div className="flex flex-col items-center">
 				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
-				{!authLoading && user !== null && club.uid === user.uid && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}
+				{!authLoading && user !== null && club.officers.includes(user.uid) && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}
 			</div>
 			{editing ? <ModifyInfo setEditing={setEditing} club={club} /> : <ReadOnlyInfo club={club} />}
 		</div>

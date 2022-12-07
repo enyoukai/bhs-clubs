@@ -1,29 +1,38 @@
 import React, {useState, useEffect} from 'react';
-import useApi from '../../hooks/useApi';
 import {Link, useLocation} from 'react-router-dom';
 import {useAuth} from 'contexts/AuthContext';
 
 import './Feed.scss'
 import axios from 'axios';
+
 export default function Feed()
 {
-	const getFeed = useApi('/feed');
 	const [feed, setFeed] = useState();
+	const [feedLoading, setFeedLoading] = useState(true);
 
 	const {user, authLoading} = useAuth();
 
-	useEffect(() => {getFeed.dispatch({populate: setFeed})}, []);
+	useEffect(() => {
+		axios.get('/feed').then(res => setFeed(res.data)).then(() => setFeedLoading(false));
+	}, []);
 
 	function handleDelete(id) {
 		axios.delete(`/feed/${id}`).then(setFeed(prevFeed => prevFeed.filter(post => post.id !== id)));
+	}
+
+	function handleSave(postId, body) {
+		return axios.patch(`/feed/${postId}`, {body: body}).then(setFeed(prevFeed => {
+			console.log(prevFeed);
+			return prevFeed;
+		}));
 	}
 
 	return (
 		<div className="pt-10 px-10">
 			<div className="text-center text-4xl">Recent Club Activities...</div>
 			<Link to='newpost'><div className="text-2xl text-center mt-5 text-green-500">Add new post</div></Link>
-			{!getFeed.loading && feed.map(post => 
-				<Post key={post.id} post={post} isAuthor={authLoading || user === null ? false : (user.uid === post.author.id)} handleDelete={handleDelete}/>
+			{!feedLoading && feed.map(post => 
+				<Post key={post.id} post={post} isAuthor={authLoading || user === null ? false : (user.uid === post.author.id)} handleDelete={handleDelete} handleSave={handleSave}/>
 			)}
 		</div>
 	)
@@ -32,18 +41,33 @@ export default function Feed()
 function Post(props)
 {
 	const [showOptions, setShowOptions] = useState(false);
+	const [editingBody, setEditingBody] = useState(props.post.body);
+	const [editing, setEditing] = useState(false);
 
 	const post = props.post;
+
+	function toggleEdit() {
+		setEditing(prevEdit => {
+			if (!prevEdit) setEditingBody(post.body);
+			return !prevEdit
+		});
+	}
+
+	function handleSave() {
+		props.handleSave(post.id, editingBody).then(setEditing(false));
+	}
+
 	return (
 		<div className="border-solid border bg-neutral-100 rounded-md w-2/5 mx-auto my-5 px-10 pb-10 pt-2 break-words">
-			<button onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)} className="float-right text-xl">
-				...{showOptions && <PostOptions isAuthor={props.isAuthor} id={post.id} handleDelete={props.handleDelete}/>}
-			</button>
+			<div onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)} className="float-right text-xl">
+				...{showOptions && <PostOptions isAuthor={props.isAuthor} id={post.id} handleDelete={props.handleDelete} handleEdit={toggleEdit}/>}
+			</div>
 			<div className='mt-7 mb-5'>
 				<Link to={`${post.id}`} className="text-xl font-bold">{post.title}</Link>
 				<div className="text-sm">by {<Link to={`/account/${post.author.id}`}>{post.author.username}</Link>} for {post.club ? <Link to={`/club/${post.club.id}`}>{post.club.name}</Link> : "DELETED CLUB"}</div>
 			</div>
-			<div className="text-xl mb-5">{props.post.body}</div>
+			{editing ? <input value={editingBody} onChange={e => setEditingBody(e.target.value)} className="text-xl mb-5"/> : <div>{post.body}</div>}
+			{editing && <button onClick={handleSave}>Save</button>}
 			{post.file && <img className="mx-auto" alt="post" width={'400rem'} src={`/images/${post.file}`}/>}
 		</div>
 	)
@@ -70,7 +94,7 @@ function PostOptions(props)
 			<button className='p-1 block w-full hover:bg-neutral-200' onClick={handleCopy}>{copied ? 'Copied!' : 'Share'}</button>
 			{props.isAuthor && 
 				<>
-					<button className='p-1 block w-full hover:bg-neutral-200'>Edit</button>
+					<button className='p-1 block w-full hover:bg-neutral-200' onClick={props.handleEdit}>Edit</button>
 					<button className='p-1 block w-full text-red-600 hover:bg-red-600 hover:text-white' onClick={() => props.handleDelete(props.id)}>Delete</button>
 				</>
 			}

@@ -40,7 +40,7 @@ router.post('/', upload.single('file'), async (req, res) => {
 	if (!req.body.title || !req.body.body || !req.body.club) return res.send("Missing fields").status(400);
 	if (!(await Club.exists({_id: req.body.club}))) return res.send("Club not found").status(404);
 
-	const post = new Post({title: req.body.title, body: req.body.body, author: user._id, club: req.body.club, file: (req.file ? req.file.filename : '')});
+	const post = new Post({title: req.body.title, body: req.body.body, author: user._id, club: req.body.club, file: (req.file ? req.file.filename : ''), createdAt: Date.now()});
 	await post.save();
 
 	const club = await Club.findOne({_id: req.body.club});
@@ -57,6 +57,17 @@ router.delete('/:postId', async (req, res) => {
 	if (post.author !== req.headers.uid) return res.sendStatus(400);
 
 	await Post.deleteOne({_id: req.params.postId});
+
+	return res.sendStatus(200);
+});
+
+router.patch('/:postId', async (req, res) => {
+	const post = await Post.findOne({id: req.params.postId});
+
+	if (post === null) return res.sendStatus(404);
+	if (post.author !== req.headers.uid) return res.sendStatus(400);
+
+	await Post.updateOne({id: req.params.postId}, {body: req.body.body});
 
 	return res.sendStatus(200);
 });

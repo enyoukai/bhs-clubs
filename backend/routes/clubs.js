@@ -27,7 +27,7 @@ router.use(authenticate);
 
 router.put('/:clubId', async (req, res) => {
 	const club = await Club.findOne({_id: req.params.clubId});
-	if (club.uid != req.headers.uid) return res.sendStatus(401);
+	if (!club.officers.includes(req.headers.uid)) return res.sendStatus(401);
 	
 	const dbRes = await Club.updateOne({_id: req.params.clubId}, {name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, infoPage: req.body.infoPage});
 	
@@ -72,7 +72,7 @@ router.post('/', upload.single('verification'), async (req, res) => {
 		return res.sendStatus(400);
 	}
 
-	const club = new Club({name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, uid: req.headers.uid, approved: false, verification: req.file.filename, officers: [req.headers.uid], tags: body.tags});
+	const club = new Club({name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, approved: false, verification: req.file.filename, officers: [req.headers.uid], tags: body.tags});
 	await club.save();
 
 	await User.updateOne({_id: req.headers.uid}, {$push: {clubs: club._id}});

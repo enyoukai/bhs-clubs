@@ -43,7 +43,6 @@ function Club(props)
 			<div>{arrayToDates(props.club.dates).join(', ')}</div>
 			<div>{props.club.time}</div>
 			<div>{props.club.advisor}</div>
-			<div>{props.club.uid}</div>
 			<img width={"300rem"} src={'/images/' + props.club.verification}/>
 			<button className="text-green-500" onClick={props.approveClub}>Approve Club</button>
 		</div>

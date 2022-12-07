@@ -33,7 +33,7 @@ export default function ModifyClub() {
     useEffect(() => {
         if (!getClub.loading)
         {
-            if (club.uid !== user.uid) 
+            if (!club.officers.includes(user.uid)) 
             {
                 navigate('/');
             }
