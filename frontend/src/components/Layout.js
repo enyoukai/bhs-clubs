@@ -109,7 +109,6 @@ function AccountDropdown(props)
   return (
     <div className="account__dropdown">
       <Link className="account__text" to={'account/' + props.uid}>Profile</Link>
-      <Link className="account__text" to={'notifications'}>Unread</Link>
       <Link className="account__text" to='settings'>Settings</Link>
       <Link className="account__text" to='signout'>Sign Out</Link>
     </div>

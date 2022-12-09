@@ -186,7 +186,6 @@ function ModifyInfo(props) {
 			<button className="bg-neutral-300 p-2 rounded-md" onClick={addText}>Add Text Box</button>
 			<DropZone onDrop={onDrop} />
 			<button className="bg-neutral-600 text-neutral-100 p-5" onClick={handleSubmit}>Save</button>
-			
 		</div>
 	)
 }

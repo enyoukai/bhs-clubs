@@ -48,6 +48,8 @@ router.post('/', upload.single('file'), async (req, res) => {
 		await User.updateOne({_id: memberId}, {$push: {'unreadPosts': post.id}});
 	});
 
+	await Club.updateOne({_id: req.body.club}, {lastPosted: Date.now()});
+
 	return res.sendStatus(201);
 });	
 

@@ -9,8 +9,9 @@ export default function Feed()
 {
 	const [feed, setFeed] = useState();
 	const [feedLoading, setFeedLoading] = useState(true);
-console.log(feed);
 	const {user, authLoading} = useAuth();
+
+	const [filterByClubsIn, setFilterByClubsIn] = useState(false);
 
 	useEffect(() => {
 		axios.get('/feed').then(res => setFeed(res.data)).then(() => setFeedLoading(false));
@@ -32,11 +33,27 @@ console.log(feed);
 		}));
 	}
 
+	function filterByIn() {
+		if (!filterByClubsIn || !user) return feed;
+
+		return feed.filter(post => {
+			// TODO: CHANGE THIS TO NOT RELY ON OVERFETCHING
+			return post.club.officers.includes(user.uid) || post.club.members.includes(user.uid);
+		})
+	}
+
+	const filteredFeed = filterByIn(feed);
+
+	console.log(filteredFeed);
+
 	return (
 		<div className="pt-10 px-10">
 			<div className="text-center text-4xl">Recent Club Activities...</div>
+			<div className='flex justify-between mt-5'>
+				{user && <button onClick={() => setFilterByClubsIn(prevSetting => !prevSetting)} className={`ease-in-out duration-300 mx-auto border border-neutral-800 p-2 rounded-lg ${filterByClubsIn && 'bg-neutral-700 text-neutral-200'}`}>Clubs I'm in</button>}
+			</div>
 			<Link to='newpost'><div className="text-2xl text-center mt-5 text-green-500">Add new post</div></Link>
-			{!feedLoading && feed.map(post => 
+			{!feedLoading && filteredFeed.map(post => 
 				<Post key={post.id} post={post} isAuthor={authLoading || user === null ? false : (user.uid === post.author.id)} handleDelete={handleDelete} handleSave={handleSave}/>
 			)}
 		</div>
