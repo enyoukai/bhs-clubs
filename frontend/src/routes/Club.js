@@ -182,10 +182,12 @@ function ModifyInfo(props) {
 					)}
 				</Droppable>
 			</DragDropContext>
-			<textarea className="border-solid border-2" value={input} onChange={(e) => setInput(e.target.value)} />
-			<button className="bg-neutral-300 p-2 rounded-md" onClick={addText}>Add Text Box</button>
-			<DropZone onDrop={onDrop} />
-			<button className="bg-neutral-600 text-neutral-100 p-5" onClick={handleSubmit}>Save</button>
+			<div className='flex flex-col items-center gap-5'>
+				<textarea className="border-solid border-2" value={input} onChange={(e) => setInput(e.target.value)} />
+				<button className="bg-neutral-300 p-2 rounded-md" onClick={addText}>Add Text Box</button>
+				<DropZone onDrop={onDrop} />
+				<button className="border border-neutral-400 text-neutral-800 px-5 py-3 rounded-md text-2xl hover:bg-neutral-100 " onClick={handleSubmit}>Save</button>
+			</div>
 		</div>
 	)
 }
