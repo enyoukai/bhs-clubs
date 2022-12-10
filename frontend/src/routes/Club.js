@@ -250,7 +250,7 @@ function Register(props) {
 	const [registered, setRegistered] = useState(props.userClubs.includes(props.clubId))
 
 	function handleRegister() {
-		axios.post(`/account/${props.uid}/clubs`, {clubId: props.clubId}).then(() => setRegistered(true));
+		axios.post(`/account/${props.userId}/clubs`, {clubId: props.clubId}).then(() => setRegistered(true));
 	}
 
 	if (registered) return <div>Already registered</div>
