@@ -1,8 +1,9 @@
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'
-
+import { useLocation } from 'react-router-dom';
+import {IoIosNotificationsOutline} from 'react-icons/io';
+import {IconContext} from 'react-icons';
 import './Layout.scss'
 import axios from "axios";
 
@@ -24,7 +25,7 @@ function Layout()
   return (
     <React.Fragment>
       <nav className="nav">
-        <Link to='/' className="nav__logo">BHS Clubs</Link>
+        <Link to='/' className="nav__logo text-yellow-400 font-medium">BHS Clubs</Link>
         <div className="nav__tabs">
           <Link to='/' className={`nav__tab ${path === '/' || path.startsWith('/club') ? selected : unselected}`}>Home</Link>
           <Link to='newclub' className={`nav__tab ${path.startsWith('/newclub') ? selected : unselected}`}>Add Club</Link>
@@ -60,7 +61,7 @@ function Notifications(props)
 
   return (
     <div onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
-      <Link to={'/notifications'}><img className="w-12 h-12 rounded-full" src="https://freeiconshop.com/wp-content/uploads/edd/notification-outline.png" alt="notifications"/></Link>
+      <Link to={'/notifications'} className='text-neutral-200 inline-block h-100'><IoIosNotificationsOutline size={50}/></Link>
       {dropdown && <NotificationsDropdown notifications={props.notifications}/>}
     </div>
   )
