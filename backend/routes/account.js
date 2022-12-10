@@ -28,10 +28,10 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
 	let isAdmin = false;
 	if (req.headers.email === process.env.ADMIN) isAdmin = true;
-	const fbUser = await admin.auth().getUser(req.headers.uid);
 
-	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email, creationTime: fbUser.metadata.creationTime, isAdmin: isAdmin});
-	await user.save();
+	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email, isAdmin: isAdmin});
+
+	console.log(await user.save());
 
 	return res.sendStatus(201);
 });
@@ -64,6 +64,7 @@ router.get('/:userId/unreadPosts', async (req, res) => {
 
 router.delete('/:userId/unreadPosts', async (req, res) => {
 	if (req.params.userId !== req.headers.uid) return res.send("Cannot access this resource").status(400);
+	if (!(await User.exists({_id: req.headers.uid})));
 
 	await User.updateOne({_id: req.headers.uid}, {unreadPosts: []});
 });
