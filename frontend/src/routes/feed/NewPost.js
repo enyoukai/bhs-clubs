@@ -91,8 +91,8 @@ export default function NewPost()
 					</select>
 					<div className="text-xl mt-4">Photo:</div>
 					<input className="block" type="file" onChange={(e) => setFile(e.target.files[0])}/>
-					{file && <img className="mt-4" alt="uploaded" src={URL.createObjectURL(file)}/>}
-					<button className="text-2xl bg-neutral-200 p-5 rounded-md mt-5" type="submit">Submit</button>
+					{file && <img className="mt-4 w-96" alt="uploaded" src={URL.createObjectURL(file)}/>}
+					<button className="text-2xl border border-neutral-600 bg-green-400 px-5 py-2 rounded-md mt-5 hover:bg-green-500" type="submit">Submit</button>
 				</form>
 			</div>
 			}
