@@ -44,8 +44,6 @@ export default function Feed()
 
 	const filteredFeed = filterByIn(feed);
 
-	console.log(filteredFeed);
-
 	return (
 		<div className="pt-10 px-10">
 			<div className="text-center text-4xl">Recent Club Activities...</div>

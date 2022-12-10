@@ -47,10 +47,10 @@ export default function Club() {
 		return registered;
 	}
 	return (
-		<>
+		<div className='p-5'>
 			{userClubs && <Register userId={user.uid} userClubs={userClubs} clubId={club.id}/>}
 			{clubLoading ? <Loading /> : <ClubInfo club={club} />}
-		</>
+		</div>
 	)
 }
 
@@ -63,7 +63,7 @@ function ClubInfo(props) {
 		<div className="pt-9 px-20">
 			<div className="flex flex-col items-center">
 				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
-				{!authLoading && user !== null && club.officers.includes(user.uid) && <button className="text-2xl mt-4" onClick={() => setEditing(!editing)}>Edit</button>}
+				{!authLoading && user !== null && club.officers.includes(user.uid) && <button className="text-2xl my-4" onClick={() => setEditing(!editing)}>Edit</button>}
 			</div>
 			{editing ? <ModifyInfo setEditing={setEditing} club={club} /> : <ReadOnlyInfo club={club} />}
 		</div>
@@ -159,7 +159,7 @@ function ModifyInfo(props) {
 	}, []);
 
 	return (
-		<div className="mx-4">
+		<div className="mx-4 mb-5">
 			{submitStatus && <div>{submitStatus}</div>}
 			<DragDropContext onDragEnd={handleOnDragEnd}>
 				<Droppable droppableId="content">
@@ -182,11 +182,13 @@ function ModifyInfo(props) {
 					)}
 				</Droppable>
 			</DragDropContext>
-			<div className='flex flex-col items-center gap-5'>
-				<textarea className="border-solid border-2" value={input} onChange={(e) => setInput(e.target.value)} />
-				<button className="bg-neutral-300 p-2 rounded-md" onClick={addText}>Add Text Box</button>
+			<div className='flex flex-col items-start gap-5 w-100'>
+				<div className='flex justify-around'>
+					<textarea className="border border-neutral-500 rounded-sm w-full" value={input} onChange={(e) => setInput(e.target.value)} />
+					<button className="text-neutral-800 border border-neutral-500 text-neutral-2xl px-5 py-2 rounded-md" onClick={addText}>Add Text Box</button>
+				</div>
 				<DropZone onDrop={onDrop} />
-				<button className="border border-neutral-400 text-neutral-800 px-5 py-3 rounded-md text-2xl hover:bg-neutral-100 " onClick={handleSubmit}>Save</button>
+				<button className="mx-auto border border-neutral-400 text-neutral-800 px-5 py-3 rounded-md text-2xl hover:bg-neutral-100 " onClick={handleSubmit}>Save</button>
 			</div>
 		</div>
 	)
@@ -198,7 +200,7 @@ function DropZone(props) {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
 	return (
-		<div {...getRootProps({ className: 'border-dashed border-black border-2 p-5 dropzone' })}>
+		<div {...getRootProps({ className: 'border-dashed border-neutral-800 border p-5 dropzone w-full' })}>
 			<input {...getInputProps()} />
 			{isDragActive ? <p>Drop here</p> : <p>Drag files or click here</p>}
 		</div>
@@ -253,6 +255,11 @@ function Register(props) {
 		axios.post(`/account/${props.userId}/clubs`, {clubId: props.clubId}).then(() => setRegistered(true));
 	}
 
-	if (registered) return <div>Already registered</div>
+	if (registered) return (
+		<div className='text-xl'>
+			<div>Already registered</div>
+			<button className='text-red-500'>Unregister</button>
+		</div>
+	)
 	else return <button onClick={handleRegister}>Register</button>
 }
