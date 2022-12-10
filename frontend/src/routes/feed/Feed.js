@@ -86,9 +86,9 @@ function Post(props)
 				<Link to={`${post.id}`} className="text-xl font-bold">{post.title}</Link>
 				<div className="text-sm">by {<Link to={`/account/${post.author.id}`}>{post.author.username}</Link>} for {post.club ? <Link to={`/club/${post.club.id}`}>{post.club.name}</Link> : "DELETED CLUB"}</div>
 			</div>
-			{editing ? <input value={editingBody} onChange={e => setEditingBody(e.target.value)} className="text-xl mb-5"/> : <div>{post.body}</div>}
-			{editing && <button onClick={handleSave}>Save</button>}
-			{post.file && <img className="mx-auto" alt="post" width={'400rem'} src={`/images/${post.file}`}/>}
+			{editing ? <textarea value={editingBody} onChange={e => setEditingBody(e.target.value)} className="text-xl mb-2 rounded-sm border border-neutral-400 w-full p-2 resize-none"/> : <div>{post.body}</div>}
+			{post.file && <img className="mx-auto mt-5" alt="post" width={'400rem'} src={`/images/${post.file}`}/>}
+			{editing && <button className='block text-2xl mt-5 mx-auto text-neutral-700 font-medium' onClick={handleSave}>Save</button>}
 		</div>
 	)
 }
