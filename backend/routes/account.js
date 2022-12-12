@@ -68,4 +68,15 @@ router.delete('/:userId/unreadPosts', async (req, res) => {
 	await User.updateOne({_id: req.headers.uid}, {unreadPosts: []});
 });
 
+router.delete('/:userId/clubs/:clubId', async (req, res) => {
+	if (req.params.userId !== req.headers.uid) return res.sendStatus(400);
+	const user = User.findOne({_id: req.headers.userId});
+	const club = Club.findOne({_id: req.headers.clubId});
+
+	if (user === null) return res.send("User not found").status(400);
+	if (club === null) return res.send("Club not found").status(400);
+	
+
+});
+
 module.exports = router;

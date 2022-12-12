@@ -60,7 +60,7 @@ function ClubInfo(props) {
 	const { user, authLoading } = useAuth();
 	
 	return (
-		<div className="pt-9 px-20">
+		<div className="pt-5 px-20">
 			<div className="flex flex-col items-center">
 				<h2 className="text-4xl font-bold text-neutral-800">{club.name}</h2>
 				{!authLoading && user !== null && club.officers.includes(user.uid) && <button className="text-2xl my-4" onClick={() => setEditing(!editing)}>Edit</button>}
@@ -255,10 +255,14 @@ function Register(props) {
 		axios.post(`/account/${props.userId}/clubs`, {clubId: props.clubId}).then(() => setRegistered(true));
 	}
 
+	function handleUnregister() {
+		axios.delete(`/accounts/${props.userId}/clubs/${props.clubId}`);
+	}
+
 	if (registered) return (
 		<div className='text-xl'>
 			<div>Already registered</div>
-			<button className='text-red-500'>Unregister</button>
+			<button onClick={handleUnregister} className='text-red-500'>Unregister</button>
 		</div>
 	)
 	else return <button onClick={handleRegister}>Register</button>
