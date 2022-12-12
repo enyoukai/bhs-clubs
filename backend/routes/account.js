@@ -69,14 +69,32 @@ router.delete('/:userId/unreadPosts', async (req, res) => {
 	await User.updateOne({_id: req.headers.uid}, {unreadPosts: []});
 });
 
-router.delete('/:userId/clubs/:clubId', async (req, res) => {
+router.delete('/:userId/club/:clubId', async (req, res) => {
 	if (req.params.userId !== req.headers.uid) return res.sendStatus(400);
 	const user = User.findOne({_id: req.headers.userId});
 	const club = Club.findOne({_id: req.headers.clubId});
 
-	if (user === null) return res.send("User not found").status(400);
-	if (club === null) return res.send("Club not found").status(400);
+	if (user === null) return res.send("User not found").status(404);
+	if (club === null) return res.send("Club not found").status(404);
+
 	
+
+	await User.updateOne({_id: req.params.userId}, {
+		$pullAll: {
+			clubs: [{_id: req.params.clubId}],
+		},
+	});
+
+	await Club.updateOne({_id: req.params.clubId}, {
+		$pullAll: {
+			officers: [{_id: req.params.userId}],
+			members: [{_id: req.params.userId}],
+		},
+	});
+
+	console.log("done");
+	
+	return res.sendStatus(200);
 
 });
 

@@ -257,7 +257,7 @@ function Register(props) {
 	}
 
 	function handleUnregister() {
-		axios.delete(`/accounts/${props.userId}/clubs/${props.clubId}`);
+		axios.delete(`/account/${props.userId}/club/${props.clubId}`);
 	}
 
 	if (registered) return (

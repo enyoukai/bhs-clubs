@@ -61,7 +61,7 @@ function Notifications(props)
 
   return (
     <div className='flex items-center' onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
-      <Link to={'/notifications'} className='text-neutral-200 inline-block h-100 align-bottom'><IoIosNotificationsOutline size={50}e/></Link>
+      <Link to={'/notifications'} className='text-neutral-200 inline-block h-100 align-bottom'><IoIosNotificationsOutline size={50}/></Link>
       {dropdown && <NotificationsDropdown notifications={props.notifications}/>}
     </div>
   )
