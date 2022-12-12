@@ -22,7 +22,6 @@ export default function Feed()
 	}
 
 	function handleSave(postId, body) {
-		console.log(postId);
 		return axios.patch(`/feed/${postId}`, {body: body}).then(setFeed(prevFeed => {
 			prevFeed.forEach((post) => {
 				if (post.id !== postId) return;

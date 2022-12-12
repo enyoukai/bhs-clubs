@@ -91,8 +91,6 @@ router.delete('/:userId/club/:clubId', async (req, res) => {
 			members: [{_id: req.params.userId}],
 		},
 	});
-
-	console.log("done");
 	
 	return res.sendStatus(200);
 

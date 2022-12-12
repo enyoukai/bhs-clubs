@@ -20,6 +20,8 @@ router.get('/', async (req, res) => {
 
 router.get('/:clubId', async (req, res) => {
 	const club = await Club.findOne({_id: req.params.clubId, approved: true});
+	if (club === null) return res.sendStatus(404);
+
 	return res.send(club);
 });
 
@@ -27,6 +29,7 @@ router.use(authenticate);
 
 router.put('/:clubId', async (req, res) => {
 	const club = await Club.findOne({_id: req.params.clubId});
+	if (club === null) return res.sendStatus(404);
 	if (!club.officers.includes(req.headers.uid)) return res.sendStatus(401);
 	
 	const dbRes = await Club.updateOne({_id: req.params.clubId}, {name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, infoPage: req.body.infoPage});
@@ -64,8 +67,6 @@ router.post('/', upload.single('verification'), async (req, res) => {
 	const body = {};
 	
 	Object.keys(req.body).forEach((key) => {body[key] = JSON.parse(req.body[key])});
-
-	console.log(body);
 
 	if (!body.name || !body.description || !body.location || !body.dates || !body.time || !body.advisor) 
 	{

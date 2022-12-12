@@ -257,7 +257,7 @@ function Register(props) {
 	}
 
 	function handleUnregister() {
-		axios.delete(`/account/${props.userId}/club/${props.clubId}`);
+		axios.delete(`/account/${props.userId}/club/${props.clubId}`).then(() => setRegistered(false));
 	}
 
 	if (registered) return (
@@ -266,5 +266,5 @@ function Register(props) {
 			<button onClick={handleUnregister} className='text-red-500'>Unregister</button>
 		</div>
 	)
-	else return <button onClick={handleRegister}>Register</button>
+	else return <button className='text-xl' onClick={handleRegister}>Register</button>
 }
