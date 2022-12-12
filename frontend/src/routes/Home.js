@@ -16,7 +16,7 @@ function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [tags, setTags] = useState({service: false, academic: false, educational: false, misc: false});
 
-  const submitted = searchParams.get('submitted');
+  const [submitted, setSubmitted] = useState(searchParams.get('submitted') === 'true');
 
   const getClubs = useApi('/clubs');
 
@@ -62,7 +62,7 @@ function Home() {
 
   return (
     <div>
-      {submitted && <div>Club request has been submitted. It will be approved shortly</div>}
+      {submitted && <div className='bg-green-400 text-center p-2 text-neutral-800 text-xl font-semibold'>Club request has been submitted. It will be approved shortly</div>}
       <OptionsBar tags={tags} setTags={setTags} setSearch={setSearch}/>
       <table className="clubTable">
         <tbody>

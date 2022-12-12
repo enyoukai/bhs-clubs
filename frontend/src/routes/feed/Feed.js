@@ -48,7 +48,7 @@ export default function Feed()
 		<div className="pt-10 px-10">
 			<div className="text-center text-4xl">Recent Club Activities...</div>
 			<div className='flex justify-between mt-5'>
-				{user && <button onClick={() => setFilterByClubsIn(prevSetting => !prevSetting)} className={`ease-in-out duration-300 mx-auto border border-neutral-800 p-2 rounded-lg ${filterByClubsIn && 'bg-neutral-700 text-neutral-200'}`}>Clubs I'm in</button>}
+				{user && <button onClick={() => setFilterByClubsIn(prevSetting => !prevSetting)} className={`ease-in-out duration-300 mx-auto border border-neutral-800 p-2 rounded-lg ${filterByClubsIn && 'bg-neutral-700 text-neutral-200'}`}>My Clubs</button>}
 			</div>
 			<Link to='newpost'><div className="text-2xl text-center mt-5 text-green-500">Add new post</div></Link>
 			{!feedLoading && filteredFeed.map(post => 
@@ -86,9 +86,9 @@ function Post(props)
 				<Link to={`${post.id}`} className="text-xl font-bold">{post.title}</Link>
 				<div className="text-sm">by {<Link to={`/account/${post.author.id}`}>{post.author.username}</Link>} for {post.club ? <Link to={`/club/${post.club.id}`}>{post.club.name}</Link> : "DELETED CLUB"}</div>
 			</div>
-			{editing ? <input value={editingBody} onChange={e => setEditingBody(e.target.value)} className="text-xl mb-5"/> : <div>{post.body}</div>}
-			{editing && <button onClick={handleSave}>Save</button>}
-			{post.file && <img className="mx-auto" alt="post" width={'400rem'} src={`/images/${post.file}`}/>}
+			{editing ? <textarea value={editingBody} onChange={e => setEditingBody(e.target.value)} className="text-xl mb-2 rounded-sm border border-neutral-400 w-full p-2 resize-none"/> : <div>{post.body}</div>}
+			{post.file && <img className="mx-auto mt-5" alt="post" width={'400rem'} src={`/images/${post.file}`}/>}
+			{editing && <button className='block text-2xl mt-5 mx-auto text-neutral-700 font-medium' onClick={handleSave}>Save</button>}
 		</div>
 	)
 }

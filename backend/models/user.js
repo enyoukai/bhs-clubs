@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
 	_id: String,
 	username: String,
 	email: String,
-	creationTime: String,
+	creationTime: {type: Date, default: Date.now},
 	clubs: [{type: Schema.Types.ObjectId, ref: 'Club'}],
 	profile: String,
 	isAdmin: Boolean,

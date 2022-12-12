@@ -11,6 +11,7 @@ import Loading from '../components/Loading';
 import './Club.scss';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import {FiTrash2} from 'react-icons/fi';
 
 import {arrayToDates} from 'utils/dateUtils';
 
@@ -171,7 +172,7 @@ function ModifyInfo(props) {
 										{(provided) => (
 											<li className="flex gap-2 flex-col items-start" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
 												{conditionalRenderItem(item)}
-												<button className="text-red-400" onClick={deleteItem(index)}>Delete</button>
+												<button className="text-red-600 mb-5" onClick={deleteItem(index)}><FiTrash2 size={30}/></button>
 											</li>
 										)}
 									</Draggable>
