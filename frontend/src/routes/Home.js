@@ -82,10 +82,10 @@ function OptionsBar(props) {
   return (
     <div className="options">
       <input className="options__search" onChange={e => props.setSearch(e.target.value)} placeholder="Search"/>
-      <button onClick={() => handleSelect('service')} className={`${props.tags.service && 'bg-neutral-600 text-neutral-100'} ease-in-out duration-200 text-xl border border-neutral-800 rounded-xl px-5`}>Service</button>
-      <button onClick={() => handleSelect('academic')} className={`${props.tags.academic && 'bg-neutral-600 text-neutral-100'} ease-in-out duration-200 text-xl border border-neutral-800 rounded-xl px-5`}>Academic</button>
-      <button onClick={() => handleSelect('educational')} className={`${props.tags.educational && 'bg-neutral-600 text-neutral-100'} ease-in-out duration-200 text-xl border border-neutral-800 rounded-xl px-5`}>Educational</button>
-      <button onClick={() => handleSelect('misc')} className={`${props.tags.misc && 'bg-neutral-600 text-neutral-100'} ease-in-out duration-200 text-xl border border-neutral-800 rounded-xl px-5`}>Misc</button>
+      <button onClick={() => handleSelect('service')} className={`${props.tags.service ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-700'} ease-in-out duration-200 text-xl border border-neutral-800 rounded-xl px-5 font-medium`}>Service</button>
+      <button onClick={() => handleSelect('academic')} className={`${props.tags.academic ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-700'} ease-in-out duration-200 text-xl border border-neutral-800 rounded-xl px-5 font-medium`}>Academic</button>
+      <button onClick={() => handleSelect('educational')} className={`${props.tags.educational ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-700'} ease-in-out duration-200 text-xl border border-neutral-800 rounded-xl px-5 font-medium`}>Educational</button>
+      <button onClick={() => handleSelect('misc')} className={`${props.tags.misc ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-700'} ease-in-out duration-200 text-xl border border-neutral-800 rounded-xl px-5 font-medium`}>Misc</button>
 
       <Link className="options__addClub" to={'newclub'}>Add Club +</Link>
     </div>
@@ -110,11 +110,11 @@ function ListHeader()
 {
   return (
     <tr className="clubTable__header">
-      <th className="header__text">Name</th>
-      <th className="header__text">Location</th>
-      <th className="header__text">Day</th>
-      <th className="header__text">Time</th>
-      <th className="header__text">Advisor</th>
+      <th className="header__text text-neutral-700 font-semibold">Name</th>
+      <th className="header__text text-neutral-700 font-semibold">Location</th>
+      <th className="header__text text-neutral-700 font-semibold">Day</th>
+      <th className="header__text text-neutral-700 font-semibold">Time</th>
+      <th className="header__text text-neutral-700 font-semibold">Advisor</th>
     </tr>
   )
 }
