@@ -72,7 +72,7 @@ function ClubInfo(props) {
 }
 
 function conditionalRenderItem(item) {
-	if (item.type === 'text') return (<span className="text-2xl">{item.content}</span>)
+	if (item.type === 'text') return (<span className="text-2xl break-words">{item.content}</span>)
 	if (item.type === 'img-file') return (<img className="mx-auto" width={"400rem"} src={URL.createObjectURL(item.content)} />)
 	if (item.type === 'img-link') return (<img className="mx-auto" width={"400rem"} src={`/images/${item.content}`} />);
 }
@@ -170,9 +170,9 @@ function ModifyInfo(props) {
 								return (
 									<Draggable key={item.id} draggableId={item.id} index={index}>
 										{(provided) => (
-											<li className="flex gap-2 flex-col items-start" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+											<li className="flex gap-2 flex-row items-start border border-dotted border-neutral-500 mb-5 p-5 justify-between " {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
 												{conditionalRenderItem(item)}
-												<button className="text-red-600 mb-5" onClick={deleteItem(index)}><FiTrash2 size={30}/></button>
+												<button className="text-red-600 my-auto" onClick={deleteItem(index)}><FiTrash2 size={30}/></button>
 											</li>
 										)}
 									</Draggable>
@@ -183,10 +183,10 @@ function ModifyInfo(props) {
 					)}
 				</Droppable>
 			</DragDropContext>
-			<div className='flex flex-col items-start gap-5 w-100'>
-				<div className='flex justify-around'>
-					<textarea className="border border-neutral-500 rounded-sm w-full" value={input} onChange={(e) => setInput(e.target.value)} />
-					<button className="text-neutral-800 border border-neutral-500 text-neutral-2xl px-5 py-2 rounded-md" onClick={addText}>Add Text Box</button>
+			<div className='flex flex-col items-start gap-5 w-full'>
+				<div className='flex flex-row justify-between w-full gap-5'>
+					<textarea className="grow border border-neutral-500 rounded-sm resize-none text-lg p-3" value={input} onChange={(e) => setInput(e.target.value)} />
+					<button className="text-neutral-800 border border-neutral-500 text-neutral-2xl px-5 py-2 rounded-md" onClick={addText}>Add Text</button>
 				</div>
 				<DropZone onDrop={onDrop} />
 				<button className="mx-auto border border-neutral-400 text-neutral-800 px-5 py-3 rounded-md text-2xl hover:bg-neutral-100 " onClick={handleSubmit}>Save</button>
