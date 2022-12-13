@@ -49,7 +49,7 @@ export default function Club() {
 	}
 	return (
 		<div className='p-5'>
-			{userClubs && <Register userId={user.uid} userClubs={userClubs} clubId={club.id}/>}
+			{userClubs && !clubLoading && <Register userId={user.uid} userClubs={userClubs} clubId={club.id}/>}
 			{clubLoading ? <Loading /> : <ClubInfo club={club} />}
 		</div>
 	)
