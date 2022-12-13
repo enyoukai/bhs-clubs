@@ -12,15 +12,16 @@ function Layout()
   const { user, isAdmin, authLoading } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const path = useLocation().pathname;
+  const location = useLocation();
 
   const selected = "nav__tab--selected";
   const unselected = "nav__tab--unselected";
 
   useEffect(() => {
     if (user) {
-      axios.get(`/account/${user.uid}/unreadPosts`).then(res => setNotifications(res.data));
+      axios.get(`/account/${user.uid}/unreadPosts `).then(res => setNotifications(res.data));
     }
-  }, [user]);
+  }, [user, location]);
 
   return (
     <React.Fragment>
@@ -71,7 +72,7 @@ function Notifications(props)
 function NotificationsDropdown(props)
 {
   return (
-    <div className="absolute bg-neutral-800 flex flex-col text-neutral-200 text-xl p-5 right-0">
+    <div className="absolute bg-neutral-800 flex flex-col text-neutral-200 text-xl p-5 top-20">
       {props.notifications.length > 0 ? 
       <ul>
         {props.notifications.map((notif, idx) => 

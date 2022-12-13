@@ -65,7 +65,8 @@ router.delete('/:id', async (req, res) => {
 
 router.post('/', upload.single('verification'), async (req, res) => {
 	const body = {};
-	
+	const user = await User.findOne({_id: req.headers.uid});
+
 	Object.keys(req.body).forEach((key) => {body[key] = JSON.parse(req.body[key])});
 
 	if (!body.name || !body.description || !body.location || !body.dates || !body.time || !body.advisor) 
@@ -73,7 +74,9 @@ router.post('/', upload.single('verification'), async (req, res) => {
 		return res.sendStatus(400);
 	}
 
-	const club = new Club({name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, approved: false, verification: req.file.filename, officers: [req.headers.uid], tags: body.tags});
+	console.log(user);
+
+	const club = new Club({name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, approved: user.isAdmin, verification: req.file.filename, officers: [req.headers.uid], tags: body.tags});
 	await club.save();
 
 	await User.updateOne({_id: req.headers.uid}, {$push: {clubs: club._id}});

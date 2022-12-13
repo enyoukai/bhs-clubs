@@ -31,7 +31,6 @@ router.post('/', async (req, res) => {
 
 	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email, isAdmin: isAdmin});
 
-	console.log(await user.save());
 
 	return res.sendStatus(201);
 });
@@ -43,7 +42,6 @@ router.post('/:userId/clubs', async (req, res) => {
 		{_id: req.params.userId}, 
 		{$push: {clubs: req.body.clubId}});
 
-	console.log(req.params.userId);
 	await Club.updateOne(
 		{_id: req.body.clubId},
 		{$push: {members: req.params.userId}});
@@ -58,6 +56,7 @@ router.get('/:userId/unreadPosts', async (req, res) => {
 		populate('unreadPosts').
 		exec(function (err, user) {
 			if (err) return res.sendStatus(500);
+			console.log(user.unreadPosts);
 			return res.send(user.unreadPosts);
 		})
 });
