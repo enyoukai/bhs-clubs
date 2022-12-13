@@ -3,7 +3,7 @@
 
 import useApi from "../hooks/useApi";
 import React, { useState, useEffect, useCallback } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useAuth } from '../contexts/AuthContext';
 import { useDropzone } from 'react-dropzone';
@@ -49,7 +49,7 @@ export default function Club() {
 	}
 	return (
 		<div className='p-5'>
-			{userClubs && !clubLoading && <Register userId={user.uid} userClubs={userClubs} clubId={club.id}/>}
+			{userClubs && !clubLoading && <Register userId={user.uid} userClubs={userClubs} officers={club.officers} clubId={club.id}/>}
 			{clubLoading ? <Loading /> : <ClubInfo club={club} />}
 		</div>
 	)
@@ -252,6 +252,7 @@ function InfoDefault(props) {
 function Register(props) {
 	const [registered, setRegistered] = useState(props.userClubs.includes(props.clubId))
 
+	
 	function handleRegister() {
 		axios.post(`/account/${props.userId}/clubs`, {clubId: props.clubId}).then(() => setRegistered(true));
 	}
@@ -260,6 +261,10 @@ function Register(props) {
 		axios.delete(`/account/${props.userId}/club/${props.clubId}`).then(() => setRegistered(false));
 	}
 
+	if (props.officers.includes(props.userId)) return (
+		<Link to="modify" className='text-xl'>Edit club details</Link>
+	)
+	
 	if (registered) return (
 		<div className='text-xl'>
 			<div>Already registered</div>

@@ -52,7 +52,7 @@ function App() {
           <Route path='newpost' element={<NewPost/>}/>
           <Route path='calendar' element={<Calendar/>}/>
           <Route path='club/:id' element={<Club/>}/>
-          <Route path='modify/:id' element={<ProtectedRoute><ModifyClub/></ProtectedRoute>}/>
+          <Route path='club/:id/modify' element={<ProtectedRoute><ModifyClub/></ProtectedRoute>}/>
           <Route path="admin">
             <Route index element={<AdminRoute><AdminHome/></AdminRoute>}/>
             <Route path="approve" element={<AdminRoute><ApproveClubs/></AdminRoute>}/>
