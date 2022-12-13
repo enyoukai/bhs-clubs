@@ -185,11 +185,14 @@ function ModifyInfo(props) {
 			</DragDropContext>
 			<div className='flex flex-col items-start gap-5 w-full'>
 				<div className='flex flex-row justify-between w-full gap-5'>
-					<textarea className="grow border border-neutral-500 rounded-sm resize-none text-lg p-3" value={input} onChange={(e) => setInput(e.target.value)} />
-					<button className="text-neutral-800 border border-neutral-500 text-neutral-2xl px-5 py-2 rounded-md" onClick={addText}>Add Text</button>
+					<textarea className="grow border border-neutral-300 rounded-xl bg-neutral-100 h-36 resize-none text-lg p-3" value={input} onChange={(e) => setInput(e.target.value)} />
+					<button className="text-neutral-800 border border-neutral-300 text-neutral-2xl px-5 py-2 rounded-md" onClick={addText}>Add Text</button>
 				</div>
 				<DropZone onDrop={onDrop} />
-				<button className="mx-auto border border-neutral-400 text-neutral-800 px-5 py-3 rounded-md text-2xl hover:bg-neutral-100 " onClick={handleSubmit}>Save</button>
+				<div className='flex justify-center w-full'>
+					<button className="text-neutral-100 bg-neutral-900 px-20 py-4 rounded-2xl text-xl font-medium hover:bg-neutral-100 " onClick={handleSubmit}>Save</button>
+					<button className="ml-10 border border-neutral-400 text-neutral-800 px-7 py-4 rounded-2xl text-xl font-medium hover:bg-neutral-100 " onClick={handleSubmit}>Cancel</button>
+				</div>
 			</div>
 		</div>
 	)
@@ -201,7 +204,7 @@ function DropZone(props) {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
 	return (
-		<div {...getRootProps({ className: 'border-dashed border-neutral-800 border p-5 dropzone w-full' })}>
+		<div {...getRootProps({ className: 'border-dashed border-neutral-600 text-lg font-semibold text-neutral-700 border p-5 dropzone w-full' })}>
 			<input {...getInputProps()} />
 			{isDragActive ? <p>Drop here</p> : <p>Drag files or click here</p>}
 		</div>

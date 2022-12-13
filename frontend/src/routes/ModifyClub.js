@@ -58,23 +58,21 @@ export default function ModifyClub() {
     return (
         <>
             {getClub.loading ? <Loading/> :         
-                <div className="modify">
-                <header>Modifying {club.name}</header>
-                <form onSubmit={submitChange} className="modify__form ">
-                    <p>Description: </p>
-                    <textarea className='border' value={description} onChange={e => setDescription(e.target.value)}></textarea>
-                    <p>Location: </p>
-                    <input className='border' value={location} onChange={e => setLocation(e.target.value)}></input>
-                    <p >Day:  TODO: FIX AND ADD MULTISELECT</p>
-                    <p>Time: </p>
-                    <input className='border' value={time} onChange={e => setTime(e.target.value)}></input>
-                    <p>Advisor: </p>
-                    <input className='border' value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
-                    <br/>
-                    <label>Officers</label>
+            <div className="modify p-10">
+                <header className='text-4xl text-center mb-10'>Modifying {club.name}</header>
+                <form onSubmit={submitChange} className="modify__form text-left ">
+                    <p className='text-xl mb-3'>Description: </p>
+                    <textarea className='border resize-none mb-5' value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                    <p className='text-xl mb-3'>Location: </p>
+                    <input className='border mb-5' value={location} onChange={e => setLocation(e.target.value)}></input>
+                    <p className='text-xl mb-3'>Day:  TODO: FIX AND ADD MULTISELECT</p>
+                    <p className='text-xl mb-3'>Time: </p>
+                    <input className='border mb-5' value={time} onChange={e => setTime(e.target.value)}></input>
+                    <p className='text-xl mb-3'>Advisor: </p>
+                    <input className='border mb-5' value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
+                    <p className='text-xl mb-3'>Officers</p>
                     {club.officers.map(officer => <div>{officer}</div>)}
-                    <br/>
-                    <button className='bg-neutral-800 text-neutral-100' type="submit">submit</button>
+                    <button className='bg-neutral-900 mt-10 px-20 py-4 rounded-2xl text-neutral-200 text-2xl mx-auto font-medium' type="submit">Submit</button>
                 </form>
             </div>}
         </>
