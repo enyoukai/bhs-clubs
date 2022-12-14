@@ -10,16 +10,15 @@ const upload = require('../middleware/upload');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-	if (Object.keys(req.query).length === 0)
-	{
-		return res.json(await Club.find({approved: true}));
+	if (Object.keys(req.query).length === 0) {
+		return res.json(await Club.find({ approved: true }).sort('name'));
 	}
 
-	return res.json(await Club.find({approved: true, name: {$regex: req.query.name, $options: 'i'}}));
+	return res.json(await Club.find({ approved: true, name: { $regex: req.query.name, $options: 'i' } }).sort('name'));
 });
 
 router.get('/:clubId', async (req, res) => {
-	const club = await Club.findOne({_id: req.params.clubId, approved: true});
+	const club = await Club.findOne({ _id: req.params.clubId, approved: true });
 	if (club === null) return res.sendStatus(404);
 
 	return res.send(club);
@@ -28,64 +27,56 @@ router.get('/:clubId', async (req, res) => {
 router.use(authenticate);
 
 router.put('/:clubId', async (req, res) => {
-	const club = await Club.findOne({_id: req.params.clubId});
+	const club = await Club.findOne({ _id: req.params.clubId });
 	if (club === null) return res.sendStatus(404);
 	if (!club.officers.includes(req.headers.uid)) return res.sendStatus(401);
-	
-	const dbRes = await Club.updateOne({_id: req.params.clubId}, {name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, infoPage: req.body.infoPage});
-	
-	if (dbRes.acknowledged)
-	{
+
+	const dbRes = await Club.updateOne({ _id: req.params.clubId }, { name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, infoPage: req.body.infoPage });
+
+	if (dbRes.acknowledged) {
 		return res.sendStatus(200);
 	}
-	else
-	{
+	else {
 		return res.sendStatus(400);
 	}
 });
 
 router.delete('/:id', async (req, res) => {
 	const clubId = req.params.id;
-	const club = await Club.findOne({_id: clubId});
-	const user = await User.findOne({_id: req.headers.uid});
-	if (!club)
-	{
+	const club = await Club.findOne({ _id: clubId });
+	const user = await User.findOne({ _id: req.headers.uid });
+	if (!club) {
 		return res.sendStatus(404);
 	}
-	else if (!club.officers.includes(user.id) && !user.isAdmin)
-	{
+	else if (!club.officers.includes(user.id) && !user.isAdmin) {
 		return res.sendStatus(401);
 	}
-	else
-	{
-		await Club.deleteOne({_id: clubId})
+	else {
+		await Club.deleteOne({ _id: clubId })
 		return res.sendStatus(200);
 	}
 });
 
 router.post('/', upload.single('verification'), async (req, res) => {
 	const body = {};
-	const user = await User.findOne({_id: req.headers.uid});
+	const user = await User.findOne({ _id: req.headers.uid });
 
-	Object.keys(req.body).forEach((key) => {body[key] = JSON.parse(req.body[key])});
+	Object.keys(req.body).forEach((key) => { body[key] = JSON.parse(req.body[key]) });
 
-	if (!body.name || !body.description || !body.location || !body.dates || !body.time || !body.advisor) 
-	{
+	if (!body.name || !body.description || !body.location || !body.dates || !body.time || !body.advisor) {
 		return res.sendStatus(400);
 	}
 
-	console.log(user);
-
-	const club = new Club({name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, approved: user.isAdmin, verification: req.file.filename, officers: [req.headers.uid], tags: body.tags});
+	const club = new Club({ name: body.name, description: body.description, location: body.location, dates: body.dates, time: body.time, advisor: body.advisor, approved: user.isAdmin, verification: req.file.filename, officers: [req.headers.uid], tags: body.tags });
 	await club.save();
 
-	await User.updateOne({_id: req.headers.uid}, {$push: {clubs: club._id}});
+	await User.updateOne({ _id: req.headers.uid }, { $push: { clubs: club._id } });
 
 	return res.send(club);
 });
 
 router.get('/:id/info', async (req, res) => {
-	const club = await Club.find({_id: req.params.id});
+	const club = await Club.find({ _id: req.params.id });
 	if (club === null) return res.send("Club not found").status(404);
 
 	return res.send(club.infoFormat);
@@ -97,11 +88,11 @@ router.put('/:id/info', upload.any('images'), async (req, res) => {
 	const processedItems = items.map((item) => {
 		if (item.type === 'text' || item.type === 'img-link') return item;
 		else if (item.type === 'img-file') {
-			return {type: 'img-link', content: req.files[item.content].filename}
+			return { type: 'img-link', content: req.files[item.content].filename }
 		}
 	});
 
-	await Club.updateOne({_id: req.params.id}, {infoFormat: processedItems});
+	await Club.updateOne({ _id: req.params.id }, { infoFormat: processedItems });
 	return res.sendStatus(201);
 });
 
