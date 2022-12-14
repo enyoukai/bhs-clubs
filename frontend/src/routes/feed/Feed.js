@@ -87,7 +87,12 @@ function Post(props)
 			</div>
 			{editing ? <textarea value={editingBody} onChange={e => setEditingBody(e.target.value)} className="text-xl mb-2 rounded-sm border border-neutral-400 w-full p-2 resize-none"/> : <div>{post.body}</div>}
 			{post.file && <img className="mx-auto mt-5" alt="post" width={'400rem'} src={`/images/${post.file}`}/>}
-			{editing && <button className='block text-2xl mt-5 mx-auto text-neutral-700 font-medium' onClick={handleSave}>Save</button>}
+			{editing && 
+				<div className='flex items-center justify-between'>
+					{editing && <button className='block text-xl bg-neutral-900 px-20 py-3 rounded-xl text-neutral-100 font-medium' onClick={handleSave}>Save</button>}
+					<button onClick={toggleEdit} className='border rounded-xl text-xl font-medium my-auto px-10 py-3 border-neutral-700'>Cancel</button>
+				</div>
+			}
 		</div>
 	)
 }

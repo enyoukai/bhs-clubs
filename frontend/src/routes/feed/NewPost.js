@@ -79,11 +79,11 @@ export default function NewPost()
 				<h2 className='text-3xl text-center'>New Post</h2>
 				{success && <div>{success}</div>}
 				{error && <div>{error}</div>}
-				<form onSubmit={handleSubmit}>
-					<div className="text-xl mt-4">Title:</div>
-					<textarea className="border border-neutral-400 rounded-sm" type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+				<form onSubmit={handleSubmit} className='w-full'>
+					<div className="text-xl mt-4">Title</div>
+					<textarea className="resize-none border border-neutral-400 rounded-sm" type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
 					<div className="text-xl mt-4">Body</div>
-					<textarea className="border border-neutral-400 rounded-sm" type="text" value={body} onChange={(e) => setBody(e.target.value)}/>
+					<textarea className="resize-none border border-neutral-400 rounded-sm" type="text" value={body} onChange={(e) => setBody(e.target.value)}/>
 					<div className="text-xl mt-4">Club:</div>
 					<select className="border border-neutral-400 rounded-sm" value={selectClub} onChange={(e) => setSelectClub(e.target.value)}>
 						<option value="" disabled>Select Club</option>
@@ -92,7 +92,7 @@ export default function NewPost()
 					<div className="text-xl mt-4">Photo:</div>
 					<input className="block" type="file" onChange={(e) => setFile(e.target.files[0])}/>
 					{file && <img className="mt-4 w-96" alt="uploaded" src={URL.createObjectURL(file)}/>}
-					<button className="text-2xl border border-neutral-600 bg-green-400 px-5 py-2 rounded-md mt-5 hover:bg-green-500" type="submit">Submit</button>
+					<button className="text-xl border bg-neutral-900 text-neutral-100 px-20 py-4 rounded-xl mt-5 hover:bg-green-500" type="submit">Submit</button>
 				</form>
 			</div>
 			}
