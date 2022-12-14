@@ -72,7 +72,7 @@ export default function ModifyClub() {
                     <input className='border mb-5' value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
                     <p className='text-xl mb-3'>Officers</p>
                     {club.officers.map(officer => <div>{officer}</div>)}
-                    <button className='bg-neutral-900 mt-10 px-20 py-4 rounded-2xl text-neutral-200 text-2xl mx-auto font-medium' type="submit">Submit</button>
+                    <button className='bg-neutral-900 mt-10 px-20 py-4 rounded-2xl text-neutral-200 text-2xl mx-auto font-medium' type="submit">Save</button>
                 </form>
             </div>}
         </>
