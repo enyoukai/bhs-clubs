@@ -37,6 +37,8 @@ export default function Feed()
 
 		return feed.filter(post => {
 			// TODO: CHANGE THIS TO NOT RELY ON OVERFETCHING
+			if (!post.club) return false;
+			
 			return post.club.officers.includes(user.uid) || post.club.members.includes(user.uid);
 		})
 	}
