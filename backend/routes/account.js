@@ -30,8 +30,8 @@ router.post('/', async (req, res) => {
 	if (req.headers.email === process.env.ADMIN) isAdmin = true;
 
 	const user = new User({_id: req.headers.uid, username: req.body.username, email: req.headers.email, isAdmin: isAdmin});
-
-
+	user.save();
+	
 	return res.sendStatus(201);
 });
 
@@ -56,7 +56,6 @@ router.get('/:userId/unreadPosts', async (req, res) => {
 		populate('unreadPosts').
 		exec(function (err, user) {
 			if (err) return res.sendStatus(500);
-			console.log(user.unreadPosts);
 			return res.send(user.unreadPosts);
 		})
 });

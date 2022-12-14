@@ -107,6 +107,7 @@ export default function NewClub() {
 				<input name='location' value={formState.location} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Days</div>
 				<DatePicker dateHandler={handleDateChange}/>
+				<div className='text-base'>No consistent schedule? </div>
 				{/* <input name='date' value={formState.date} className="newClub__input" onChange={handleTextChange}></input> */}
 				<div className="newClub__text">Time</div>
 				<input name='time' value={formState.time} className="newClub__input" onChange={handleTextChange}/> 
