@@ -64,7 +64,7 @@ function Home() {
     <div>
       {submitted && <div className='bg-green-400 text-center p-2 text-neutral-800 text-xl font-semibold'>Club request has been submitted. It will be approved shortly</div>}
       <OptionsBar tags={tags} setTags={setTags} setSearch={setSearch} />
-      <table className="clubTable">
+      <table className="clubTable w-full">
         <tbody>
           <ListHeader />
           <ClubList mousePosition={mousePosition} clubs={tagFilter(clubs)} />
