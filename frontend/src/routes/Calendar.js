@@ -69,7 +69,9 @@ function CalendarColumns() {
 
 function DayColumn(props) {
 	// FIX THIS MAKE THIS A LEGIT THING LATER PLEASE!!!!!
-	const sortedClubs = useMemo(() => props.clubs.sort((a, b) => a.time.localeCompare(b.time)), [props.clubs]);
+	const sortedClubs = useMemo(() =>
+		props.clubs.sort((clubA, clubB) => clubA.time.localeCompare(clubB.time)),
+		[props.clubs]);
 
 	return (
 		<td className="align-baseline">
