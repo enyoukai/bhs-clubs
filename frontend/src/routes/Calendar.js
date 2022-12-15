@@ -1,19 +1,17 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function Calendar()
-{
+export default function Calendar() {
 	return (
 		<div className="p-10 text-center">
 			<h1 className="text-4xl">Calendar</h1>
-			<CalendarUI/>
+			<CalendarUI />
 		</div>
 	)
 }
 
-function CalendarUI()
-{
+function CalendarUI() {
 	return (
 		<table className="mt-10 border w-full table-fixed">
 			<thead>
@@ -29,7 +27,7 @@ function CalendarUI()
 			</thead>
 			<tbody>
 				<tr>
-					<CalendarColumns/>
+					<CalendarColumns />
 				</tr>
 			</tbody>
 		</table>
@@ -61,22 +59,24 @@ function CalendarColumns() {
 
 	return (
 		<>
-		{
-			!loading && dayMap.map((dayCol, idx) => <DayColumn key={idx} clubs={dayCol}/>)
-		}
-			
+			{
+				!loading && dayMap.map((dayCol, idx) => <DayColumn key={idx} clubs={dayCol} />)
+			}
+
 		</>
 	)
 }
 
-function DayColumn(props)
-{
+function DayColumn(props) {
+	// FIX THIS MAKE THIS A LEGIT THING LATER PLEASE!!!!!
+	const sortedClubs = useMemo(() => props.clubs.sort((a, b) => a.time.localeCompare(b.time)), [props.clubs]);
+
 	return (
 		<td className="align-baseline">
 			<ul>
 				{
-					props.clubs.map((club) => <ClubTime key={club.id} club={club}/>)
-				}	
+					sortedClubs.map((club) => <ClubTime key={club.id} club={club} />)
+				}
 			</ul>
 		</td>
 	)
