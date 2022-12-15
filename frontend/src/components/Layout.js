@@ -25,7 +25,7 @@ function Layout() {
   return (
     <React.Fragment>
       <nav className="nav sticky top-0">
-        <Link to='/' className="nav__logo text-purple-300 font-medium">dasik</Link>
+        <Link to='/' className="nav__logo text-purple-400 font-medium">dasik</Link>
         <div className="nav__tabs">
           <Link to='/' className={`nav__tab text-xl font-medium ${path === '/' || path.startsWith('/club') ? selected : unselected}`}>Home</Link>
           <Link to='newclub' className={`nav__tab text-xl font-medium ${path.startsWith('/newclub') ? selected : unselected}`}>Add Club</Link>

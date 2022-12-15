@@ -82,12 +82,12 @@ function OptionsBar(props) {
   return (
     <div className="flex justify-around items-center py-5">
       <input className="options__search text-sm" onChange={e => props.setSearch(e.target.value)} placeholder="Search" />
-      <button onClick={() => handleSelect('service')} className={`${props.tags.service ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-lg border border-neutral-400 rounded-xl px-5 font-medium py-1`}>Service</button>
-      <button onClick={() => handleSelect('academic')} className={`${props.tags.academic ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-lg border border-neutral-400 rounded-xl px-5 font-medium py-1`}>Academic</button>
-      <button onClick={() => handleSelect('educational')} className={`${props.tags.educational ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-lg border border-neutral-400 rounded-xl px-5 font-medium py-1`}>Educational</button>
-      <button onClick={() => handleSelect('misc')} className={`${props.tags.misc ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-lg border border-neutral-400 rounded-xl px-5 font-medium py-1`}>Misc</button>
+      <button onClick={() => handleSelect('service')} className={`${props.tags.service ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-base border border-neutral-400 rounded-xl px-5 font-semibold py-1`}>Service</button>
+      <button onClick={() => handleSelect('academic')} className={`${props.tags.academic ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-base border border-neutral-400 rounded-xl px-5 font-semibold py-1`}>Academic</button>
+      <button onClick={() => handleSelect('educational')} className={`${props.tags.educational ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-base border border-neutral-400 rounded-xl px-5 font-semibold py-1`}>Educational</button>
+      <button onClick={() => handleSelect('misc')} className={`${props.tags.misc ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-base border border-neutral-400 rounded-xl px-5 font-semibold py-1`}>Misc</button>
 
-      <Link className="options__addClub text-lg" to={'newclub'}>Add Club +</Link>
+      <Link className="options__addClub text-base " to={'newclub'}>Add Club +</Link>
     </div>
   )
 }
