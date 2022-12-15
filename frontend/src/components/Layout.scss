@@ -13,7 +13,7 @@
 }
 
 .nav__tabs {
-	display:flex;
+	display: flex;
 	gap: 3rem;
 	align-items: center;
 	justify-content: flex-start;
@@ -68,10 +68,10 @@
 .account__dropdown {
 	position: absolute;
 	background-color: #282828;
-	display:flex;
+	display: flex;
 	flex-direction: column;
-	padding:1rem;
-	right:0.5rem;
+	padding: 1rem;
+	right: 0.5rem;
 	border-radius: 0.2rem;
 }
 

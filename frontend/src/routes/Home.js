@@ -81,13 +81,13 @@ function OptionsBar(props) {
 
   return (
     <div className="flex justify-around items-center py-5">
-      <input className="options__search" onChange={e => props.setSearch(e.target.value)} placeholder="Search" />
-      <button onClick={() => handleSelect('service')} className={`${props.tags.service ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-700'} ease-in-out duration-200 text-xl border border-neutral-500 rounded-xl px-5 font-medium py-1`}>Service</button>
-      <button onClick={() => handleSelect('academic')} className={`${props.tags.academic ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-700'} ease-in-out duration-200 text-xl border border-neutral-500 rounded-xl px-5 font-medium py-1`}>Academic</button>
-      <button onClick={() => handleSelect('educational')} className={`${props.tags.educational ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-700'} ease-in-out duration-200 text-xl border border-neutral-500 rounded-xl px-5 font-medium py-1`}>Educational</button>
-      <button onClick={() => handleSelect('misc')} className={`${props.tags.misc ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-700'} ease-in-out duration-200 text-xl border border-neutral-500 rounded-xl px-5 font-medium py-1`}>Misc</button>
+      <input className="options__search text-sm" onChange={e => props.setSearch(e.target.value)} placeholder="Search" />
+      <button onClick={() => handleSelect('service')} className={`${props.tags.service ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-lg border border-neutral-400 rounded-xl px-5 font-medium py-1`}>Service</button>
+      <button onClick={() => handleSelect('academic')} className={`${props.tags.academic ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-lg border border-neutral-400 rounded-xl px-5 font-medium py-1`}>Academic</button>
+      <button onClick={() => handleSelect('educational')} className={`${props.tags.educational ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-lg border border-neutral-400 rounded-xl px-5 font-medium py-1`}>Educational</button>
+      <button onClick={() => handleSelect('misc')} className={`${props.tags.misc ? 'bg-neutral-600 text-neutral-100' : 'text-neutral-600'} ease-in-out duration-200 text-lg border border-neutral-400 rounded-xl px-5 font-medium py-1`}>Misc</button>
 
-      <Link className="options__addClub" to={'newclub'}>Add Club +</Link>
+      <Link className="options__addClub text-lg" to={'newclub'}>Add Club +</Link>
     </div>
   )
 }
@@ -108,12 +108,12 @@ function ClubList(props) {
 
 function ListHeader() {
   return (
-    <tr className="clubTable__header">
-      <th className="header__text text-neutral-700 font-semibold">Name</th>
-      <th className="header__text text-neutral-700 font-semibold">Location</th>
-      <th className="header__text text-neutral-700 font-semibold">Day</th>
-      <th className="header__text text-neutral-700 font-semibold">Time</th>
-      <th className="header__text text-neutral-700 font-semibold">Advisor</th>
+    <tr className="">
+      <th className="text-xl text-purple-400 font-semibold">Name</th>
+      <th className="text-xl text-purple-400 font-semibold">Location</th>
+      <th className="text-xl text-purple-400 font-semibold">Day</th>
+      <th className="text-xl text-purple-400 font-semibold">Time</th>
+      <th className="text-xl text-purple-400 font-semibold">Advisor</th>
     </tr>
   )
 }
@@ -132,12 +132,12 @@ function Club(props) {
   }
 
   return (
-    <tr className="text-xl font-semibold border-b-2 border-spacing-0 border-collapse" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
-      <td><Link className="text-neutral-600 hover:text-blue-400 ease-in-out duration-300 pl-5" to={'club/' + club.id}>{club.name}</Link></td>
-      <td><Link className="text-neutral-600 hover:text-blue-500 ease-in-out duration-300 " to={'club/' + club.id}>{club.location}</Link></td>
-      <td><Link className="text-neutral-600 hover:text-blue-500 ease-in-out duration-300 " to={'club/' + club.id}>{arrayToDates(club.dates).join(', ')}</Link></td>
-      <td><Link className="text-neutral-600 hover:text-blue-500 ease-in-out duration-300 " to={'club/' + club.id}>{club.time}</Link></td>
-      <td className='pr-5 py-5'><Link className="text-neutral-600 hover:text-blue-500 ease-in-out duration-300" to={'club/' + club.id}>{club.advisor}</Link></td>
+    <tr className="text-lg font-semibold border-b-2 border-spacing-0 border-collapse" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
+      <td><Link className="text-neutral-600 hover:text-purple-400 ease-in-out duration-300 pl-5" to={'club/' + club.id}>{club.name}</Link></td>
+      <td><Link className="text-neutral-600 hover:text-purple-500 ease-in-out duration-300 " to={'club/' + club.id}>{club.location}</Link></td>
+      <td><Link className="text-neutral-600 hover:text-purple-500 ease-in-out duration-300 " to={'club/' + club.id}>{arrayToDates(club.dates).join(', ')}</Link></td>
+      <td><Link className="text-neutral-600 hover:text-purple-500 ease-in-out duration-300 " to={'club/' + club.id}>{club.time}</Link></td>
+      <td className='pr-5 py-5'><Link className="text-neutral-600 hover:text-purple-500 ease-in-out duration-300" to={'club/' + club.id}>{club.advisor}</Link></td>
     </tr>
   )
 }

@@ -25,13 +25,13 @@ function Layout() {
   return (
     <React.Fragment>
       <nav className="nav sticky top-0">
-        <Link to='/' className="nav__logo text-yellow-400 font-medium">Dasik</Link>
+        <Link to='/' className="nav__logo text-purple-300 font-medium">dasik</Link>
         <div className="nav__tabs">
-          <Link to='/' className={`nav__tab ${path === '/' || path.startsWith('/club') ? selected : unselected}`}>Home</Link>
-          <Link to='newclub' className={`nav__tab ${path.startsWith('/newclub') ? selected : unselected}`}>Add Club</Link>
-          <Link to='feed' className={`nav__tab ${path.startsWith('/feed') ? selected : unselected}`}>Feed</Link>
-          <Link to='calendar' className={`nav__tab ${path.startsWith('/calendar') ? selected : unselected}`}>Calendar</Link>
-          {isAdmin && <Link to='admin' className={`nav__tab ${path.startsWith('/admin') ? selected : unselected}`}>Admin</Link>}
+          <Link to='/' className={`nav__tab text-xl font-medium ${path === '/' || path.startsWith('/club') ? selected : unselected}`}>Home</Link>
+          <Link to='newclub' className={`nav__tab text-xl font-medium ${path.startsWith('/newclub') ? selected : unselected}`}>Add Club</Link>
+          <Link to='feed' className={`nav__tab text-xl font-medium ${path.startsWith('/feed') ? selected : unselected}`}>Feed</Link>
+          <Link to='calendar' className={`nav__tab text-xl font-medium ${path.startsWith('/calendar') ? selected : unselected}`}>Calendar</Link>
+          {isAdmin && <Link to='admin' className={`nav__tab text-xl font-medium ${path.startsWith('/admin') ? selected : unselected}`}>Admin</Link>}
         </div>
         {!authLoading &&
           (user === null ? <RegisterBar /> :
@@ -59,7 +59,7 @@ function Notifications(props) {
 
   return (
     <div className='flex items-center' onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
-      <Link to={'/notifications'} className='text-neutral-200 inline-block h-100 align-bottom'><IoIosNotificationsOutline size={50} /></Link>
+      <Link to={'/notifications'} className='text-neutral-200 inline-block h-100 align-bottom'><IoIosNotificationsOutline size={40} /></Link>
       {dropdown && <NotificationsDropdown notifications={props.notifications} />}
     </div>
   )
@@ -93,7 +93,7 @@ function Avatar(props) {
 
   return (
     <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link to={'account/' + props.uid}><img className="account__avatar" src="https://cdn.dribbble.com/users/1165288/screenshots/6008531/document-hierarchy.jpg" alt="profile" /></Link>
+      <Link to={'account/' + props.uid}><img className="account__avatar w-15 h-15" src="https://cdn.dribbble.com/users/1165288/screenshots/6008531/document-hierarchy.jpg" alt="profile" /></Link>
       {dropdown && <AccountDropdown uid={props.uid} />}
     </div>
   )
