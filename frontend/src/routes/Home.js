@@ -132,7 +132,7 @@ function Club(props) {
   }
 
   return (
-    <tr className="text-lg font-semibold border-b-2 border-spacing-0 border-collapse" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
+    <tr className="text-base font-semibold border-b-2 border-spacing-0 border-neutral-100 border-collapse" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
       <td><Link className="text-neutral-600 hover:text-purple-400 ease-in-out duration-300 pl-5" to={'club/' + club.id}>{club.name}</Link></td>
       <td><Link className="text-neutral-600 hover:text-purple-500 ease-in-out duration-300 " to={'club/' + club.id}>{club.location}</Link></td>
       <td><Link className="text-neutral-600 hover:text-purple-500 ease-in-out duration-300 " to={'club/' + club.id}>{arrayToDates(club.dates).join(', ')}</Link></td>
