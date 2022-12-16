@@ -13,6 +13,7 @@ import Account from './routes/Account'
 import SignOut from './routes/SignOut';
 import Calendar from './routes/Calendar';
 import Club from './routes/Club';
+import ClaimClubPage from 'routes/ClaimClub';
 import Settings from './routes/Settings';
 
 import ModifyClub from './routes/ModifyClub';
@@ -35,28 +36,29 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path='/' element={<Layout/>}>
-          <Route index element={<Home/>}/>
-          <Route path='signin' element={<SignIn/>}/>
-          <Route path='register' element={<Register/>}/>
-          <Route path='newclub' element={<ProtectedRoute><NewClub/></ProtectedRoute>}/>
-          <Route path='account/:id' element={<Account/>}/>
-          <Route path='settings' element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
-          <Route path='signout' element={<SignOut/>}/>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='signin' element={<SignIn />} />
+          <Route path='register' element={<Register />} />
+          <Route path='newclub' element={<ProtectedRoute><NewClub /></ProtectedRoute>} />
+          <Route path='account/:id' element={<Account />} />
+          <Route path='settings' element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+          <Route path='signout' element={<SignOut />} />
           <Route path='feed'>
-            <Route index element={<Feed/>}/>
-            <Route path='newpost' element={<ProtectedRoute><NewPost/></ProtectedRoute>}/>
-            <Route path=':id' element={<PostPage/>}/>
+            <Route index element={<Feed />} />
+            <Route path='newpost' element={<ProtectedRoute><NewPost /></ProtectedRoute>} />
+            <Route path=':id' element={<PostPage />} />
           </Route>
-          <Route path='notifications' element={<ProtectedRoute><NotificationsPage/></ProtectedRoute>}/>
-          <Route path='newpost' element={<NewPost/>}/>
-          <Route path='calendar' element={<Calendar/>}/>
-          <Route path='club/:id' element={<Club/>}/>
-          <Route path='club/:id/modify' element={<ProtectedRoute><ModifyClub/></ProtectedRoute>}/>
+          <Route path='notifications' element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+          <Route path='newpost' element={<NewPost />} />
+          <Route path='calendar' element={<Calendar />} />
+          <Route path='club/:id' element={<Club />} />
+          <Route path='club/:id/modify' element={<ProtectedRoute><ModifyClub /></ProtectedRoute>} />
+          <Route path='club/:id/claim' element={<ProtectedRoute><ClaimClubPage /></ProtectedRoute>} />
           <Route path="admin">
-            <Route index element={<AdminRoute><AdminHome/></AdminRoute>}/>
-            <Route path="approve" element={<AdminRoute><ApproveClubs/></AdminRoute>}/>
-            <Route path="moderation" element={<AdminRoute><Moderation/></AdminRoute>}/>
+            <Route index element={<AdminRoute><AdminHome /></AdminRoute>} />
+            <Route path="approve" element={<AdminRoute><ApproveClubs /></AdminRoute>} />
+            <Route path="moderation" element={<AdminRoute><Moderation /></AdminRoute>} />
           </Route>
         </Route>
       </Routes>

@@ -8,18 +8,17 @@ import { useAuth } from '../contexts/AuthContext'
 
 import './NewClub.scss';
 
-function capitalizeFirstLetter(str)
-{
+function capitalizeFirstLetter(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export default function NewClub() {
 	// TODO: make a reducer later
-	const [formState, setFormState] = useState({name: '', description: '', location: '', dates: [], time: '', advisor: '', tags: {service: false, academic: false, educational: false, misc: false }, verification: null});
+	const [formState, setFormState] = useState({ name: '', description: '', location: '', dates: [], time: '', advisor: '', tags: { service: false, academic: false, educational: false, misc: false }, verification: null });
 
 	const [error, setError] = useState('');
 
-	const {token} = useAuth();
+	const { token } = useAuth();
 
 	const createClub = useApi('/clubs', 'post', token);
 
@@ -29,36 +28,32 @@ export default function NewClub() {
 		e.preventDefault();
 		const errorFields = [];
 
-		for (const [key, value] of Object.entries(formState))
-		{
+		for (const [key, value] of Object.entries(formState)) {
 			if (!value || (Array.isArray(value) && value.length === 0)) {
 				errorFields.push(key);
 			}
 		}
 
-		if (errorFields.length > 0)
-		{
-			let errorMessage = "Following fields need to be filled: "; 
+		if (errorFields.length > 0) {
+			let errorMessage = "Following fields need to be filled: ";
 			errorMessage += errorFields.map(field => capitalizeFirstLetter(field)).join(', ');
 			setError(errorMessage);
 
 			return;
 		}
-		
+
 		const formData = new FormData();
-		for (const key in formState)
-		{
+		for (const key in formState) {
 			formData.append(key, JSON.stringify(formState[key]));
 		}
 
 		formData.append('verification', formState.verification);
 
-		createClub.dispatch({body: formData, headers: {'Content-Type': 'multipart/form-data'}});
+		createClub.dispatch({ body: formData, headers: { 'Content-Type': 'multipart/form-data' } });
 	}
 
-	function handleTextChange(e)
-	{
-		setFormState((prevState) => ({...prevState, [e.target.name]: e.target.value}));
+	function handleTextChange(e) {
+		setFormState((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
 
 		if (error) setError('');
 	}
@@ -68,28 +63,26 @@ export default function NewClub() {
 
 		dates.forEach((isSelected, day) => isSelected && newDateState.push(day))
 
-		setFormState((prevState) => ({...prevState, dates: newDateState}));
+		setFormState((prevState) => ({ ...prevState, dates: newDateState }));
 
 		if (error) setError('');
 	}
 
-	function handleDrop(files)
-	{
-		setFormState((prevState) => ({...prevState, verification: files[0]}));
+	function handleDrop(files) {
+		setFormState((prevState) => ({ ...prevState, verification: files[0] }));
 	}
 
 	function handleTagChange(tag) {
 		setFormState((prevState) => {
 			const newTagState = prevState.tags;
 			newTagState[tag] = !newTagState[tag];
-			
-			return {...prevState, tags: newTagState};
- 		});
+
+			return { ...prevState, tags: newTagState };
+		});
 	}
 
 	useEffect(() => {
-		if (!createClub.loading && !createClub.error)
-		{
+		if (!createClub.loading && !createClub.error) {
 			navigate('/?submitted=true');
 		}
 	}, [createClub.loading, createClub.error, navigate])
@@ -106,17 +99,17 @@ export default function NewClub() {
 				<div className="newClub__text">Location</div>
 				<input name='location' value={formState.location} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Days</div>
-				<DatePicker dateHandler={handleDateChange}/>
-				<div className='text-base'>No consistent schedule? </div>
+				<DatePicker dateHandler={handleDateChange} />
+				<div className='text-base font-semibold'>No consistent schedule? </div>
 				{/* <input name='date' value={formState.date} className="newClub__input" onChange={handleTextChange}></input> */}
 				<div className="newClub__text">Time</div>
-				<input name='time' value={formState.time} className="newClub__input" onChange={handleTextChange}/> 
+				<input name='time' value={formState.time} className="newClub__input" onChange={handleTextChange} />
 				<div className="newClub__text">Advisor</div>
 				<input name='advisor' value={formState.advisor} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Tags</div>
-				<TagPicker tags={formState.tags} handleTagChange={handleTagChange}/>
+				<TagPicker tags={formState.tags} handleTagChange={handleTagChange} />
 				<div className="newClub__text">Verification</div>
-				<DropZone currentImg={formState.verification} onDrop={handleDrop}/>
+				<DropZone currentImg={formState.verification} onDrop={handleDrop} />
 				<button type="submit" className="mt-4 text-4xl text-neutral-800 bg-neutral-100 p-6 rounded-lg font-medium">Add Club</button>
 			</form>
 		</div>
@@ -132,16 +125,16 @@ function DropZone(props) {
 	return (
 		<div {...getRootProps({ className: 'border-dotted border-2 p-5 dropzone text-neutral-100' })}>
 			<input {...getInputProps()} />
-			{props.currentImg ? <img className='mx-auto' alt='verification' src={URL.createObjectURL(props.currentImg)}/> : <p>Drag file here</p>}
+			{props.currentImg ? <img className='mx-auto' alt='verification' src={URL.createObjectURL(props.currentImg)} /> : <p>Drag file here</p>}
 		</div>
 	)
 }
 
 // LIFT THIS STATE UP
 function DatePicker(props) {
-	const {dateHandler} = props;
+	const { dateHandler } = props;
 	const [selectedDates, setSelectedDates] = useState(Array.apply(null, Array(7)).map(() => false));
- 
+
 	function toggleDate(date) {
 		return () => {
 			setSelectedDates((prevDates) => {
@@ -168,26 +161,24 @@ function DatePicker(props) {
 	)
 }
 
-function TagPicker(props)
-{
+function TagPicker(props) {
 	return (
 		<div>
-			{Object.entries(props.tags).map(([tag, value]) => 
-				<button type='button' key={tag} onClick={() => props.handleTagChange(tag)} className={`block border p-5 rounded-md w-full mb-5 text-left ease-in-out duration-300 ${value ? 'bg-neutral-100 text-neutral-900' : 'bg-neutral-800 text-neutral-100' }`}>
-					{capitalizeFirstLetter(tag)}	
+			{Object.entries(props.tags).map(([tag, value]) =>
+				<button type='button' key={tag} onClick={() => props.handleTagChange(tag)} className={`block border p-5 rounded-md w-full mb-5 text-left ease-in-out duration-300 ${value ? 'bg-neutral-100 text-neutral-900' : 'bg-neutral-800 text-neutral-100'}`}>
+					{capitalizeFirstLetter(tag)}
 				</button>
-			
+
 			)}
 		</div>
 	)
 }
 
-function TimePicker(props)
-{
+function TimePicker(props) {
 	return (
 		<div>
-			<input/>
-			<input/>
+			<input />
+			<input />
 
 		</div>
 	)

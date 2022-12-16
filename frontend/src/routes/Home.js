@@ -109,11 +109,11 @@ function ClubList(props) {
 function ListHeader() {
   return (
     <tr className="">
-      <th className="text-xl text-purple-400 font-semibold">Name</th>
-      <th className="text-xl text-purple-400 font-semibold">Location</th>
-      <th className="text-xl text-purple-400 font-semibold">Day</th>
-      <th className="text-xl text-purple-400 font-semibold">Time</th>
-      <th className="text-xl text-purple-400 font-semibold">Advisor</th>
+      <th className="text-xl text-purple-500 font-semibold">Name</th>
+      <th className="text-xl text-purple-500 font-semibold">Location</th>
+      <th className="text-xl text-purple-500 font-semibold">Day</th>
+      <th className="text-xl text-purple-500 font-semibold">Time</th>
+      <th className="text-xl text-purple-500 font-semibold">Advisor</th>
     </tr>
   )
 }

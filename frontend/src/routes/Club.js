@@ -11,9 +11,9 @@ import Loading from '../components/Loading';
 import './Club.scss';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import {FiTrash2} from 'react-icons/fi';
+import { FiTrash2 } from 'react-icons/fi';
 
-import {arrayToDates} from 'utils/dateUtils';
+import { arrayToDates } from 'utils/dateUtils';
 
 
 export default function Club() {
@@ -34,13 +34,11 @@ export default function Club() {
 		if (authLoading) return;
 		if (user) axios.get(`/account/${user.uid}/clubs`).then(res => setUserClubs(res.data));
 	}, [authLoading, user]);
-	
-	function isUserRegistered(user, id)
-	{
+
+	function isUserRegistered(user, id) {
 		let registered = false;
 		user.clubs.forEach(club => {
-			if (club.id === id) 
-			{
+			if (club.id === id) {
 				registered = true;
 			}
 		});
@@ -49,7 +47,15 @@ export default function Club() {
 	}
 	return (
 		<div className='p-5'>
-			{userClubs && !clubLoading && <Register userId={user.uid} userClubs={userClubs} officers={club.officers} clubId={club.id}/>}
+			<div className='flex items-center justify-between'>
+				{userClubs && !clubLoading && <Register userId={user.uid} userClubs={userClubs} officers={club.officers} clubId={club.id} />}
+				{!clubLoading && club.officers.length === 0 &&
+					<div className='text-xl font-semibold text-right'>
+						<div>No registered officers</div>
+						<Link to="claim" className='text-purple-500'>Claim club</Link>
+					</div>}
+
+			</div>
 			{clubLoading ? <Loading /> : <ClubInfo club={club} />}
 		</div>
 	)
@@ -59,7 +65,7 @@ function ClubInfo(props) {
 	const club = props.club;
 	const [editing, setEditing] = useState(false);
 	const { user, authLoading } = useAuth();
-	
+
 	return (
 		<div className="pt-5 px-20">
 			<div className="flex flex-col items-center">
@@ -172,7 +178,7 @@ function ModifyInfo(props) {
 										{(provided) => (
 											<li className="flex gap-2 flex-row items-start border border-dotted border-neutral-500 mb-5 p-5 justify-between " {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
 												{conditionalRenderItem(item)}
-												<button className="text-red-600 my-auto" onClick={deleteItem(index)}><FiTrash2 size={30}/></button>
+												<button className="text-red-600 my-auto" onClick={deleteItem(index)}><FiTrash2 size={30} /></button>
 											</li>
 										)}
 									</Draggable>
@@ -228,7 +234,7 @@ function ReadOnlyInfo(props) {
 
 	return (
 		<div className="p-6">
-			{<InfoDefault club={club}/>}
+			{<InfoDefault club={club} />}
 			<ul>
 				{items.map((item, idx) => <li className="mt-4" key={idx}>{conditionalRenderItem(item)}</li>)}
 			</ul>
@@ -255,9 +261,9 @@ function InfoDefault(props) {
 function Register(props) {
 	const [registered, setRegistered] = useState(props.userClubs.includes(props.clubId))
 
-	
+
 	function handleRegister() {
-		axios.post(`/account/${props.userId}/clubs`, {clubId: props.clubId}).then(() => setRegistered(true));
+		axios.post(`/account/${props.userId}/clubs`, { clubId: props.clubId }).then(() => setRegistered(true));
 	}
 
 	function handleUnregister() {
@@ -267,9 +273,9 @@ function Register(props) {
 	if (props.officers.includes(props.userId)) return (
 		<Link to="modify" className='text-xl'>Edit club details</Link>
 	)
-	
+
 	if (registered) return (
-		<div className='text-xl'>
+		<div className='text-xl font-medium'>
 			<div>Already registered</div>
 			<button onClick={handleUnregister} className='text-red-500'>Unregister</button>
 		</div>
