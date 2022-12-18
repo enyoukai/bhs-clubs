@@ -16,8 +16,9 @@ const User = require('../models/user');
 router.use(authenticate);
 router.use(adminAuthenticate);
 
+// really inefficient idk wtv i'm too tired tod o anything about this
 router.get('/clubs', async (req, res) => {
-	return res.json(await Club.find());
+	return res.json(await Club.find({}, '+claimRequests'));
 });
 
 router.patch('/clubs/:clubID', async (req, res) => {

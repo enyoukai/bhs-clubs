@@ -97,8 +97,9 @@ router.put('/:id/info', upload.any('images'), async (req, res) => {
 });
 
 router.post('/:id/claims', upload.single('verification'), async (req, res) => {
+	// TODO: stop multiple requests from same user
 	const club = await Club.findByIdAndUpdate({_id: req.params.id}, {
-		$addToSet: {
+		$push: {
 			claimRequests: {user: req.headers.uid, verification: req.file.filename}
 		}
 	})
