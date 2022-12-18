@@ -27,6 +27,7 @@ import PostPage from 'routes/feed/Post';
 
 import ProtectedRoute from './routes/ProtectedRoute';
 import AdminRoute from './routes/admin/AdminRoute';
+import ClaimRequestsPage from 'routes/admin/ClaimRequests';
 
 import NotificationsPage from 'routes/Notifications';
 
@@ -59,6 +60,7 @@ function App() {
             <Route index element={<AdminRoute><AdminHome /></AdminRoute>} />
             <Route path="approve" element={<AdminRoute><ApproveClubs /></AdminRoute>} />
             <Route path="moderation" element={<AdminRoute><Moderation /></AdminRoute>} />
+            <Route path="claims" element={<AdminRoute><ClaimRequestsPage/></AdminRoute>}/>
           </Route>
         </Route>
       </Routes>

@@ -96,4 +96,18 @@ router.put('/:id/info', upload.any('images'), async (req, res) => {
 	return res.sendStatus(201);
 });
 
+router.post('/:id/claims', upload.single('verification'), async (req, res) => {
+	const club = await Club.findByIdAndUpdate({_id: req.params.id}, {
+		$addToSet: {
+			claimRequests: {user: req.headers.uid, verification: req.file.filename}
+		}
+	})
+
+	if (!club) return res.sendStatus(404);
+
+	club.save();
+
+	res.sendStatus(200);
+});
+
 module.exports = router;
