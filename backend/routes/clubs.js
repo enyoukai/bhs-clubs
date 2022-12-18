@@ -63,7 +63,7 @@ router.post('/', upload.single('verification'), async (req, res) => {
 
 	Object.keys(req.body).forEach((key) => { body[key] = JSON.parse(req.body[key]) });
 
-	if (!body.name || !body.description || !body.location || !body.dates || !body.time || !body.advisor) {
+	if (!body.name || !body.description || !body.location || !body.dates || !body.time || !body.advisor || !body.tags) {
 		return res.sendStatus(400);
 	}
 

@@ -25,6 +25,7 @@ export default function Club() {
 	const [clubLoading, setClubLoading] = useState(true);
 
 	const [userClubs, setUserClubs] = useState();
+	const [userClubsLoading, setUserClubsLoading] = useState(true);
 
 	useEffect(() => {
 		axios.get(`/clubs/${clubId}`).then(res => setClub(res.data)).then(() => setClubLoading(false));
@@ -32,7 +33,7 @@ export default function Club() {
 
 	useEffect(() => {
 		if (authLoading) return;
-		if (user) axios.get(`/account/${user.uid}/clubs`).then(res => setUserClubs(res.data));
+		if (user) axios.get(`/account/${user.uid}/clubs`).then(res => setUserClubs(res.data)).then(() => setUserClubsLoading(false));
 	}, [authLoading, user]);
 
 	function isUserRegistered(user, id) {
@@ -47,16 +48,19 @@ export default function Club() {
 	}
 	return (
 		<div className='p-5'>
-			<div className='flex items-center justify-between'>
-				{userClubs && !clubLoading && <Register userId={user.uid} userClubs={userClubs} officers={club.officers} clubId={club.id} />}
-				{!clubLoading && club.officers.length === 0 &&
-					<div className='text-xl font-semibold text-right'>
-						<div>No registered officers</div>
-						<Link to="claim" className='text-purple-500'>Claim club</Link>
-					</div>}
+			{clubLoading || userClubsLoading ? <Loading/> : <>
+				<div className='flex items-center justify-between'>
+					{userClubs && !clubLoading && <Register userId={user.uid} userClubs={userClubs} officers={club.officers} clubId={club.id} />}
+					{!clubLoading && club.officers.length === 0 &&
+						<div className='text-xl font-semibold text-right'>
+							<div>No registered officers</div>
+							<Link to="claim" className='text-purple-500'>Claim club</Link>
+						</div>}
 
-			</div>
-			{clubLoading ? <Loading /> : <ClubInfo club={club} />}
+				</div>
+				{clubLoading ? <Loading /> : <ClubInfo club={club} />}
+			</>}
+		
 		</div>
 	)
 }

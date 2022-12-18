@@ -47,9 +47,9 @@ function Layout() {
 
 function RegisterBar() {
   return (
-    <div className="nav__login-bar">
-      <Link to={'signin'} className="login-bar__text">Sign In</Link>
-      <Link to={'register'} className="login-bar__text">Register</Link>
+    <div className="flex gap-10 items-center">
+      <Link to={'signin'} className="text-xl text-neutral-300 hover:text-neutral-100 font-medium">Sign In</Link>
+      <Link to={'register'} className="text-xl text-neutral-300 hover:text-neutral-100 font-medium">Register</Link>
     </div>
   )
 }
