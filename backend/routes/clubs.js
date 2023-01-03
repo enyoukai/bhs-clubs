@@ -2,6 +2,7 @@ require('dotenv').config();
 const admin = require('firebase-admin');
 const Club = require("../models/clubs");
 const User = require("../models/user");
+const Claim = require("../models/claims");
 
 const express = require("express");
 const authenticate = require('../middleware/authenticate');
@@ -98,15 +99,8 @@ router.put('/:id/info', upload.any('images'), async (req, res) => {
 
 router.post('/:id/claims', upload.single('verification'), async (req, res) => {
 	// TODO: stop multiple requests from same user
-	const club = await Club.findByIdAndUpdate({_id: req.params.id}, {
-		$push: {
-			claimRequests: {user: req.headers.uid, verification: req.file.filename}
-		}
-	})
-
-	if (!club) return res.sendStatus(404);
-
-	club.save();
+	const claim = new Claim({ club: req.body.club, author: req.headers.uid, verificationURL: req.file.filename });
+	claim.save();
 
 	res.sendStatus(200);
 });

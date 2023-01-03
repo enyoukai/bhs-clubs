@@ -27,6 +27,7 @@ export default function NewClub() {
 		const formData = new FormData();
 
 		formData.append('verification', verification);
+		formData.append('club', clubId);
 
 		axios.post(`/clubs/${clubId}/claims`, formData).then(() => navigate('/'));
 	}
