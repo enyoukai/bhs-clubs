@@ -60,7 +60,7 @@ function App() {
             <Route index element={<AdminRoute><AdminHome /></AdminRoute>} />
             <Route path="approve" element={<AdminRoute><ApproveClubs /></AdminRoute>} />
             <Route path="moderation" element={<AdminRoute><Moderation /></AdminRoute>} />
-            <Route path="claims" element={<AdminRoute><ClaimRequestsPage/></AdminRoute>}/>
+            <Route path="claims" element={<AdminRoute><ClaimRequestsPage /></AdminRoute>} />
           </Route>
         </Route>
       </Routes>
