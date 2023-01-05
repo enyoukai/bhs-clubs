@@ -5,7 +5,7 @@ const adminAuthenticate = require('../middleware/adminAuthenticate');
 const admin = require('firebase-admin');
 const Club = require("../models/clubs");
 const User = require('../models/user');
-const claims = require("../models/claims");
+const Claims = require("../models/claims");
 
 // router.get(`/adminCheck/:userId`, async (req, res) => {
 //     const user = await User.findOne({_id: req.params.userId});
@@ -23,11 +23,31 @@ router.get('/clubs', async (req, res) => {
 });
 
 router.get('/claims', async (req, res) => {
-	return res.json(await claims.find());
+	Claims.find().populate('club').populate('author').exec(function(err, claims) {
+		return res.send(claims);
+	});
 });
 
 router.patch('/clubs/:clubID', async (req, res) => {
 	const dbRes = await Club.updateOne({ _id: req.params.clubID }, { approved: req.body.approved });
+});
+
+router.put('/claims/:claimId', async (req, res) => {
+	if (!(await Claims.exists({id: req.params.claimId}))) return res.sendStatus(404);
+
+	const claim = await Claims.findOne({id: req.params.claimId});
+
+	
+	if (req.body.approved)
+	{
+		await Club.updateOne(
+			{ _id: claim.club},
+			{ $push: {officers: req.headers.uid}}
+		);
+	}
+
+	await Claims.deleteOne({_id: claim.id});
+
 });
 
 

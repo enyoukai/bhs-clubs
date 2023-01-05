@@ -17,7 +17,6 @@ const clubSchema = new mongoose.Schema({
 	members: [{type: String, ref: User}],
 	tags: {},
 	lastPosted: Date,
-	claimRequests: {type: [], select: false}
 });
 
 // https://stackoverflow.com/questions/7034848/mongodb-output-id-instead-of-id
