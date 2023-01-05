@@ -33,10 +33,8 @@ router.patch('/clubs/:clubID', async (req, res) => {
 });
 
 router.put('/claims/:claimId', async (req, res) => {
-	if (!(await Claims.exists({id: req.params.claimId}))) return res.sendStatus(404);
-
 	const claim = await Claims.findOne({id: req.params.claimId});
-
+	if (!claim) return res.sendStatus(404);
 	
 	if (req.body.approved)
 	{
