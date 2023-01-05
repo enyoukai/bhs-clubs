@@ -99,6 +99,7 @@ router.put('/:id/info', upload.any('images'), async (req, res) => {
 
 router.post('/:id/claims', upload.single('verification'), async (req, res) => {
 	// TODO: stop multiple requests from same user
+
 	const claim = new Claim({ club: req.body.club, author: req.headers.uid, verificationURL: req.file.filename });
 	claim.save();
 

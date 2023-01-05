@@ -38,9 +38,17 @@ router.put('/claims/:claimId', async (req, res) => {
 	
 	if (req.body.approved)
 	{
+		const club = await Club.findOne({_id: claim.club});
+		if (club.officers.includes(claim.author)) 
+		{
+			await Claims.deleteOne({_id: claim.id});
+
+			return res.send("User already officer").status(400);
+		}
+
 		await Club.updateOne(
 			{ _id: claim.club},
-			{ $push: {officers: req.headers.uid}}
+			{ $push: {officers: claim.author}}
 		);
 	}
 
