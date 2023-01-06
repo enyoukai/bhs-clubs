@@ -19,10 +19,16 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:clubId', async (req, res) => {
-	const club = await Club.findOne({ _id: req.params.clubId, approved: true });
-	if (club === null) return res.sendStatus(404);
+	if (!(await Club.exists({_id: req.params.clubId})));
 
-	return res.send(club);
+	 Club.findOne({ _id: req.params.clubId, approved: true }).populate('officers').exec(function (err, club) {
+		if (err)
+		{
+			return res.sendStatus(500);
+		}
+		return res.json(club);
+	 });
+
 });
 
 router.use(authenticate);

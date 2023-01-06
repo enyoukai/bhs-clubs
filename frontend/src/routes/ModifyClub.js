@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useApi from '../hooks/useApi';
 
+import DatePicker from "components/DatePicker";
 import { useAuth } from '../contexts/AuthContext'
 
 import Loading from "../components/Loading";
@@ -33,7 +34,7 @@ export default function ModifyClub() {
     useEffect(() => {
         if (!getClub.loading)
         {
-            if (!club.officers.includes(user.uid)) 
+            if (!club.officers.some((officer) => officer.id === user.uid)) 
             {
                 navigate('/');
             }
@@ -55,6 +56,7 @@ export default function ModifyClub() {
         navigate('/');
     }
 
+    console.log(club.officers);
     return (
         <>
             {getClub.loading ? <Loading/> :         
@@ -65,14 +67,19 @@ export default function ModifyClub() {
                     <textarea className='border resize-none mb-5' value={description} onChange={e => setDescription(e.target.value)}></textarea>
                     <p className='text-xl mb-3'>Location: </p>
                     <input className='border mb-5' value={location} onChange={e => setLocation(e.target.value)}></input>
-                    <p className='text-xl mb-3'>Day:  TODO: FIX AND ADD MULTISELECT</p>
+                    <p className='text-xl mb-3'>Dates</p>
+                    <DatePicker dateHandler={() => {}}/>
                     <p className='text-xl mb-3'>Time: </p>
                     <input className='border mb-5' value={time} onChange={e => setTime(e.target.value)}></input>
                     <p className='text-xl mb-3'>Advisor: </p>
                     <input className='border mb-5' value={advisor} onChange={e => setAdvisor(e.target.value)}></input>
                     <p className='text-xl mb-3'>Officers</p>
-                    {club.officers.map(officer => <div>{officer}</div>)}
+                    {club.officers.map(officer => <div>{officer.username + " - " + officer.email}</div>)}
+                    <input placeholder="email" className="border"/> 
+                    <button>Add Officer</button>
+                    <br/>
                     <button className='bg-neutral-900 mt-10 px-20 py-4 rounded-2xl text-neutral-200 text-2xl mx-auto font-medium' type="submit">Save</button>
+                    
                 </form>
             </div>}
         </>
