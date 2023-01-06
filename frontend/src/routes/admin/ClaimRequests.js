@@ -9,36 +9,35 @@ export default function ClaimRequestsPage() {
 		axios.get('/admin/claims').then(res => setClaims(res.data)).then(() => setClaimsLoading(false));
 	}, []);
 
-	function removeClaim(claimId)
-	{
+	function removeClaim(claimId) {
 		setClaims(prevClaims => {
 			return prevClaims.filter(claim => claim.id !== claimId)
 		});
 	}
-	
-	function approveClaim(claimId)
-	{
-		return () => axios.put('/admin/claims/' + claimId, {approved: true}).then(removeClaim(claimId));
+
+	function approveClaim(claimId) {
+		return () => axios.put('/admin/claims/' + claimId, { approved: true }).then(removeClaim(claimId));
 	}
 
-	function denyClaim(claimId)
-	{
-		return () => axios.put('/admin/claims/' + claimId, {approved: false}).then(removeClaim(claimId));
+	function denyClaim(claimId) {
+		return () => axios.put('/admin/claims/' + claimId, { approved: false }).then(removeClaim(claimId));
 	}
+
+	console.log(claims);
 
 	return (
 		<>
 			{!claimsLoading &&
 				<div>
 					{
-						claims.map((claim) => 
-						<div key={claim.id}>
-							<div>Claim for: {claim.club.name}</div>
-							<div>Clame made by: {claim.author.username}</div>
-							<img width={"300rem"} src={"/images/" + claim.verificationURL}/>
-							<button className="block text-green-500" onClick={approveClaim(claim.id)}>Approve Claim</button>
-							<button className="block text-red-500" onClick={denyClaim(claim.id)}>Deny Claim</button>
-						</div>)
+						claims.map((claim) =>
+							<div key={claim.id}>
+								<div>Claim for: {claim.club.name}</div>
+								<div>Clame made by: {claim.author.username}</div>
+								<img width={"300rem"} src={"/images/" + claim.verificationURL} />
+								<button className="block text-green-500" onClick={approveClaim(claim.id)}>Approve Claim</button>
+								<button className="block text-red-500" onClick={denyClaim(claim.id)}>Deny Claim</button>
+							</div>)
 					}
 				</div>
 			}
