@@ -274,7 +274,7 @@ function Register(props) {
 		axios.delete(`/account/${props.userId}/club/${props.clubId}`).then(() => setRegistered(false));
 	}
 
-	if (props.officers.includes(props.userId)) return (
+	if (props.officers.some((officer) => officer.id === props.userId)) return (
 		<Link to="modify" className='text-xl'>Edit club details</Link>
 	)
 
