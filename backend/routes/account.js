@@ -51,7 +51,7 @@ router.post('/:userId/clubs', async (req, res) => {
 
 router.get('/:userId/unreadPosts', async (req, res) => {
 	if (req.params.userId !== req.headers.uid) return res.send("Cannot access this resource").status(400);
-	if (!(await User.exists({ _id: req.params.userId })));
+	if (!(await User.exists({ _id: req.params.userId }))) return res.sendStatus(404);
 
 	User.findOne({ _id: req.params.userId }).
 		populate('unreadPosts').
