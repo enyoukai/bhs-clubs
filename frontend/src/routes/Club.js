@@ -33,7 +33,13 @@ export default function Club() {
 
 	useEffect(() => {
 		if (authLoading) return;
-		if (user) axios.get(`/account/${user.uid}/clubs`).then(res => setUserClubs(res.data)).then(() => setUserClubsLoading(false));
+
+		if (user) {
+			axios.get(`/account/${user.uid}/clubs`).then(res => setUserClubs(res.data)).then(() => setUserClubsLoading(false));
+		}
+		else {
+			setUserClubsLoading(false);
+		}
 	}, [authLoading, user]);
 
 	function isUserRegistered(user, id) {
@@ -46,9 +52,11 @@ export default function Club() {
 
 		return registered;
 	}
+
+
 	return (
 		<div className='p-5'>
-			{clubLoading || userClubsLoading ? <Loading/> : <>
+			{clubLoading || userClubsLoading ? <Loading /> : <>
 				<div className='flex items-center justify-between'>
 					{userClubs && !clubLoading && <Register userId={user.uid} userClubs={userClubs} officers={club.officers} clubId={club.id} />}
 					{!clubLoading && club.officers.length === 0 &&
@@ -60,7 +68,7 @@ export default function Club() {
 				</div>
 				{clubLoading ? <Loading /> : <ClubInfo club={club} />}
 			</>}
-		
+
 		</div>
 	)
 }
