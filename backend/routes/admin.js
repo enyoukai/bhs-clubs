@@ -50,6 +50,11 @@ router.put('/claims/:claimId', async (req, res) => {
 			{ _id: claim.club},
 			{ $push: {officers: claim.author}}
 		);
+
+		await User.updateOne(
+			{_id: claim.author},
+			{ $push: {clubs: claim.club}}
+		);
 	}
 
 	await Claims.deleteOne({_id: claim.id});
