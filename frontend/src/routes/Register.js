@@ -3,6 +3,8 @@ import {useAuth} from '../contexts/AuthContext';
 import {createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
+import authCodeToError from 'utils/authErrors';
+
 import useApi from '../hooks/useApi';
 
 import './SignIn.scss';
@@ -38,7 +40,7 @@ function Register(props)
 			navigate('/');
 		}
 		catch (error) {
-			setErrorMessage(error.message);
+			setErrorMessage(authCodeToError(error.code));
 		}
 	}
 

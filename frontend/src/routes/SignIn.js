@@ -3,7 +3,9 @@ import {useAuth} from '../contexts/AuthContext';
 import {signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
+import authCodeToError from 'utils/authErrors';
 import './SignIn.scss';
+
 
 function SignIn() {
 	const [email, setEmail] = useState('');
@@ -22,7 +24,7 @@ function SignIn() {
 			navigate('/');
 		}
 		catch (error) {
-			setErrorMessage(error.message);
+			setErrorMessage(authCodeToError(error.code));
 		}
 	}
 
