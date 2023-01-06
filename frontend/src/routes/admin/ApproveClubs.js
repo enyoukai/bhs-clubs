@@ -3,17 +3,28 @@ import React, {useState, useEffect} from 'react';
 import {useAuth} from 'contexts/AuthContext';
 
 import {arrayToDates} from 'utils/dateUtils';
+import axios from 'axios';
 
 export default function ApproveClubs()
 {
 	const {token} = useAuth();
 	
-	const getClubs = useApi('/admin/clubs', methods.GET, token);
 	const patchClub = useApi('/admin/clubs', methods.PATCH, token);
 
 	const [clubs, setClubs] = useState();
+	const [clubsLoading, setClubsLoading] = useState(true);
 
-	useEffect(() => {getClubs.dispatch({populate: setClubs})}, []);
+	useEffect(() => {
+		async function fetch ()
+		{
+			const allClubs = (await axios.get('/admin/clubs')).data;
+			setClubs(allClubs.filter(club => club.approved === false));
+			setClubsLoading(false);
+		}
+		fetch();
+	}, []);
+
+	console.log(clubs);
 
 	async function approveClub(clubID)
 	{
@@ -23,11 +34,11 @@ export default function ApproveClubs()
 
 	return (
 		<div>
-		<div>Pending Clubs...</div>
-		{
-			!getClubs.loading &&
-			(clubs.length > 0 ? clubs.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>) : <div>Nothing to show</div>)
-		}
+			<div>Pending Clubs...</div>
+			{
+				!clubsLoading &&
+				(clubs.length > 0 ? clubs.map(club => <Club key={club.id} club={club} approveClub={() => approveClub(club.id)}/>) : <div>Nothing to show</div>)
+			}
 		</div>
 	)
 }
@@ -43,7 +54,7 @@ function Club(props)
 			<div>{arrayToDates(props.club.dates).join(', ')}</div>
 			<div>{props.club.time}</div>
 			<div>{props.club.advisor}</div>
-			<img width={"300rem"} src={'/images/' + props.club.verification}/>
+			<img width={"300rem"} src={"/images/" + props.club.verification}/>
 			<button className="text-green-500" onClick={props.approveClub}>Approve Club</button>
 		</div>
 	)
