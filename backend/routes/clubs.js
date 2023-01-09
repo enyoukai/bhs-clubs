@@ -1,7 +1,7 @@
 require('dotenv').config();
 const admin = require('firebase-admin');
 const Club = require("../models/clubs");
-const User = require("../models/user");
+const User = require("../models/users");
 const Claim = require("../models/claims");
 
 const express = require("express");

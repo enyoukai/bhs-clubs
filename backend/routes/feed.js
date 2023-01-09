@@ -4,7 +4,7 @@ const authenticate = require('../middleware/authenticate');
 const admin = require('firebase-admin');
 const Post = require("../models/posts");
 const Club = require("../models/clubs");
-const User = require("../models/user");
+const User = require("../models/users");
 
 const upload = require('../middleware/upload');
 const { default: mongoose } = require("mongoose");

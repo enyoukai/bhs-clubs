@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const User = require('./user');
+const User = require('./users');
 
 const clubSchema = new mongoose.Schema({
 	name: String,

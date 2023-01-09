@@ -3,7 +3,7 @@ const router = express.Router();
 const authenticate = require('../middleware/authenticate');
 const admin = require('firebase-admin');
 const Club = require("../models/clubs");
-const User = require('../models/user');
+const User = require('../models/users');
 
 router.get('/:userId', async (req, res) => {
 	User.findOne({ _id: req.params.userId }).populate('clubs').exec(function (err, user) {

@@ -4,7 +4,7 @@ const authenticate = require('../middleware/authenticate');
 const adminAuthenticate = require('../middleware/adminAuthenticate');
 const admin = require('firebase-admin');
 const Club = require("../models/clubs");
-const User = require('../models/user');
+const User = require('../models/users');
 const Claims = require("../models/claims");
 
 // router.get(`/adminCheck/:userId`, async (req, res) => {
