@@ -23,7 +23,7 @@ router.get('/clubs', async (req, res) => {
 });
 
 router.get('/claims', async (req, res) => {
-	Claims.find().populate('club').populate('author').exec(function(err, claims) {
+	Claims.find().populate('club').populate('author').exec(function (err, claims) {
 		return res.send(claims);
 	});
 });
@@ -33,31 +33,29 @@ router.patch('/clubs/:clubID', async (req, res) => {
 });
 
 router.put('/claims/:claimId', async (req, res) => {
-	const claim = await Claims.findOne({id: req.params.claimId});
+	const claim = await Claims.findOne({ id: req.params.claimId });
 	if (!claim) return res.sendStatus(404);
-	
-	if (req.body.approved)
-	{
-		const club = await Club.findOne({_id: claim.club});
-		if (club.officers.includes(claim.author)) 
-		{
-			await Claims.deleteOne({_id: claim.id});
+
+	if (req.body.approved) {
+		const club = await Club.findOne({ _id: claim.club });
+		if (club.officers.includes(claim.author)) {
+			await Claims.deleteOne({ _id: claim.id });
 
 			return res.send("User already officer").status(400);
 		}
 
 		await Club.updateOne(
-			{ _id: claim.club},
-			{ $push: {officers: claim.author}}
+			{ _id: claim.club },
+			{ $push: { officers: claim.author } }
 		);
 
 		await User.updateOne(
-			{_id: claim.author},
-			{ $push: {clubs: claim.club}}
+			{ _id: claim.author },
+			{ $addToSet: { clubs: claim.club } }
 		);
 	}
 
-	await Claims.deleteOne({_id: claim.id});
+	await Claims.deleteOne({ _id: claim.id });
 
 });
 
