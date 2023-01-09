@@ -9,5 +9,5 @@ export default function authCodeToError(code) {
 
 	};
 
-	return code in authErrors ? authErrors[code] : code;
+	return code in authErrors ? authErrors[code] : 'Something went wrong. Check developer console for more information.';
 }

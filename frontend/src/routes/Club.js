@@ -62,7 +62,7 @@ export default function Club() {
 					{!clubLoading && club.officers.length === 0 &&
 						<div className='text-xl font-semibold text-right'>
 							<div>No registered officers</div>
-							<Link to="claim" className='text-purple-500'>Claim club</Link>
+							<Link to="claim" className='text-purple-500 text-2xl'>Claim club</Link>
 						</div>}
 
 				</div>
@@ -90,7 +90,7 @@ function ClubInfo(props) {
 }
 
 function conditionalRenderItem(item) {
-	if (item.type === 'text') return (<span className="text-2xl break-words">{item.content}</span>)
+	if (item.type === 'text') return (<span className="text-2xl break-words whitespace-pre-wrap">{item.content}</span>)
 	if (item.type === 'img-file') return (<img className="mx-auto" width={"400rem"} src={URL.createObjectURL(item.content)} />)
 	if (item.type === 'img-link') return (<img className="mx-auto" width={"400rem"} src={`/images/${item.content}`} />);
 }
@@ -258,12 +258,17 @@ function ReadOnlyInfo(props) {
 function InfoDefault(props) {
 	const club = props.club;
 	return (
-		<div className="float-left mr-10 flex flex-col gap-3 bg-neutral-100 px-6 py-3 rounded-lg width w-1/4 text-2xl mb-20">
-			<div>{club.description}</div>
-			<div>{club.location}</div>
-			<div>{arrayToDates(club.dates).join(', ')}</div>
-			<div>{club.time}</div>
-			<div>{club.advisor}</div>
+		<div className="float-left mr-10 flex flex-col gap-3 px-6 py-6 rounded-lg width w-1/6 text-2xl mb-20 border font-medium text-neutral-800">
+			<div className="text-purple-500">Description</div>
+			<div className="text-xl">{club.description}</div>
+			<div className="text-purple-500">Location</div>
+			<div className="text-xl">{club.location}</div>
+			<div className="text-purple-500">Dates</div>
+			<div className="text-xl">{arrayToDates(club.dates).join(', ')}</div>
+			<div className="text-purple-500">Time</div>
+			<div className="text-xl">{club.time}</div>
+			<div className="text-purple-500">Advisor</div>
+			<div className="text-xl">{club.advisor}</div>
 		</div>
 	)
 }
@@ -283,14 +288,14 @@ function Register(props) {
 	}
 
 	if (props.officers.some((officer) => officer.id === props.userId)) return (
-		<Link to="modify" className='text-xl'>Edit club details</Link>
+		<Link to="modify" className='text-xl font-semibold text-neutral-800'>Edit club details</Link>
 	)
 
 	if (registered) return (
-		<div className='text-xl font-medium'>
-			<div>Already registered</div>
-			<button onClick={handleUnregister} className='text-red-500'>Unregister</button>
+		<div className='text-xl font-semibold'>
+			<div className='font-neutral-800'>Already registered</div>
+			<button onClick={handleUnregister} className='text-2xl text-red-500'>Unregister</button>
 		</div>
 	)
-	else return <button className='text-xl' onClick={handleRegister}>Register</button>
+	else return <button className='text-xl font-semibold text-neutral-800' onClick={handleRegister}>Register</button>
 }
