@@ -17,6 +17,11 @@ const clubSchema = new mongoose.Schema({
 	members: [{type: String, ref: User}],
 	tags: {},
 	lastPosted: Date,
+	meetingTimes: [{
+		date: Number,
+		timeHour: Number,
+		timeMinute: Number
+	}]
 });
 
 // https://stackoverflow.com/questions/7034848/mongodb-output-id-instead-of-id

@@ -8,6 +8,8 @@ const User = require('../models/user');
 router.get('/:userId', async (req, res) => {
 	User.findOne({ _id: req.params.userId }).populate('clubs').exec(function (err, user) {
 		if (err) return res.sendStatus(500);
+		if (user === null) return res.sendStatus(404);
+
 		return res.send(user);
 	});
 });
