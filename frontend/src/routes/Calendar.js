@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function Calendar() {
 	return (
 		<div className="p-10 text-center">
-			<h1 className="text-4xl">Calendar</h1>
+			<h1 className="text-4xl font-semibold text-neutral-800">Calendar</h1>
 			<CalendarUI />
 		</div>
 	)
@@ -15,14 +15,14 @@ function CalendarUI() {
 	return (
 		<table className="mt-10 border w-full table-fixed">
 			<thead>
-				<tr>
-					<th>Sunday</th>
-					<th>Monday</th>
-					<th>Tuesday</th>
-					<th>Wednesday</th>
-					<th>Thursday</th>
-					<th>Friday</th>
-					<th>Saturday</th>
+				<tr className>
+					<th className="pt-3 text-lg text-neutral-700">Sunday</th>
+					<th className="pt-3 text-lg text-neutral-700">Monday</th>
+					<th className="pt-3 text-lg text-neutral-700">Tuesday</th>
+					<th className="pt-3 text-lg text-neutral-700">Wednesday</th>
+					<th className="pt-3 text-lg text-neutral-700">Thursday</th>
+					<th className="pt-3 text-lg text-neutral-700">Friday</th>
+					<th className="pt-3 text-lg text-neutral-700">Saturday</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -88,8 +88,8 @@ function ClubTime(props) {
 	return (
 		<li>
 			<Link to={`/club/${props.club.id}`}>
-				<div className='border'>
-					<div>{props.club.time}</div>
+				<div className='border px-2 py-5 font-semibold bg-neutral-800 text-neutral-100 rounded-md my-3 mx-2'>
+					<div className="text-purple-400">{props.club.time}</div>
 					<div>{props.club.name}</div>
 				</div>
 			</Link>
