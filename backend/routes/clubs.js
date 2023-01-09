@@ -29,6 +29,12 @@ router.get('/:clubId', async (req, res) => {
 	return res.json(club);
 });
 
+router.get('/:id/members', async (req,res) => {
+	if (!(await Club.exists({_id: req.params.id}))) return res.send("Club not found").status(StatusCode.ClientErrorNotFound);
+
+	return res.json((await Club.findOne({_id: req.params.id}).populate('members')).members);
+});
+
 router.use(authenticate);
 
 router.put('/:clubId', async (req, res) => {
