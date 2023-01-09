@@ -23,21 +23,19 @@ export default function ClaimRequestsPage() {
 		return () => axios.put('/admin/claims/' + claimId, { approved: false }).then(removeClaim(claimId));
 	}
 
-	console.log(claims);
-
 	return (
 		<>
 			{!claimsLoading &&
 				<div>
 					{
-						claims.map((claim) =>
+						claims.length > 0 ? claims.map((claim) =>
 							<div key={claim.id}>
 								<div>Claim for: {claim.club.name}</div>
 								<div>Clame made by: {claim.author.username}</div>
 								<img width={"300rem"} src={"/images/" + claim.verificationURL} />
 								<button className="block text-green-500" onClick={approveClaim(claim.id)}>Approve Claim</button>
 								<button className="block text-red-500" onClick={denyClaim(claim.id)}>Deny Claim</button>
-							</div>)
+							</div>) : <div>No Claims Currently</div>
 					}
 				</div>
 			}
