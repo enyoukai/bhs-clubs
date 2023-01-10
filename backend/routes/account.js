@@ -56,7 +56,7 @@ router.get('/:userId/unreadPosts', async (req, res) => {
 	if (!(await User.exists({ _id: req.params.userId }))) return res.sendStatus(404);
 
 	const unreadPosts = await User.findOne({ _id: req.params.userId }).populate('unreadPosts').populate('unreadPosts.club');
-	console.log(await unreadPosts.populate('club'));
+	console.log(unreadPosts);
 
 	return res.send(unreadPosts);
 });
