@@ -73,7 +73,7 @@ function NotificationsDropdown(props) {
         <ul>
           {props.notifications.map((notif, idx) =>
             <li key={idx}>
-              <Link>{notif.title} - {notif.body}</Link>
+              <Link>{notif.club} - {notif.title}</Link>
             </li>)}
         </ul> : <div>Nothing to show</div>}
     </div>

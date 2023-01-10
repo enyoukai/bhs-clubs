@@ -52,15 +52,13 @@ router.post('/:userId/clubs', async (req, res) => {
 });
 
 router.get('/:userId/unreadPosts', async (req, res) => {
-	if (req.params.userId !== req.headers.uid) return res.send("Cannot access this resource").status(400);
+	if (req.params.userId !== req.headers.uid) return res.send("Cannot access this resource").status(403);
 	if (!(await User.exists({ _id: req.params.userId }))) return res.sendStatus(404);
 
-	User.findOne({ _id: req.params.userId }).
-		populate('unreadPosts').
-		exec(function (err, user) {
-			if (err) return res.sendStatus(500);
-			return res.send(user.unreadPosts);
-		})
+	const unreadPosts = await User.findOne({ _id: req.params.userId }).populate('unreadPosts').populate('unreadPosts.club');
+	console.log(await unreadPosts.populate('club'));
+
+	return res.send(unreadPosts);
 });
 
 router.delete('/:userId/unreadPosts', async (req, res) => {
