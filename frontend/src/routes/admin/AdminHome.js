@@ -2,13 +2,14 @@ import { Link } from 'react-router-dom';
 
 export default function Admin() {
     return (
-        <ul>
-            <li><Link to='/admin/approve'>Approve Clubs</Link></li>
-            <li><Link to='/admin/moderation'>Moderate Club</Link></li>
-            <li><Link to='/admin/claims'>Approve Claims</Link></li>
-            <li><Link to='/admin/approve'>Users</Link></li>
-            <li><Link to='/admin/approve'>Feed</Link></li>
+        <div className="m-10">
+            <h2 className="text-center text-4xl font-semibold">Admin Home</h2>
+            <ul>
+                <li className='text-2xl mb-3'><Link to='/admin/approve'>Approve Clubs</Link></li>
+                <li className='text-2xl mb-3'><Link to='/admin/moderation'>Moderate Clubs</Link></li>
+                <li className='text-2xl mb-3'><Link to='/admin/claims'>Approve Claims</Link></li>
 
-        </ul>
+            </ul>
+        </div>
     )
 }
