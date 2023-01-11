@@ -248,7 +248,7 @@ function ReadOnlyInfo(props) {
 		<div className="p-6">
 			{<InfoDefault club={club} />}
 			<ul>
-				{items.map((item, idx) => <li className="mt-4" key={idx}>{conditionalRenderItem(item)}</li>)}
+				{items.map((item, idx) => <li className="my-10" key={idx}>{conditionalRenderItem(item)}</li>)}
 			</ul>
 
 		</div>

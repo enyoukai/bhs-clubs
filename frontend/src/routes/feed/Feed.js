@@ -44,14 +44,13 @@ export default function Feed() {
 
 	const filteredFeed = filterByIn(feed);
 
-	console.log(filteredFeed);
 	return (
 		<div className="pt-10 px-10">
 			<div className="text-center text-4xl font-semibold text-neutral-900">Recent Club Activities...</div>
-			<div className='flex justify-between mt-5'>
+			<Link to='newpost'><div className="text-2xl text-center mt-5 text-green-500 font-semibold">Add new post</div></Link>
+			<div className='flex justify-between mt-8 mb-7'>
 				{user && <button onClick={() => setFilterByClubsIn(prevSetting => !prevSetting)} className={`ease-in-out duration-300 mx-auto border border-neutral-800 p-2 rounded-lg ${filterByClubsIn && 'bg-neutral-700 text-neutral-200'}`}>My Clubs</button>}
 			</div>
-			<Link to='newpost'><div className="text-2xl text-center mt-5 text-green-500 font-semibold">Add new post</div></Link>
 			{!feedLoading && filteredFeed.map(post =>
 				<Post key={post.id} post={post} isAuthor={authLoading || user === null ? false : (user.uid === post.author.id)} handleDelete={handleDelete} handleSave={handleSave} />
 			)}
@@ -78,7 +77,7 @@ function Post(props) {
 	}
 
 	return (
-		<div className="border-solid border bg-neutral-100 rounded-md w-2/5 mx-auto my-5 px-10 pb-10 pt-2 break-words">
+		<div className="border-solid border rounded-md w-2/5 mx-auto my-5 px-10 pb-10 pt-2 break-words">
 			<div onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)} className="float-right text-xl">
 				...{showOptions && <PostOptions isAuthor={props.isAuthor} id={post.id} handleDelete={props.handleDelete} handleEdit={toggleEdit} />}
 			</div>

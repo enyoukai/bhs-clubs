@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-export default function PostPage()
-{
+export default function PostPage() {
 	const postId = useParams().id;
 	const [post, setPost] = useState();
 	const [postLoading, setPostLoading] = useState(true);
@@ -13,14 +12,14 @@ export default function PostPage()
 	}, [postId]);
 
 	return (
-		<div className='p-10'>
-		{!postLoading &&
-			<div>
-				<div className='text-4xl text-center'>{post.title}</div>
-				<div className='mt-10 text-2xl'>{post.body}</div>
-				{post.file && <img width={'300rem'} src={`/images/${post.file}`}/>}
-			</div>
-		}
+		<div className='py-10 px-24'>
+			{!postLoading &&
+				<div>
+					<div className='text-4xl text-center mb-10'>{post.title} by {post.club.name}</div>
+					<div className='mt-10 text-2xl mb-10'>{post.body}</div>
+					{post.file && <img className='mb-10 mx-auto' width={'300rem'} alt="post" src={`/images/${post.file}`} />}
+				</div>
+			}
 		</div>
 	)
 }

@@ -88,9 +88,9 @@ function ClubTime(props) {
 	return (
 		<li>
 			<Link to={`/club/${props.club.id}`}>
-				<div className='border px-2 py-5 font-semibold bg-neutral-800 text-neutral-100 rounded-md my-3 mx-2'>
-					<div className="text-purple-400">{props.club.time}</div>
-					<div>{props.club.name}</div>
+				<div className='border px-2 py-5 font-semibold text-neutral-100 rounded-md my-3 mx-2'>
+					<div className="text-purple-500">{props.club.time}</div>
+					<div className="text-neutral-800">{props.club.name}</div>
 				</div>
 			</Link>
 		</li>
