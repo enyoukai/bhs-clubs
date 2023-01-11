@@ -25,7 +25,7 @@ function Layout() {
   return (
     <React.Fragment>
       <nav className="flex items-center gap-x-12 px-10 py-2 bg-neutral-800 sticky top-0">
-        <Link to='/' className="nav__logo text-purple-400 text-2xl font-medium">dasik</Link>
+        <Link to='/' className="nav__logo text-purple-400 text-3xl font-semibold">dasik</Link>
         <div className="nav__tabs">
           <Link to='/' className={`nav__tab text-xl font-medium ${path === '/' || path.startsWith('/club') ? selected : unselected}`}>Home</Link>
           <Link to='newclub' className={`nav__tab text-xl font-medium ${path.startsWith('/newclub') ? selected : unselected}`}>Add Club</Link>
@@ -68,14 +68,17 @@ function Notifications(props) {
 // dropdown component?
 function NotificationsDropdown(props) {
   return (
-    <div className="absolute bg-neutral-800 flex flex-col text-neutral-200 text-xl p-5 top-20">
+    <div className="absolute bg-neutral-800 flex flex-col text-neutral-200 text-md p-5 top-14 w-1/8 right-14">
       {props.notifications.length > 0 ?
-        <ul>
+        <ul className="flex flex-col gap-5">
           {props.notifications.map((notif, idx) =>
             <li key={idx}>
-              <Link>{notif.club} - {notif.title}</Link>
+              <Link to={`/feed/${notif.id}`} className="flex flex-row gap-5 align-middle">
+                <span className="text-purple-300 text-lg">{notif.club.name}</span>
+                <span>Made a new post</span>
+              </Link>
             </li>)}
-        </ul> : <div>Nothing to show</div>}
+        </ul> : <div className="text-xl">Nothing to show</div>}
     </div>
   )
 }
