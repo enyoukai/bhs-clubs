@@ -61,7 +61,7 @@ rows.forEach(row => {
 	console.log("Location: " + location);
 
 	// for now it just randomizes
-	const club = new Club({ name: name, description: name, location: location, dates: [getRandomInt(7)], time: time, advisor: advisor, approved: true, verification: "", officers: [], tags: { service: randBool(), academic: randBool(), educational: randBool(), misc: randBool() } });
+	const club = new Club({ name: name.replace("&amp;", "&"), description: name, location: location, dates: [getRandomInt(7)], time: time, advisor: advisor, approved: true, verification: "", officers: [], tags: { service: randBool(), academic: randBool(), educational: randBool(), misc: randBool() } });
 	club.save();
 });
 
