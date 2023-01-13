@@ -4,22 +4,22 @@ import axios from 'axios';
 
 const AuthContext = React.createContext();
 
-export function useAuth()
-{
+export function useAuth() {
 	return useContext(AuthContext);
 }
 
-export function AuthProvider(props)
-{
+export function AuthProvider(props) {
 	const [user, setUser] = useState(null);
 	const [authLoading, setAuthLoading] = useState(true);
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [token, setToken] = useState();
 
 	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged(async function(user) {
-			if (user !== null)
-			{
+		const unsubscribe = auth.onAuthStateChanged(async function (user) {
+			if (user !== null) {
+				// TODO: fix hacky solution for race condition between account creation and firebase callback
+				await new Promise(r => setTimeout(r, 1000));
+
 				const adminStatus = (await axios.get(`/account/${user.uid}`));
 
 				setIsAdmin(adminStatus.data.isAdmin);
@@ -29,8 +29,7 @@ export function AuthProvider(props)
 
 				setToken(token);
 			}
-			else
-			{
+			else {
 				axios.defaults.headers.common['Authorization'] = null;
 				setToken(null);
 				setIsAdmin(false);
@@ -42,13 +41,12 @@ export function AuthProvider(props)
 		return unsubscribe
 	}, []);
 
-	function signOut()
-	{
+	function signOut() {
 		return auth.signOut();
 	}
 
-	const authValue = {auth, user, authLoading, token, isAdmin, signOut};
-	
+	const authValue = { auth, user, authLoading, token, isAdmin, signOut };
+
 	return (
 		<AuthContext.Provider value={authValue}>
 			{props.children}

@@ -7,6 +7,7 @@ import { IconContext } from 'react-icons';
 import './Layout.scss'
 import axios from "axios";
 
+
 function Layout() {
   const { user, isAdmin, authLoading } = useAuth();
   const [notifications, setNotifications] = useState([]);
@@ -96,7 +97,7 @@ function Avatar(props) {
 
   return (
     <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link to={'account/' + props.uid}><img className="account__avatar w-15 h-15" src="https://cdn.dribbble.com/users/1165288/screenshots/6008531/document-hierarchy.jpg" alt="profile" /></Link>
+      <Link to={'account/' + props.uid}><img className="account__avatar w-15 h-15" src="https://i.pinimg.com/236x/44/b9/65/44b965ef15668cf3ec5d7888be48ec3a.jpg" alt="profile" /></Link>
       {dropdown && <AccountDropdown uid={props.uid} />}
     </div>
   )
