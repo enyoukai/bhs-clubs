@@ -97,7 +97,7 @@ function Avatar(props) {
 
   return (
     <div className="nav__account" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link to={'account/' + props.uid}><img className="account__avatar w-15 h-15" src="https://i.pinimg.com/236x/44/b9/65/44b965ef15668cf3ec5d7888be48ec3a.jpg" alt="profile" /></Link>
+      <Link to={'account/' + props.uid}><img className="account__avatar w-15 h-15" src="/defaultprofile.jpg" alt="profile" /></Link>
       {dropdown && <AccountDropdown uid={props.uid} />}
     </div>
   )
