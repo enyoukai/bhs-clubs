@@ -72,21 +72,21 @@ export default function NewPost() {
 	return (
 		<>
 			{clubs !== undefined &&
-				<div className='p-5'>
-					<h2 className='text-3xl text-center'>New Post</h2>
+				<div className='p-5 py-10'>
+					<h2 className='text-4xl font-semibold text-center'>New Post</h2>
 					{success && <div>{success}</div>}
 					{error && <div>{error}</div>}
-					<form onSubmit={handleSubmit} className='w-full'>
-						<div className="text-xl mt-4">Title</div>
-						<textarea className="resize-none border border-neutral-400 rounded-sm" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-						<div className="text-xl mt-4">Body</div>
-						<textarea className="resize-none border border-neutral-400 rounded-sm" type="text" value={body} onChange={(e) => setBody(e.target.value)} />
-						<div className="text-xl mt-4">Club:</div>
-						<select className="border border-neutral-400 rounded-sm" value={selectClub} onChange={(e) => setSelectClub(e.target.value)}>
+					<form onSubmit={handleSubmit} className='w-full pt-10 px-20'>
+						<div className="text-2xl my-4">Title</div>
+						<textarea className="p-2 resize-none border border-neutral-400 rounded-sm w-full" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+						<div className="text-2xl my-4">Body</div>
+						<textarea className="p-2 resize-none border border-neutral-400 rounded-sm w-full h-40" type="text" value={body} onChange={(e) => setBody(e.target.value)} />
+						<div className="text-2xl my-4">Club:</div>
+						<select className="px-4 py-2 border border-neutral-400 rounded-md" value={selectClub} onChange={(e) => setSelectClub(e.target.value)}>
 							<option value="" disabled>Select Club</option>
 							{clubs.map((club) => <option key={club.id} value={club.id}>{club.name}</option>)}
 						</select>
-						<div className="text-xl mt-4">Photo:</div>
+						<div className="text-2xl my-4">Photo:</div>
 						{/* <input className="block" type="file" onChange={(e) => setFile(e.target.files[0])}/> */}
 						<DropZone currentImg={file} onDrop={(files) => setFile(files[0])} />
 						{/* {file && <img className="mt-4 w-96" alt="uploaded" src={URL.createObjectURL(file)}/>} */}
