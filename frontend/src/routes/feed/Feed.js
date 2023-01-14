@@ -77,7 +77,7 @@ function Post(props) {
 	}
 
 	return (
-		<div className="border-solid border rounded-md w-2/5 mx-auto my-5 px-10 pb-10 pt-2 break-words">
+		<div className="border-solid border border-neutral-400 rounded-md w-2/5 mx-auto my-5 px-10 pb-10 pt-2 break-words">
 			<div onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)} className="float-right text-xl">
 				...{showOptions && <PostOptions isAuthor={props.isAuthor} id={post.id} handleDelete={props.handleDelete} handleEdit={toggleEdit} />}
 			</div>

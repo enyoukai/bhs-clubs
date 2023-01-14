@@ -75,18 +75,18 @@ export default function NewPost() {
 				<div className='p-5 py-10'>
 					<h2 className='text-4xl font-semibold text-center'>New Post</h2>
 					{success && <div>{success}</div>}
-					{error && <div>{error}</div>}
 					<form onSubmit={handleSubmit} className='w-full px-20'>
+						{error && <div className="font-semibold text-red-600">{error}</div>}
 						<div className="text-2xl mb-4 mt-8">Title</div>
-						<textarea className="p-2 resize-none border border-neutral-400 rounded-sm w-full" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+						<input className="p-2 resize-none border border-neutral-400 rounded-sm w-full" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
 						<div className="text-2xl mb-4 mt-8">Body</div>
-						<textarea className="p-2 resize-none border border-neutral-400 rounded-sm w-full h-40" type="text" value={body} onChange={(e) => setBody(e.target.value)} />
-						<div className="text-2xl mb-4 mt-8">Club:</div>
+						<textarea className="p-2 resize-none border border-neutral-400 rounded-sm w-full h-24" type="text" value={body} onChange={(e) => setBody(e.target.value)} />
+						<div className="text-2xl mb-4 mt-8">Club</div>
 						<select className="px-4 py-2 border border-neutral-400 rounded-md" value={selectClub} onChange={(e) => setSelectClub(e.target.value)}>
 							<option value="" disabled>Select Club</option>
 							{clubs.map((club) => <option key={club.id} value={club.id}>{club.name}</option>)}
 						</select>
-						<div className="text-2xl mb-4 mt-8">Photo:</div>
+						<div className="text-2xl mb-4 mt-8">Upload</div>
 						{/* <input className="block" type="file" onChange={(e) => setFile(e.target.files[0])}/> */}
 						<DropZone currentImg={file} onDrop={(files) => setFile(files[0])} width='200rem'/>
 						{/* {file && <img className="mt-4 w-96" alt="uploaded" src={URL.createObjectURL(file)}/>} */}

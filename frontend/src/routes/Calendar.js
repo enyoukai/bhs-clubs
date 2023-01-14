@@ -13,7 +13,7 @@ export default function Calendar() {
 
 function CalendarUI() {
 	return (
-		<table className="mt-10 border w-full table-fixed">
+		<table className="mt-10 w-full table-fixed">
 			<thead>
 				<tr className>
 					<th className="pt-3 text-lg text-neutral-700">Sunday</th>
@@ -88,7 +88,7 @@ function ClubTime(props) {
 	return (
 		<li>
 			<Link to={`/club/${props.club.id}`}>
-				<div className='border px-2 py-5 font-semibold text-neutral-100 rounded-md my-3 mx-2'>
+				<div className='border border-neutral-400 px-2 py-5 font-semibold text-neutral-100 rounded-md my-5 mx-2'>
 					<div className="text-purple-500">{props.club.time}</div>
 					<div className="text-neutral-800">{props.club.name}</div>
 				</div>
