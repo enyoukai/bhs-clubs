@@ -76,21 +76,21 @@ export default function NewPost() {
 					<h2 className='text-4xl font-semibold text-center'>New Post</h2>
 					{success && <div>{success}</div>}
 					{error && <div>{error}</div>}
-					<form onSubmit={handleSubmit} className='w-full pt-10 px-20'>
-						<div className="text-2xl my-4">Title</div>
+					<form onSubmit={handleSubmit} className='w-full px-20'>
+						<div className="text-2xl mb-4 mt-8">Title</div>
 						<textarea className="p-2 resize-none border border-neutral-400 rounded-sm w-full" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-						<div className="text-2xl my-4">Body</div>
+						<div className="text-2xl mb-4 mt-8">Body</div>
 						<textarea className="p-2 resize-none border border-neutral-400 rounded-sm w-full h-40" type="text" value={body} onChange={(e) => setBody(e.target.value)} />
-						<div className="text-2xl my-4">Club:</div>
+						<div className="text-2xl mb-4 mt-8">Club:</div>
 						<select className="px-4 py-2 border border-neutral-400 rounded-md" value={selectClub} onChange={(e) => setSelectClub(e.target.value)}>
 							<option value="" disabled>Select Club</option>
 							{clubs.map((club) => <option key={club.id} value={club.id}>{club.name}</option>)}
 						</select>
-						<div className="text-2xl my-4">Photo:</div>
+						<div className="text-2xl mb-4 mt-8">Photo:</div>
 						{/* <input className="block" type="file" onChange={(e) => setFile(e.target.files[0])}/> */}
-						<DropZone currentImg={file} onDrop={(files) => setFile(files[0])} />
+						<DropZone currentImg={file} onDrop={(files) => setFile(files[0])} width='200rem'/>
 						{/* {file && <img className="mt-4 w-96" alt="uploaded" src={URL.createObjectURL(file)}/>} */}
-						<button className="text-xl border bg-neutral-900 text-neutral-100 px-20 py-4 rounded-xl mt-5 hover:bg-green-500" type="submit">Submit</button>
+						<button className="block mx-auto text-xl border bg-neutral-900 text-neutral-100 px-20 py-4 rounded-xl mt-10 hover:bg-green-500" type="submit">Submit</button>
 					</form>
 				</div>
 			}
