@@ -60,6 +60,11 @@ export default function ModifyClub() {
         // navigate('/');
     }
 
+    function dateHandler()
+    {
+
+    }
+
     return (
         <>
             {clubLoading ? <Loading/> :         
