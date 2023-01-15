@@ -57,7 +57,7 @@ export default function ModifyClub() {
         const payload = {description: description, location: location, dates: dates, time: time, advisor: advisor};
         await axios.patch(`/clubs/${clubId}`, payload);
 
-        navigate('/');
+        navigate(`/club/${clubId}`);
     }
 
     function dateHandler()
