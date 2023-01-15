@@ -37,14 +37,14 @@ router.get('/:id/members', async (req,res) => {
 
 router.use(authenticate);
 
-router.put('/:clubId', async (req, res) => {
+router.patch('/:clubId', async (req, res) => {
 	const club = await Club.findOne({ _id: req.params.clubId });
 	const user = await User.findOne({_id: req.headers.uid});
 
 	if (club === null) return res.sendStatus(StatusCode.ClientErrorNotFound);
 	if (!club.officers.includes(req.headers.uid) && !user.isAdmin) return res.sendStatus(StatusCode.ClientErrorForbidden);
 
-	await Club.updateOne({ _id: req.params.clubId }, { name: req.body.name, description: req.body.description, location: req.body.location, date: req.body.date, time: req.body.time, advisor: req.body.advisor, infoPage: req.body.infoPage });
+	await Club.updateOne({ _id: req.params.clubId }, {$set: req.body});
 
 	return res.sendStatus(StatusCode.SuccessOK);
 });
