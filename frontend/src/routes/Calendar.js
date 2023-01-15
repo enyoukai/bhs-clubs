@@ -15,7 +15,7 @@ function CalendarUI() {
 	return (
 		<table className="mt-10 w-full table-fixed">
 			<thead>
-				<tr className>
+				<tr>
 					<th className="pt-3 text-lg text-neutral-700">Sunday</th>
 					<th className="pt-3 text-lg text-neutral-700">Monday</th>
 					<th className="pt-3 text-lg text-neutral-700">Tuesday</th>

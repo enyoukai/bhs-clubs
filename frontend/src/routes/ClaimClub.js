@@ -42,7 +42,7 @@ export default function NewClub() {
 				<div className="text-center mb-10">Registering as Owner of {club.name}</div>
 				<form onSubmit={submitClub} className="flex flex-col gap-4">
 					<div className="text-2xl">Verification</div>
-					<DropZone currentImg={verification} onDrop={handleDrop} />
+					<DropZone currentImg={verification} onDrop={handleDrop} theme='dark' />
 					<button type="submit" className="mt-4 text-4xl text-neutral-800 bg-neutral-100 p-6 rounded-lg font-medium">Claim</button>
 				</form>
 			</div>}

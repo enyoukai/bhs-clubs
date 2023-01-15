@@ -208,7 +208,7 @@ function ModifyInfo(props) {
 				</div>
 				<DropZone onDrop={onDrop} />
 				<div className='flex justify-center w-full'>
-					<button className="text-neutral-100 bg-neutral-900 px-20 py-4 rounded-2xl text-xl font-medium hover:bg-neutral-100 " onClick={handleSubmit}>Save</button>
+					<button className="text-neutral-100 bg-neutral-900 px-20 py-4 rounded-2xl text-xl font-medium hover:bg-neutral-700 " onClick={handleSubmit}>Save</button>
 					<button className="ml-10 border border-neutral-400 text-neutral-800 px-7 py-4 rounded-2xl text-xl font-medium hover:bg-neutral-100 " onClick={handleSubmit}>Cancel</button>
 				</div>
 			</div>
