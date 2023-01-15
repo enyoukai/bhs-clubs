@@ -5,11 +5,15 @@ export default function DatePicker(props) {
 	const [selectedDates, setSelectedDates] = useState(Array.apply(null, Array(7)).map(() => false));
 
 	function toggleDate(date) {
-		const newSelectedDates = Array.from(selectedDates);
-		newSelectedDates[date] = !newSelectedDates[date];
-
-		dateHandler(newSelectedDates);
-	}
+		return () => { 
+			setSelectedDates((prevDates) => {
+				const cloneDates = Array.from(prevDates); 
+				cloneDates[date] = !cloneDates[date]; 
+				return cloneDates;
+			}); 
+		} } 
+		
+		useEffect(() => dateHandler(selectedDates), [selectedDates]);
 
 	return (
 		<div className="grid grid-cols-7 text-center gap-4">
