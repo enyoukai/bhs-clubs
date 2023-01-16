@@ -61,11 +61,7 @@ export default function NewClub() {
 	}
 
 	function handleDateChange(dates) {
-		const newDateState = [];
-
-		dates.forEach((isSelected, day) => isSelected && newDateState.push(day))
-
-		setFormState((prevState) => ({ ...prevState, dates: newDateState }));
+		setFormState((prevState) => ({ ...prevState, dates: dates }));
 
 		if (error) setError('');
 	}
@@ -101,7 +97,7 @@ export default function NewClub() {
 				<div className="newClub__text">Location</div>
 				<input name='location' value={formState.location} className="newClub__input" onChange={handleTextChange}></input>
 				<div className="newClub__text">Days</div>
-				<DatePicker dateHandler={handleDateChange} />
+				<DatePicker dateHandler={handleDateChange} selectedDates={formState.dates}/>
 				<div className='text-base font-semibold'>No consistent schedule? </div>
 				{/* <input name='date' value={formState.date} className="newClub__input" onChange={handleTextChange}></input> */}
 				<div className="newClub__text">Time</div>
