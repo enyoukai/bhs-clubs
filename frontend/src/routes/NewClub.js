@@ -2,6 +2,8 @@ import useApi from '../hooks/useApi';
 
 import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'components/DatePicker';
+import TagPicker from 'components/TagPicker';
+import {capitalizeFirstLetter} from 'utils/textUtils';
 
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from 'react-dropzone';
@@ -9,10 +11,6 @@ import { useDropzone } from 'react-dropzone';
 import { useAuth } from '../contexts/AuthContext'
 
 import './NewClub.scss';
-
-function capitalizeFirstLetter(str) {
-	return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 export default function NewClub() {
 	// TODO: make a reducer later
@@ -128,18 +126,18 @@ function DropZone(props) {
 	)
 }
 
-function TagPicker(props) {
-	return (
-		<div>
-			{Object.entries(props.tags).map(([tag, value]) =>
-				<button type='button' key={tag} onClick={() => props.handleTagChange(tag)} className={`block border p-5 rounded-md w-full mb-5 text-left ease-in-out duration-300 ${value ? 'bg-neutral-100 text-neutral-900' : 'bg-neutral-800 text-neutral-100'}`}>
-					{capitalizeFirstLetter(tag)}
-				</button>
+// function TagPicker(props) {
+// 	return (
+// 		<div>
+// 			{Object.entries(props.tags).map(([tag, value]) =>
+// 				<button type='button' key={tag} onClick={() => props.handleTagChange(tag)} className={`block border p-5 rounded-md w-full mb-5 text-left ease-in-out duration-300 ${value ? 'bg-neutral-100 text-neutral-900' : 'bg-neutral-800 text-neutral-100'}`}>
+// 					{capitalizeFirstLetter(tag)}
+// 				</button>
 
-			)}
-		</div>
-	)
-}
+// 			)}
+// 		</div>
+// 	)
+// }
 
 function TimePicker(props) {
 	return (
