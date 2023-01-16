@@ -60,11 +60,6 @@ export default function ModifyClub() {
         navigate(`/club/${clubId}`);
     }
 
-    function dateHandler()
-    {
-
-    }
-
     return (
         <>
             {clubLoading ? <Loading/> :         
@@ -76,7 +71,7 @@ export default function ModifyClub() {
                     <p className='text-2xl mb-3'>Location </p>
                     <input className='border border-neutral-600 mb-5 p-2 w-full rounded-md text-neutral-800' value={location} onChange={e => setLocation(e.target.value)}></input>
                     <p className='text-2xl mb-3'>Dates</p>
-                    <DatePicker dateHandler={() => {}}/>
+                    <DatePicker theme="light" dateHandler={setDates} selectedDates={dates}/>
                     <div className='flex justify-between mt-5'>
                         <div>
                             <p className='text-2xl my-3'>Time </p>

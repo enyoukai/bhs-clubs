@@ -15,16 +15,23 @@ router.get('/', async (req, res) => {
 	if (Object.keys(req.query).length === 0) {
 		const approvedClubs = await Club.find({ approved: true }).collation({locale: 'en', strength: 2}).sort('name');
 
+		approvedClubs.forEach(club => club.dates.sort());
+
 		return res.json(approvedClubs);
 	}
 	else {
-		return res.json(await Club.find({ approved: true, name: { $regex: req.query.name, $options: 'i' } }).sort('name'));
+		const allClubs = await Club.find({ approved: true, name: { $regex: req.query.name, $options: 'i' } }).sort('name');
+		allClubs.forEach(club => club.dates.sort());
+
+		return res.json(allClubs);
 	}
 });
 
 router.get('/:clubId', async (req, res) => {
 	const club = await Club.findOne({ _id: req.params.clubId, approved: true }).populate('officers');
 	if (club === null) return res.sendStatus(StatusCode.ClientErrorNotFound);
+
+	club.dates.sort();
 
 	return res.json(club);
 });
