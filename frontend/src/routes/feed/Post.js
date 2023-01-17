@@ -15,7 +15,7 @@ export default function PostPage() {
 		<div className='py-10 px-24'>
 			{!postLoading &&
 				<div>
-					<div className='text-4xl text-center mb-10'>{post.title} by {post.club.name}</div>
+					<div className='text-4xl text-center mb-10 font-semibold'>{post.title} by <span className='text-purple-500'>{post.club.name}</span></div>
 					<div className='mt-10 text-2xl mb-10'>{post.body}</div>
 					{post.file && <img className='mb-10 mx-auto' width={'300rem'} alt="post" src={`/images/${post.file}`} />}
 				</div>
