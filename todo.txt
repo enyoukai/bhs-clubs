@@ -1,0 +1,1 @@
+make notifications delete when you click thme
