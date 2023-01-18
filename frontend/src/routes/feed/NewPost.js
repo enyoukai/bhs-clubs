@@ -50,7 +50,8 @@ export default function NewPost() {
 
 	useEffect(() => {
 		if (!getUser.loading) {
-			setClubs(userData.clubs);
+			const officerClubs = userData.clubs.filter(club => club.officers.includes(user.uid));
+			setClubs(officerClubs);
 		}
 	}, [getUser.loading]);
 
