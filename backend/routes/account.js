@@ -1,3 +1,5 @@
+const { StatusCode } = require("status-code-enum");
+
 const express = require("express");
 const router = express.Router();
 const authenticate = require('../middleware/authenticate');
@@ -69,9 +71,20 @@ router.get('/:userId/unreadPosts', async (req, res) => {
 
 router.delete('/:userId/unreadPosts', async (req, res) => {
 	if (req.params.userId !== req.headers.uid) return res.send("Cannot access this resource").status(400);
-	if (!(await User.exists({ _id: req.headers.uid })));
+	if (!(await User.exists({ _id: req.headers.uid }))) return res.sendStatus(StatusCode.ClientErrorNotFound);
 
 	await User.updateOne({ _id: req.headers.uid }, { unreadPosts: [] });
+});
+
+router.delete('/:userId/unreadPosts/:postId', async (req, res) => {
+	if (req.params.userId !== req.headers.uid) return res.send("Cannot access this resource").status(400);
+	if (!(await User.exists({ _id: req.headers.uid }))) return res.sendStatus(StatusCode.ClientErrorNotFound);
+
+	await User.updateOne({ _id: req.headers.uid }, { 
+		$pull: {
+			unreadPosts: req.params.postId 
+		}
+	});
 });
 
 router.delete('/:userId/club/:clubId', async (req, res) => {
